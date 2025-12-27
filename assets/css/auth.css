@@ -1,0 +1,13 @@
+.auth-header{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.auth-form{
+  margin-top: 12px;
+  display: grid;
+  gap: 10px;
+}

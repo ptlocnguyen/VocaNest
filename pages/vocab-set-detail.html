@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VocaNest - Chi tiết bộ từ</title>
+    <link rel="stylesheet" href="../assets/css/base.css" />
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="app-header__left">
+            <a href="./vocab-sets.html" class="btn">Quay lại</a>
+            <div class="title-block">
+                <strong id="setTitle" class="page-title"></strong>
+                <span id="setMeta" class="muted"></span>
+            </div>
+        </div>
+
+        <div class="user-area">
+            <span id="userEmail" class="badge"></span>
+            <button id="logoutBtn" class="btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="two-cols two-cols--detail">
+            <section id="addSection" class="card">
+                <div class="section-head">
+                    <h3>Thêm từ vựng</h3>
+                    <p class="muted" id="editHint">Nhập từ và nghĩa, sau đó bấm Thêm</p>
+                </div>
+
+                <div class="form-grid">
+                    <div class="row">
+                        <div class="col">
+                            <label class="label" for="wordInput">Từ vựng</label>
+                            <input id="wordInput" class="input" placeholder="Ví dụ: benefit" />
+                        </div>
+
+                        <div class="col">
+                            <label class="label" for="meaningInput">Nghĩa</label>
+                            <input id="meaningInput" class="input" placeholder="Ví dụ: lợi ích" />
+                        </div>
+                    </div>
+
+                    <button id="addBtn" class="btn primary" type="button">Thêm</button>
+
+                    <div id="addAlert" class="alert" style="display:none;"></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-head">
+                    <h3>Danh sách từ</h3>
+                    <div class="row row--tight">
+                        <input id="searchInput" class="input" placeholder="Tìm nhanh (word hoặc meaning)..." />
+                    </div>
+                </div>
+
+                <div id="vocabItems" class="list"></div>
+            </section>
+        </div>
+    </main>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
+
+    <script src="../assets/js/authGuard.js"></script>
+    <script src="../assets/js/vocabSetDetail.js"></script>
+</body>
+
+</html>

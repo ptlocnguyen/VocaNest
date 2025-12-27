@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaNest</title>
+  <link rel="stylesheet" href="./assets/css/base.css" />
+</head>
+<body>
+  <div class="center">
+    <div class="card card--narrow">
+      <h1>VocaNest</h1>
+      <p>Đang kiểm tra đăng nhập...</p>
+    </div>
+  </div>
+
+  <script src="./assets/js/config.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./assets/js/supabaseClient.js"></script>
+
+  <script>
+    (async () => {
+      try {
+        const { data } = await window.supabase.auth.getSession();
+        const hasSession = !!data?.session;
+
+        window.location.href = hasSession ? "./pages/home.html" : "./pages/auth.html";
+      } catch (err) {
+        console.error(err);
+        window.location.href = "./pages/auth.html";
+      }
+    })();
+  </script>
+</body>
+</html>

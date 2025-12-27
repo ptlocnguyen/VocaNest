@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VocaNest - Bộ từ vựng</title>
+    <link rel="stylesheet" href="../assets/css/base.css" />
+</head>
+
+<body>
+    <header class="app-header">
+        <div class="app-header__left">
+            <strong class="logo">VocaNest</strong>
+
+            <nav class="nav">
+                <a class="nav__link" href="./home.html">Home</a>
+                <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
+            </nav>
+        </div>
+
+        <div class="user-area">
+            <span id="userEmail" class="badge"></span>
+            <button id="logoutBtn" class="btn">Đăng xuất</button>
+        </div>
+    </header>
+
+    <main class="main">
+        <section class="card header-card">
+            <div class="header-row">
+                <div>
+                    <h2>Bộ từ vựng</h2>
+                    <p class="muted">Quản lý bộ của bạn và khám phá bộ công khai</p>
+                </div>
+
+                <button id="openCreateModal" class="btn primary">Tạo bộ mới</button>
+            </div>
+        </section>
+
+        <div class="two-cols">
+            <section class="card">
+                <div class="section-head">
+                    <h3>Của tôi</h3>
+                    <p class="muted">Bạn có toàn quyền chỉnh sửa</p>
+                </div>
+                <div class="vocab-box">
+                    <input id="mySearchInput" class="input vocab-box__search" placeholder="Tìm bộ từ vựng của bạn..." />
+
+                    <div id="myVocabList" class="grid vocab-box__list"></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="section-head">
+                    <h3>Công khai</h3>
+                    <p class="muted">Chỉ xem, không chỉnh sửa</p>
+                </div>
+                <div class="vocab-box">
+                    <input id="publicSearchInput" class="input vocab-box__search"
+                        placeholder="Tìm bộ từ vựng công khai..." />
+
+                    <div id="publicVocabList" class="grid vocab-box__list"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <div id="modal" class="modal hidden" aria-hidden="true">
+        <div class="modal-card">
+            <div class="card">
+                <div class="modal-head">
+                    <h3>Tạo bộ từ vựng</h3>
+                    <button id="closeModalX" class="btn btn-icon" type="button" aria-label="Đóng">×</button>
+                </div>
+
+                <div class="form-grid">
+                    <div>
+                        <label class="label" for="titleInput">Tên bộ</label>
+                        <input id="titleInput" class="input" placeholder="Ví dụ: 600 TOEIC Words" />
+                    </div>
+
+                    <div>
+                        <label class="label" for="descInput">Mô tả</label>
+                        <input id="descInput" class="input" placeholder="Không bắt buộc" />
+                    </div>
+
+                    <label class="check">
+                        <input id="publicCheckbox" type="checkbox" />
+                        <span>Công khai (mọi người có thể xem)</span>
+                    </label>
+
+                    <div class="row row--actions">
+                        <button id="createBtn" class="btn primary" type="button">Tạo</button>
+                        <button id="closeModal" class="btn" type="button">Huỷ</button>
+                    </div>
+
+                    <div id="modalAlert" class="alert" style="display:none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../assets/js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
+
+    <script src="../assets/js/authGuard.js"></script>
+    <script src="../assets/js/vocabSets.js"></script>
+</body>
+
+</html>
