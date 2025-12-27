@@ -47,8 +47,13 @@ let allItems = [];
     // ===== LIST =====
     const vocabItemsEl = document.getElementById("vocabItems");
 
+    // ===== STATE =====
     let isOwner = false;
     const searchInput = document.getElementById("searchInput");
+
+    // ===== FUNCTIONS =====
+    const excelInput = document.getElementById("excelInput");
+    const importAlert = document.getElementById("importAlert");
 
     async function loadSetInfo() {
         const { data, error } = await supabaseClient
@@ -162,6 +167,11 @@ let allItems = [];
         list.forEach(renderItem);
     }
 
+    function showImportAlert(msg, type = "ok") {
+        importAlert.textContent = msg;
+        importAlert.className = `alert ${type}`;
+        importAlert.style.display = "block";
+    }
 
     async function addItem() {
         if (!isOwner) return;
@@ -218,6 +228,78 @@ let allItems = [];
             );
 
             renderItems(filtered);
+        });
+    }
+
+    if (excelInput) {
+        excelInput.addEventListener("change", async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            try {
+                showImportAlert("Đang đọc file Excel...", "ok");
+
+                const data = await file.arrayBuffer();
+                const workbook = XLSX.read(data, { type: "array" });
+
+                const sheetName = workbook.SheetNames[0];
+                const sheet = workbook.Sheets[sheetName];
+
+                // Convert sheet → array of rows
+                const rows = XLSX.utils.sheet_to_json(sheet, {
+                    header: 1,
+                    blankrows: false
+                });
+
+                if (!rows || rows.length === 0) {
+                    showImportAlert("File Excel rỗng", "err");
+                    return;
+                }
+
+                // Bỏ dòng header (nếu có)
+                const vocabRows = rows.slice(1);
+
+                const items = vocabRows
+                    .map(r => ({
+                        word: String(r[0] || "").trim(),
+                        meaning: String(r[1] || "").trim()
+                    }))
+                    .filter(r => r.word && r.meaning);
+
+                if (!items.length) {
+                    showImportAlert("Không tìm thấy dữ liệu hợp lệ", "err");
+                    return;
+                }
+
+                // Chuẩn bị insert hàng loạt
+                const payload = items.map(it => ({
+                    vocab_set_id: vocabSetId, // biến bạn đã có sẵn
+                    user_id: currentUser.id,
+                    word: it.word,
+                    meaning: it.meaning
+                }));
+
+                showImportAlert(`Đang import ${payload.length} từ...`, "ok");
+
+                const { error } = await supabaseClient
+                    .from("vocab_items")
+                    .insert(payload);
+
+                if (error) {
+                    console.error(error);
+                    showImportAlert("Import thất bại", "err");
+                    return;
+                }
+
+                showImportAlert(`Import thành công ${payload.length} từ`, "ok");
+
+                excelInput.value = "";
+                loadItems();
+
+            } catch (err) {
+                console.error(err);
+                showImportAlert("Lỗi đọc file Excel", "err");
+            }
         });
     }
 

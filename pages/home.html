@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VocaNest - Home</title>
     <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/home.css" />
 </head>
 
 <body>
@@ -20,7 +21,7 @@
         </div>
 
         <div class="user-area">
-            <span id="userEmail" class="badge" title="Email đăng nhập"></span>
+            <a id="userEmail" class="badge" title="Email đăng nhập" href="./account.html"></a>
             <button id="logoutBtn" class="btn">Đăng xuất</button>
         </div>
     </header>
@@ -40,15 +41,18 @@
                 <a class="btn primary" href="./vocab-sets.html">Mở danh sách bộ từ</a>
             </div>
 
+            <!-- ✅ Flashcards: điều hướng đúng -->
             <div class="card">
                 <h3>Flashcards</h3>
-                <p>Tính năng sẽ làm sau: tạo flashcards theo từng bộ từ vựng.</p>
-                <button class="btn" disabled>Đang phát triển</button>
+                <p>Học từ vựng bằng thẻ, gắn với từng bộ từ vựng cụ thể.</p>
+                <a class="btn primary" href="./vocab-sets.html">
+                    Chọn bộ để học
+                </a>
             </div>
 
             <div class="card">
-                <h3>Đề thi TOEIC / IELTS</h3>
-                <p>Tính năng sẽ làm sau: upload đề + file nghe (Google Drive).</p>
+                <h3>Đề thi TOEIC</h3>
+                <p>Upload đề, file nghe, đáp án. Không gian tập trung và đếm giờ trong lúc giải đề.</p>
                 <button class="btn" disabled>Đang phát triển</button>
             </div>
         </section>

@@ -1,0 +1,173 @@
+/* ================================
+   FLASHCARD WRAPPER
+================================ */
+.flashcard-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: min(70vh, 520px);
+}
+
+/* ================================
+   CARD CONTAINER
+================================ */
+.flashcard-container {
+  perspective: 1000px;
+  display: flex;
+  justify-content: center;
+}
+
+/* ================================
+   FLASHCARD
+================================ */
+.flashcard {
+  width: min(90vw, 520px);   /* scale theo màn hình */
+  aspect-ratio: 16 / 10;     /* giữ tỉ lệ đẹp */
+  height: auto;
+
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s ease;
+  cursor: pointer;
+}
+
+.flashcard.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* ================================
+   CARD FACE
+================================ */
+.flashcard-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, var(--card), var(--card2));
+
+  font-size: clamp(28px, 5vw, 44px); /* quan trọng */
+  font-weight: 700;                 /* đậm hơn */
+  letter-spacing: 0.5px;
+  text-align: center;
+  padding: 28px;
+}
+
+/* BACK */
+.flashcard-back {
+  transform: rotateY(180deg);
+  font-size: clamp(16px, 2.6vw, 22px);
+  font-weight: 500;
+  color: var(--muted);
+}
+
+/* ================================
+   CARD ACTIONS (ICON INSIDE CARD)
+================================ */
+.flashcard-actions {
+  position: absolute;
+  bottom: 16px;        /* thoáng hơn */
+  display: flex;
+  gap: 10px;
+}
+
+.flashcard-actions--left {
+  left: 16px;
+}
+
+.flashcard-actions--right {
+  right: 16px;
+}
+
+.icon-btn {
+  background: rgba(255,255,255,0.12);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 8px 10px;
+  cursor: pointer;
+
+  font-size: clamp(15px, 2.5vw, 18px);
+  position: relative;
+}
+
+.icon-btn:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+/* Tooltip */
+.icon-btn::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: 130%;
+  right: 0;
+  background: #000;
+  color: #fff;
+  font-size: 12px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(4px);
+  transition: 0.15s ease;
+}
+
+.icon-btn:hover::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Active state */
+.icon-btn.active {
+  border-color: rgba(106,169,255,0.7);
+  background: rgba(106,169,255,0.25);
+}
+
+/* ================================
+   CONTROLS (UNDER CARD)
+================================ */
+.flashcard-controls {
+  margin-top: 28px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+
+  opacity: 0.8;
+  flex-wrap: nowrap; /* không cho nhảy dòng */
+}
+
+.flashcard-controls .btn {
+  padding: 6px 12px;
+  font-size: 14px;
+}
+
+/* Progress */
+.flashcard-progress {
+  font-size: 14px;
+  color: var(--muted);
+  min-width: 64px;
+  text-align: center;
+}
+
+/* Shuffle active */
+.shuffle-active {
+  border-color: rgba(106,169,255,0.65);
+  background: rgba(106,169,255,0.22);
+}
+
+/* ================================
+   SPEED SELECT
+================================ */
+.speed-select {
+  height: 34px;              /* ngang nút */
+  padding: 6px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  min-width: 72px;
+}

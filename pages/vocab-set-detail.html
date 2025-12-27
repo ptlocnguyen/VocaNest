@@ -6,12 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VocaNest - Chi tiết bộ từ</title>
     <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/vocab-set-detail.css" />
 </head>
 
 <body>
     <header class="app-header">
         <div class="app-header__left">
             <a href="./vocab-sets.html" class="btn">Quay lại</a>
+
+            <a id="flashcardsLink" class="btn primary" href="#">
+                📚 Flashcards
+            </a>
+
             <div class="title-block">
                 <strong id="setTitle" class="page-title"></strong>
                 <span id="setMeta" class="muted"></span>
@@ -19,7 +25,7 @@
         </div>
 
         <div class="user-area">
-            <span id="userEmail" class="badge"></span>
+            <a id="userEmail" class="badge" href="./account.html"></a>
             <button id="logoutBtn" class="btn">Đăng xuất</button>
         </div>
     </header>
@@ -49,6 +55,18 @@
 
                     <div id="addAlert" class="alert" style="display:none;"></div>
                 </div>
+
+                <div class="import-box">
+                    <label class="label">Import từ Excel</label>
+
+                    <input id="excelInput" type="file" class="input" accept=".xlsx,.xls" />
+
+                    <p class="muted">
+                        File Excel gồm 2 cột: từ vựng | nghĩa
+                    </p>
+
+                    <div id="importAlert" class="alert" style="display:none;"></div>
+                </div>
             </section>
 
             <section class="card">
@@ -70,6 +88,22 @@
 
     <script src="../assets/js/authGuard.js"></script>
     <script src="../assets/js/vocabSetDetail.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+
+    <script>
+        (function () {
+            const params = new URLSearchParams(window.location.search);
+            const setId = params.get("id");
+            const flashLink = document.getElementById("flashcardsLink");
+
+            if (setId && flashLink) {
+                flashLink.href = `./flashcards.html?set=${setId}`;
+            } else if (flashLink) {
+                flashLink.style.display = "none";
+            }
+        })();
+    </script>
 </body>
 
 </html>

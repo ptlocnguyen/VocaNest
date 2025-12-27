@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VocaNest - Tài khoản</title>
+
+    <!-- Base + auth + account CSS -->
+    <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/auth.css" />
+    <link rel="stylesheet" href="../assets/css/account.css" />
+</head>
+
+<body>
+    <div class="center">
+        <div class="card card--narrow">
+
+            <!-- Header -->
+            <div class="auth-header">
+                <div>
+                    <h1>Tài khoản</h1>
+                    <p>Thông tin đăng ký và bảo mật</p>
+                </div>
+            </div>
+
+            <!-- ===== Thông tin tài khoản ===== -->
+            <div class="account-info">
+                <div class="account-info__item">
+                    <span class="label">Email</span>
+                    <div id="accountEmail" class="account-info__value"></div>
+                </div>
+
+                <div class="account-info__item">
+                    <span class="label">Ngày tạo tài khoản</span>
+                    <div id="accountCreatedAt" class="account-info__value"></div>
+                </div>
+            </div>
+
+            <hr class="account-divider" />
+
+            <!-- ===== Đổi mật khẩu ===== -->
+            <div class="form-grid">
+
+                <div class="account-field">
+                    <label class="label" for="newPassword">Mật khẩu mới</label>
+                    <input id="newPassword" class="input" type="password" placeholder="Tối thiểu 6 ký tự" />
+                    <div class="account-hint">
+                        Sau khi đổi mật khẩu, bạn không cần đăng nhập lại
+                    </div>
+                </div>
+
+                <button id="changePasswordBtn" class="btn primary block">
+                    Đổi mật khẩu
+                </button>
+
+                <div id="alertBox" class="alert" style="display:none;"></div>
+            </div>
+
+            <!-- Back -->
+            <p style="margin-top:14px; text-align:center;">
+                <a href="./home.html">← Quay về Home</a>
+            </p>
+
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../assets/js/config.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
+    <script src="../assets/js/supabaseClient.js"></script>
+    <script src="../assets/js/authGuard.js"></script>
+    <script src="../assets/js/account.js"></script>
+</body>
+
+</html>

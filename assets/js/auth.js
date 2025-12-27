@@ -81,7 +81,7 @@ submitBtn.addEventListener("click", async () => {
 
       window.location.replace("./home.html");
     } else {
-      const { error } = await supabaseClient.auth.signUp({
+      const { user, error } = await supabaseClient.auth.signUp({
         email,
         password
       });
@@ -89,6 +89,20 @@ submitBtn.addEventListener("click", async () => {
       if (error) {
         showAlert("err", error.message);
         return;
+      }
+
+      // ===== TẠO PROFILE PUBLIC =====
+      if (user) {
+        const { error: profileErr } = await supabaseClient
+          .from("profiles")
+          .insert({
+            id: user.id,
+            email: user.email
+          });
+
+        if (profileErr) {
+          console.error("Create profile failed:", profileErr);
+        }
       }
 
       showAlert("ok", "Đăng ký thành công, bạn có thể đăng nhập");

@@ -1,102 +1,30 @@
-# VocaNest – Web học từ vựng tiếng Anh
+# VocaNest – Web học tiếng Anh (HTML/CSS/JS + Supabase v1)
 
-VocaNest là một web học tiếng Anh đơn giản, chạy hoàn toàn bằng **HTML, CSS, JavaScript thuần** và deploy trên **GitHub Pages**.  
-Dự án tập trung vào việc học từ vựng thông qua **bộ từ vựng** và **flashcards**, kết hợp Supabase để xác thực và lưu trữ dữ liệu.
-
----
-
-## 1. Công nghệ sử dụng
-
-### Frontend
-- HTML5
-- CSS3 (custom CSS, không dùng framework)
-- JavaScript thuần (ES6+)
-- Không dùng bundler, không dùng framework (React/Vue)
-
-### Backend as a Service
-- **Supabase**
-  - Supabase JS v1.35.7 (CDN)
-  - Supabase Auth: đăng nhập / đăng ký bằng email + password
-  - Supabase Database (PostgreSQL)
-    - Bảng `vocab_sets`
-    - Bảng `vocab_items`
-  - RLS (Row Level Security) bật, truy cập theo user
-
-### Khác
-- GitHub Pages: deploy frontend
-- VS Code: phát triển và test local (Live Server)
+## Tổng quan
+VocaNest là web học tiếng Anh chạy hoàn toàn trên **GitHub Pages**, sử dụng:
+- HTML / CSS / JavaScript thuần
+- Supabase JS **v1.35.7 (CDN)** cho Auth & Database
+- Không backend riêng, không Supabase v2
 
 ---
 
-## 2. Kiến trúc tổng quát
-
-- Mỗi trang HTML load JS riêng, không dùng JS chung cho nhiều trang (tránh trùng biến).
-- Auth flow được **centralize** bằng `authGuard.js`.
-- Không dùng Supabase v2 để tránh lỗi CDN, dùng Supabase v1 ổn định.
-
-### Các file JS chính
-- `config.js`  
-  Chứa SUPABASE_URL và SUPABASE_ANON_KEY.
-- `supabaseClient.js`  
-  Khởi tạo `supabaseClient` từ Supabase v1 CDN.
-- `auth.js`  
-  Chỉ dùng cho `auth.html` (login / register).
-- `authGuard.js`  
-  Guard duy nhất cho tất cả trang private.
-- `home.js`  
-  Trang home (hiển thị email user, logout).
-- `vocabSets.js`  
-  Trang danh sách bộ từ vựng.
-- `vocabSetDetail.js`  
-  Trang chi tiết bộ từ vựng.
+## Công nghệ sử dụng
+- Frontend: HTML5, CSS3 (custom, chia theo từng trang), JavaScript thuần
+- Auth & DB: Supabase (PostgreSQL + Auth)
+- Text-to-Speech: Web Speech API (trình duyệt)
+- Deploy: GitHub Pages
 
 ---
 
-## 3. Các chức năng đã hoàn thành
-
-### 3.1. Xác thực người dùng
-- Đăng ký tài khoản bằng email + password.
-- Đăng nhập.
-- Tự động redirect:
-  - Đã login → vào trang home.
-  - Chưa login → bị chặn ở các trang private.
-- Đăng xuất (logout) ổn định, không bị loop.
-
-### 3.2. Trang Home
-- Hiển thị email người dùng đang đăng nhập.
-- Nút đăng xuất.
-
-### 3.3. Quản lý bộ từ vựng (vocab-sets.html)
-- Tạo bộ từ vựng mới:
-  - Tên bộ
-  - Mô tả (không bắt buộc)
-  - Chọn công khai / riêng tư
-- Hiển thị:
-  - Bộ từ vựng của tôi
-  - Bộ từ vựng công khai của người khác
-- Scroll nội bộ cho từng box khi có nhiều bộ.
-- Tìm kiếm nhanh theo **tên bộ từ vựng** (client-side).
-- Không query lại database khi search.
-
-### 3.4. Chi tiết bộ từ vựng (vocab-set-detail.html)
-- Kiểm tra quyền truy cập:
-  - Owner: xem + thêm + xoá từ.
-  - Không phải owner:
-    - Nếu public: chỉ xem.
-    - Nếu private: bị chặn.
-- Hiển thị danh sách từ vựng:
-  - Từ
-  - Nghĩa
-- Thêm từ mới (owner).
-- Xoá từ (owner).
-- Tìm kiếm nhanh theo:
-  - Word
-  - Meaning
-- Search hoạt động trên data cache, không query lại Supabase.
+## Kiến trúc Auth
+- `auth.js`: xử lý đăng nhập / đăng ký
+- `authGuard.js`: guard duy nhất cho toàn bộ trang private
+- Không redirect loop
+- Không dùng guard.js cũ
 
 ---
 
-## 4. Database (Supabase)
+## Database (Supabase)
 
 ### Bảng `vocab_sets`
 - `id`
@@ -114,44 +42,123 @@ Dự án tập trung vào việc học từ vựng thông qua **bộ từ vựng
 - `meaning`
 - `created_at`
 
----
+### Bảng `profiles`
+- `id` (FK → auth.users.id)
+- `email`
+- `created_at`
 
-## 5. Những quyết định kỹ thuật quan trọng
-
-- Không dùng Supabase JS v2 vì:
-  - CDN không ổn định cho browser thuần.
-- Không dùng async guard ở nhiều nơi:
-  - Tránh redirect loop.
-- Mỗi trang chỉ load JS của chính nó:
-  - Tránh lỗi `Identifier has already been declared`.
-- Search/filter luôn dựa trên **data gốc trong JS**, không thao tác trực tiếp DOM.
+> Foreign keys:
+- `vocab_sets.user_id → profiles.id`
+- `vocab_items.user_id → profiles.id`
 
 ---
 
-## 6. Các hướng phát triển tiếp theo (chưa làm)
+## Các chức năng đã hoàn thành
 
-- Flashcards:
-  - Lật thẻ
-  - Shuffle
-  - Đánh dấu từ khó
-- Thống kê:
-  - Số lượng từ trong mỗi bộ
-  - Tiến độ học
-- Upload đề TOEIC / IELTS:
-  - Lưu file trên Google Drive
-  - Quản lý metadata bằng Google Apps Script
-- Phân trang (pagination) hoặc infinite scroll cho bộ lớn.
+### 1. Auth
+- Đăng ký / đăng nhập / đăng xuất ổn định
+- Tự động tạo `profiles` khi user đăng ký
+- Backfill `profiles` cho user cũ
+- Trang thông tin tài khoản + đổi mật khẩu
 
 ---
 
-## 7. Ghi chú khi tiếp tục phát triển
-
-Khi mở lại dự án hoặc tạo chat mới:
-- Nhớ rằng project đang dùng **Supabase v1 + CDN**.
-- Auth đã được centralize bằng `authGuard.js`.
-- Không dùng lại `guard.js` cũ.
-- Không trộn logic của `home.js` vào các trang khác.
+### 2. Trang Home
+- Hiển thị email user (link tới trang tài khoản)
+- Điều hướng tới các chức năng chính
 
 ---
 
-© VocaNest – English Vocabulary Learning Project
+### 3. Trang Vocab Sets
+
+#### Bộ của tôi
+- Tạo bộ từ vựng (public / private)
+- Hiển thị danh sách bộ của user
+- Search client-side
+- Xoá bộ (chỉ owner, xoá kèm vocab_items)
+- Hiển thị số lượng từ trong mỗi bộ (badge)
+
+#### Bộ công khai
+- Hiển thị bộ public của user khác
+- Hiển thị:
+  - Email người tạo
+  - Ngày tạo
+  - Số lượng từ
+- Search client-side
+- Nút học Flashcards
+
+#### UI / UX
+- Card tối hơn, hài hoà với background
+- Badge màu:
+  - Công khai (xanh)
+  - Riêng tư (cam)
+- Badge số lượng từ gắn sát trạng thái
+- Layout hai cột cân chiều cao
+
+---
+
+### 4. Trang Vocab Set Detail
+- Kiểm tra quyền owner / public
+- Thêm / xoá từ (owner)
+- Search word / meaning (client-side, cache)
+- Scroll nội bộ khi danh sách dài
+- Import từ vựng từ file Excel (.xlsx)
+
+---
+
+### 5. Flashcards
+- Load vocab theo `vocab_set_id`
+- Card lật (flip animation)
+- Hiển thị progress (x / total)
+- Shuffle flashcards
+- Text-to-Speech:
+  - Chọn tốc độ đọc
+  - Auto speak bật / tắt (lưu localStorage)
+- Nút nghe / đánh dấu từ nhúng trong card (icon + tooltip)
+- Layout tinh gọn, responsive
+
+---
+
+## Cấu trúc thư mục (rút gọn)
+
+```
+assets/
+  css/
+    base.css
+    home.css
+    vocab-sets.css
+    vocab-set-detail.css
+    flashcards.css
+  js/
+    config.js
+    supabaseClient.js
+    auth.js
+    authGuard.js
+    home.js
+    vocabSets.js
+    vocabSetDetail.js
+    flashcards.js
+pages/
+  home.html
+  vocab-sets.html
+  vocab-set-detail.html
+  flashcards.html
+  account.html
+  auth.html
+```
+
+---
+
+## Ghi chú kiến trúc quan trọng
+- Không JOIN trực tiếp `auth.users` từ frontend
+- Thông tin public user lấy qua bảng `profiles`
+- Query tối ưu, không N+1
+- CSS tách theo từng trang, `base.css` chỉ chứa style chung
+
+---
+
+## Hướng phát triển tiếp theo
+- Bookmark bộ công khai
+- Clone bộ công khai về bộ của tôi
+- Thống kê học tập
+- Upload đề TOEIC / IELTS

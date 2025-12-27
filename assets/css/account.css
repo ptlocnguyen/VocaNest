@@ -1,0 +1,50 @@
+/* ===== Account page ===== */
+
+/* Nhóm thông tin tài khoản (email, created_at) */
+.account-info {
+    display: grid;
+    gap: 8px;
+}
+
+/* Dòng hiển thị thông tin (read-only) */
+.account-info__item {
+    padding: 10px 12px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: rgba(0, 0, 0, 0.16);
+}
+
+/* Value text */
+.account-info__value {
+    font-size: 14px;
+    color: var(--text);
+    word-break: break-all;
+}
+
+/* Separator giữa info và password */
+.account-divider {
+    margin: 16px 0;
+    height: 1px;
+    background: var(--border);
+    border: none;
+}
+
+/* Hint text dưới input password */
+.account-hint {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: -6px;
+}
+
+.account-field {
+    display: grid;
+    gap: 8px;
+}
+
+.account-hint {
+    margin-top: 4px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.4;
+}

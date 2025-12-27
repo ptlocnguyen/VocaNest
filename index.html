@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VocaNest</title>
   <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/index.css" />
 </head>
 <body>
   <div class="center">
@@ -15,15 +16,14 @@
   </div>
 
   <script src="./assets/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
   <script src="./assets/js/supabaseClient.js"></script>
 
   <script>
     (async () => {
       try {
-        const { data } = await window.supabase.auth.getSession();
-        const hasSession = !!data?.session;
-
+        const session = window.supabaseClient.auth.session();
+        const hasSession = !!session?.user;
         window.location.href = hasSession ? "./pages/home.html" : "./pages/auth.html";
       } catch (err) {
         console.error(err);
