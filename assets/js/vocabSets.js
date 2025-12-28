@@ -244,27 +244,56 @@ createBtn.addEventListener("click", async () => {
 
   createBtn.disabled = true;
 
-  const payload = {
-    user_id: currentUser.id,
-    title,
-    description: descInput.value.trim() || null,
-    is_public: publicCheckbox.checked
-  };
+  try {
+    // ===== ĐẢM BẢO PROFILE TỒN TẠI =====
+    const { data: profile, error: profileErr } = await supabaseClient
+      .from("profiles")
+      .select("id")
+      .eq("id", currentUser.id)
+      .maybeSingle();
 
-  const { error } = await supabaseClient
-    .from("vocab_sets")
-    .insert(payload);
+    if (profileErr && profileErr.code !== "PGRST116") {
+      throw profileErr;
+    }
 
-  createBtn.disabled = false;
+    if (!profile) {
+      const { error: insertProfileErr } = await supabaseClient
+        .from("profiles")
+        .insert({
+          id: currentUser.id,
+          email: currentUser.email
+        });
 
-  if (error) {
-    console.error(error);
+      if (insertProfileErr) {
+        throw insertProfileErr;
+      }
+    }
+
+    // ===== TẠO VOCAB SET =====
+    const payload = {
+      user_id: currentUser.id,
+      title,
+      description: descInput.value.trim() || null,
+      is_public: publicCheckbox.checked
+    };
+
+    const { error } = await supabaseClient
+      .from("vocab_sets")
+      .insert(payload);
+
+    if (error) {
+      throw error;
+    }
+
+    closeModal();
+    loadLists();
+
+  } catch (err) {
+    console.error(err);
     alert("Tạo bộ từ vựng thất bại");
-    return;
+  } finally {
+    createBtn.disabled = false;
   }
-
-  closeModal();
-  loadLists();
 });
 
 // ===== SEARCH =====

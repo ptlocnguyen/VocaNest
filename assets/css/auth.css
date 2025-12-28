@@ -127,3 +127,30 @@
   gap: 8px;
   margin-top: 6px;
 }
+
+/* ===== Auth mode visual feedback ===== */
+
+/* Register mode */
+.auth--register {
+  border-color: rgba(98, 211, 154, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(98, 211, 154, 0.35),
+    0 20px 60px rgba(0,0,0,0.45);
+}
+
+/* Badge đổi màu khi register */
+.auth--register .badge {
+  border-color: rgba(98, 211, 154, 0.55);
+  color: rgba(98, 211, 154, 0.95);
+}
+
+.card {
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.2s ease;
+}
+
+.auth--register {
+  transform: translateY(-2px);
+}

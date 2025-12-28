@@ -11,6 +11,8 @@ const toggleText = document.getElementById("toggleText");
 const modeBadge = document.getElementById("modeBadge");
 const alertBox = document.getElementById("alertBox");
 
+const card = document.querySelector(".card");
+
 let isLoginMode = true;
 
 function showAlert(type, message) {
@@ -25,6 +27,8 @@ function hideAlert() {
 }
 
 function setMode(login) {
+  const titleEl = document.getElementById("authTitle");
+  const descEl = document.getElementById("authDesc");
   isLoginMode = login;
   hideAlert();
 
@@ -33,11 +37,19 @@ function setMode(login) {
     toggleText.textContent = "Chưa có tài khoản?";
     toggleMode.textContent = "Đăng ký";
     modeBadge.textContent = "Login";
+    card.classList.remove("auth--register");
+    titleEl.textContent = "Đăng nhập";
+    descEl.textContent =
+      "Truy cập tài khoản để quản lý bộ từ vựng và flashcards.";
   } else {
     submitBtn.textContent = "Tạo tài khoản";
     toggleText.textContent = "Đã có tài khoản?";
     toggleMode.textContent = "Đăng nhập";
     modeBadge.textContent = "Register";
+    card.classList.add("auth--register");
+    titleEl.textContent = "Tạo tài khoản";
+    descEl.textContent =
+      "Tạo tài khoản mới để bắt đầu học và lưu từ vựng.";
   }
 }
 

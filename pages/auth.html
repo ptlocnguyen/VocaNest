@@ -14,8 +14,10 @@
         <div class="card card--narrow">
             <div class="auth-header">
                 <div>
-                    <h1>VocaNest</h1>
-                    <p>Đăng nhập để quản lý bộ từ vựng và ôn tập flashcards.</p>
+                    <h1 id="authTitle">Đăng nhập</h1>
+                    <p id="authDesc">
+                        Truy cập tài khoản để quản lý bộ từ vựng và flashcards.
+                    </p>
                 </div>
                 <span class="badge" id="modeBadge">Login</span>
             </div>
@@ -27,6 +29,10 @@
                 <label class="label" for="passwordInput">Mật khẩu</label>
                 <input id="passwordInput" class="input" type="password" placeholder="Tối thiểu 6 ký tự"
                     autocomplete="current-password" />
+
+                <p class="muted" style="text-align:right; margin-top:4px;">
+                    <a href="./forgot-password.html">Quên mật khẩu?</a>
+                </p>
 
                 <button id="submitBtn" class="btn primary block">Đăng nhập</button>
 
