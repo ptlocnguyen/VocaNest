@@ -1,0 +1,129 @@
+/* =========================
+   UI COMPONENTS (REUSABLE)
+========================= */
+
+/* ===== Card ===== */
+.card {
+  background: linear-gradient(180deg, var(--card), var(--card2));
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 20px;
+  backdrop-filter: blur(10px);
+}
+
+.card--narrow {
+  width: 100%;
+  max-width: 520px;
+}
+
+/* ===== Button ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 14px;
+  min-height: 40px;
+
+  border-radius: 12px;
+  border: 1px solid rgba(255,255,255,0.18);
+  background: rgba(255,255,255,0.10);
+  color: var(--text);
+
+  font-weight: 600;
+  cursor: pointer;
+  user-select: none;
+  text-decoration: none;
+}
+
+.btn:hover {
+  background: rgba(255,255,255,0.14);
+  text-decoration: none;
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.btn.primary {
+  border-color: rgba(106,169,255,0.55);
+  background: rgba(106,169,255,0.18);
+}
+
+.btn.primary:hover {
+  background: rgba(106,169,255,0.24);
+}
+
+.btn.block {
+  width: 100%;
+}
+
+/* Danger */
+.btn-danger {
+  color: #ffb3b3;
+  border-color: rgba(255,106,106,0.55);
+  background: rgba(255,106,106,0.18);
+}
+
+.btn-danger:hover {
+  background: rgba(255,106,106,0.28);
+  border-color: rgba(255,106,106,0.75);
+}
+
+/* ===== Input ===== */
+.input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  outline: none;
+  background: rgba(0,0,0,0.18);
+  color: var(--text);
+}
+
+.input:focus {
+  border-color: rgba(106,169,255,0.65);
+  box-shadow: 0 0 0 3px rgba(106,169,255,0.12);
+}
+
+/* ===== Label ===== */
+.label {
+  display: inline-block;
+  font-size: 13px;
+  margin: 6px 0;
+  color: rgba(255,255,255,0.78);
+}
+
+/* ===== Badge ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.16);
+  font-size: 13px;
+  color: var(--muted);
+}
+
+/* ===== Alert ===== */
+.alert {
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.18);
+  color: var(--muted);
+}
+
+.alert.ok {
+  border-color: rgba(98,211,154,0.45);
+  color: rgba(98,211,154,0.95);
+}
+
+.alert.err {
+  border-color: rgba(255,106,106,0.45);
+  color: rgba(255,106,106,0.95);
+}

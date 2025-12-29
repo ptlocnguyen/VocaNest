@@ -5,23 +5,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>VocaNest - Chi tiết bộ từ</title>
+
     <link rel="stylesheet" href="../assets/css/base.css" />
+    <link rel="stylesheet" href="../assets/css/layout.css" />
+    <link rel="stylesheet" href="../assets/css/ui.css" />
     <link rel="stylesheet" href="../assets/css/vocab-set-detail.css" />
 </head>
 
 <body>
+    <!-- Header -->
     <header class="app-header">
         <div class="app-header__left">
             <a href="./vocab-sets.html" class="btn">Quay lại</a>
-
-            <a id="flashcardsLink" class="btn primary" href="#">
-                📚 Flashcards
-            </a>
-
-            <div class="title-block">
-                <strong id="setTitle" class="page-title"></strong>
-                <span id="setMeta" class="muted"></span>
-            </div>
         </div>
 
         <div class="user-area">
@@ -30,11 +25,23 @@
     </header>
 
     <main class="main">
+
+        <!-- ===== Set info card ===== -->
+        <section class="card set-info-card">
+            <h1 id="setTitle" class="set-info-title"></h1>
+            <p id="setMeta" class="set-info-meta"></p>
+        </section>
+
+        <!-- ===== Main content ===== -->
         <div class="two-cols two-cols--detail">
+
+            <!-- Thêm từ (owner only) -->
             <section id="addSection" class="card">
                 <div class="section-head">
                     <h3>Thêm từ vựng</h3>
-                    <p class="muted" id="editHint">Nhập từ và nghĩa, sau đó bấm Thêm</p>
+                    <p class="muted" id="editHint">
+                        Nhập từ và nghĩa, sau đó bấm Thêm
+                    </p>
                 </div>
 
                 <div class="form-grid">
@@ -50,14 +57,15 @@
                         </div>
                     </div>
 
-                    <button id="addBtn" class="btn primary" type="button">Thêm</button>
+                    <button id="addBtn" class="btn primary" type="button">
+                        Thêm
+                    </button>
 
                     <div id="addAlert" class="alert" style="display:none;"></div>
                 </div>
 
                 <div class="import-box">
                     <label class="label">Import từ Excel</label>
-
                     <input id="excelInput" type="file" class="input" accept=".xlsx,.xls" />
 
                     <p class="muted">
@@ -68,12 +76,18 @@
                 </div>
             </section>
 
-            <section class="card">
-                <div class="section-head">
+            <!-- ===== Danh sách từ + Flashcards ===== -->
+            <section class="card vocab-list-card">
+                <div class="section-head section-head--between">
                     <h3>Danh sách từ</h3>
-                    <div class="row row--tight">
-                        <input id="searchInput" class="input" placeholder="Tìm nhanh (word hoặc meaning)..." />
-                    </div>
+
+                    <a id="flashcardsLink" class="btn primary btn-flashcards" href="#">
+                        📚 Học Flashcards
+                    </a>
+                </div>
+
+                <div class="row row--tight">
+                    <input id="searchInput" class="input" placeholder="Tìm nhanh (word hoặc meaning)..." />
                 </div>
 
                 <div id="vocabItems" class="list"></div>
@@ -81,13 +95,12 @@
         </div>
     </main>
 
+    <!-- JS giữ nguyên -->
     <script src="../assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
     <script src="../assets/js/supabaseClient.js"></script>
-
     <script src="../assets/js/authGuard.js"></script>
     <script src="../assets/js/vocabSetDetail.js"></script>
-
     <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 
     <script>

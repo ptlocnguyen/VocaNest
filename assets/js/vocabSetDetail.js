@@ -65,6 +65,10 @@ let allItems = [];
 
         isOwner = data.user_id === currentUser.id;
 
+        if (!isOwner) {
+            document.body.classList.add("viewer-mode");
+        }
+
         if (!isOwner && !data.is_public) {
             alert("Bộ này là riêng tư");
             window.location.replace("./vocab-sets.html");

@@ -1,23 +1,7 @@
-.main{
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 28px 20px 56px;
-}
-
 .muted{
   color: var(--muted);
   font-size: 14px;
   margin: 0;
-}
-
-/* Card */
-.card{
-  background: linear-gradient(180deg, var(--card), var(--card2));
-  border: 1px solid var(--border);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-  padding: 20px;
-  backdrop-filter: blur(10px);
 }
 
 /* Layout helpers */
@@ -47,114 +31,7 @@
   display: inline-block;
   font-size: 13px;
   color: rgba(255,255,255,0.78);
-  margin: 6px 0 6px;
-}
-
-.input{
-  width: 100%;
-  padding: 12px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  outline: none;
-  background: rgba(0,0,0,0.18);
-  color: var(--text);
-}
-
-.input:focus{
-  border-color: rgba(106,169,255,0.65);
-  box-shadow: 0 0 0 3px rgba(106,169,255,0.12);
-}
-
-/* Buttons */
-.btn{
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 10px 14px;
-  border-radius: 12px;
-  border: 1px solid rgba(255,255,255,0.18);
-  background: rgba(255,255,255,0.10);
-  color: var(--text);
-
-  cursor: pointer;
-  font-weight: 600;
-  user-select: none;
-  text-decoration: none;
-  min-height: 40px;
-}
-
-.btn:hover{ background: rgba(255,255,255,0.14); text-decoration: none; }
-.btn:disabled{ opacity: 0.55; cursor: not-allowed; }
-
-.btn.primary{
-  border-color: rgba(106,169,255,0.55);
-  background: rgba(106,169,255,0.18);
-}
-
-.btn.primary:hover{ background: rgba(106,169,255,0.24); }
-
-.btn-danger{
-  border-color: rgba(255,106,106,0.40);
-  background: rgba(255,106,106,0.12);
-}
-
-.btn-danger:hover{
-  background: rgba(255,106,106,0.18);
-}
-
-/* Badge + Alert */
-.badge{
-  display: inline-flex;
-  align-items: center;
-  padding: 6px 10px;
-  border-radius: 999px;
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.16);
-  color: var(--muted);
-  font-size: 13px;
-}
-
-.alert{
-  margin-top: 12px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  background: rgba(0,0,0,0.18);
-  color: var(--muted);
-}
-
-.alert.ok{ border-color: rgba(98,211,154,0.45); color: rgba(98,211,154,0.95); }
-.alert.err{ border-color: rgba(255,106,106,0.45); color: rgba(255,106,106,0.95); }
-
-/* Header */
-.app-header{
-  position: sticky;
-  top: 0;
-  z-index: 10;
-
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-
-  padding: 12px 18px;
-  border-bottom: 1px solid var(--border);
-  background: rgba(0,0,0,0.20);
-  backdrop-filter: blur(10px);
-}
-
-.app-header__left{
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: 0;
-}
-
-.user-area{
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  margin: 6px 0;
 }
 
 /* Sections */
@@ -169,83 +46,116 @@
   gap: 12px;
 }
 
-/* Detail list */
-.title-block{
-  display: grid;
-  gap: 2px;
-  min-width: 0;
-}
-
-.page-title{
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
+/* List */
 .list{
   display: grid;
   gap: 10px;
   margin-top: 10px;
 }
 
-/* ================================
-   SCROLL vocab list (PHẦN SỬA)
-================================ */
+/* Scroll vocab list */
 #vocabItems{
-  max-height: min(60vh, 480px); /* giới hạn chiều cao */
+  max-height: min(60vh, 480px);
   overflow-y: auto;
-  padding-right: 6px;           /* tránh che nội dung bởi scrollbar */
+  padding-right: 6px;
 }
 
-/* Scrollbar đẹp hơn (Chrome, Edge, Safari) */
-#vocabItems::-webkit-scrollbar{
-  width: 6px;
-}
-
-#vocabItems::-webkit-scrollbar-thumb{
-  background: rgba(255,255,255,0.28);
-  border-radius: 4px;
-}
-
-#vocabItems::-webkit-scrollbar-track{
-  background: transparent;
-}
-
+/* vocab row */
 .vocab-row{
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
   gap: 12px;
-
-  padding: 12px 12px;
+  padding: 12px;
   border-radius: 14px;
   border: 1px solid var(--border);
   background: rgba(0,0,0,0.16);
 }
 
-.vocab-row__main{
-  min-width: 0;
-}
-
-.vocab-word{
-  font-weight: 700;
-  margin-bottom: 2px;
-}
-
-.vocab-meaning{
-  color: var(--muted);
-  font-size: 14px;
-  line-height: 1.45;
-}
-
-.vocab-row__actions{
-  display: flex;
-  gap: 8px;
-  flex-shrink: 0;
-}
-
+/* Import */
 .import-box{
   margin-top: 14px;
   display: grid;
   gap: 6px;
+}
+
+/* ===== Set info card ===== */
+.set-info-card{
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.set-info-title{
+  font-size: clamp(24px, 3vw, 32px);
+  font-weight: 800;
+  margin-bottom: 6px;
+}
+
+.set-info-meta{
+  font-size: 14px;
+  color: var(--muted);
+}
+
+/* ===== Flashcards inline (inside card) ===== */
+.flashcard-inline{
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: center;
+}
+
+.btn-flashcards{
+  min-width: 220px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Section head: title + action */
+.section-head--between{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+/* Flashcards button in header */
+.btn-flashcards{
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Mobile: đẩy nút xuống dưới title */
+@media (max-width: 520px){
+  .section-head--between{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .btn-flashcards{
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* ===== Viewer mode (xem bộ công khai) ===== */
+.viewer-mode .two-cols--detail{
+  grid-template-columns: 1fr;
+  justify-items: center;
+}
+
+/* Căn giữa box danh sách từ */
+.viewer-mode .vocab-list-card{
+  width: 100%;
+  max-width: 760px;
+}
+
+/* Chuẩn hoá chiều ngang cho các box chính */
+.viewer-mode .set-info-card,
+.viewer-mode .vocab-list-card{
+  width: 100%;
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
 }

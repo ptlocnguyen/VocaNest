@@ -48,20 +48,3 @@
     color: var(--muted);
     line-height: 1.4;
 }
-
-/* ===== Logout button (Danger) ===== */
-.btn-danger {
-    color: #ffd1d1;
-    border-color: rgba(255, 106, 106, 0.6);
-    background: rgba(255, 106, 106, 0.22);
-}
-
-.btn-danger:hover {
-    background: rgba(255, 106, 106, 0.32);
-    border-color: rgba(255, 106, 106, 0.8);
-}
-
-.btn-danger:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
