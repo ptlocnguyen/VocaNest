@@ -58,4 +58,19 @@
     passwordInput.value = "";
     showAlert("ok", "Đổi mật khẩu thành công");
   });
+
+  // Logout
+  const logoutBtn = document.getElementById("logoutBtn");
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", async () => {
+      const ok = confirm("Bạn có chắc chắn muốn đăng xuất?");
+      if (!ok) return;
+
+      logoutBtn.disabled = true;
+
+      await supabaseClient.auth.signOut();
+      window.location.replace("./auth.html");
+    });
+  }
 })();

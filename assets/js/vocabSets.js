@@ -3,7 +3,6 @@
 // Supabase v1 + authGuard
 
 const userEmailEl = document.getElementById("userEmail");
-const logoutBtn = document.getElementById("logoutBtn");
 
 // Guard
 const currentUser = requireAuth();
@@ -33,13 +32,6 @@ const createBtn = document.getElementById("createBtn");
 
 const mySearchInput = document.getElementById("mySearchInput");
 const publicSearchInput = document.getElementById("publicSearchInput");
-
-// ===== LOGOUT =====
-logoutBtn.addEventListener("click", async () => {
-  logoutBtn.disabled = true;
-  await supabaseClient.auth.signOut();
-  window.location.replace("./auth.html");
-});
 
 // ===== MODAL =====
 function openModal() {

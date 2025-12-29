@@ -23,16 +23,8 @@ let allItems = [];
 
     // ===== HEADER =====
     const userEmailEl = document.getElementById("userEmail");
-    const logoutBtn = document.getElementById("logoutBtn");
 
     if (userEmailEl) userEmailEl.textContent = currentUser.email;
-
-    if (logoutBtn) {
-        logoutBtn.addEventListener("click", async () => {
-            await supabaseClient.auth.signOut();
-            window.location.replace("./auth.html");
-        });
-    }
 
     // ===== SET INFO =====
     const setTitleEl = document.getElementById("setTitle");

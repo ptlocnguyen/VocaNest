@@ -25,16 +25,6 @@
     });
   }
 
-  // Logout
-  const logoutBtn = document.getElementById("logoutBtn");
-  if (logoutBtn) {
-    logoutBtn.addEventListener("click", async () => {
-      logoutBtn.disabled = true;
-      await supabaseClient.auth.signOut();
-      window.location.replace("./auth.html");
-    });
-  }
-
   // ===== Read setId from URL =====
   const params = new URLSearchParams(window.location.search);
   const setId = params.get("set");
