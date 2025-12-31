@@ -79,9 +79,6 @@
     flex-direction: column;
     align-items: stretch;
   }
-  .user-area .badge{
-    display: none;
-  }
 }
 
 .section-head{

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="../assets/css/layout.css" />
     <link rel="stylesheet" href="../assets/css/ui.css" />
     <link rel="stylesheet" href="../assets/css/home.css" />
+    <link rel="stylesheet" href="../assets/css/footer.css">
 </head>
 
 <body>
@@ -24,7 +25,10 @@
         </div>
 
         <div class="user-area">
-            <a id="userEmail" class="badge" title="Email đăng nhập" href="./account.html"></a>
+            <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
+                <span class="user-account__icon">👤</span>
+                <span id="userEmail" class="user-account__text"></span>
+            </a>
         </div>
     </header>
 
@@ -60,12 +64,46 @@
         </section>
     </main>
 
+    <footer class="app-footer">
+        <div class="footer-inner">
+
+            <div class="footer-col">
+                <h4>VocaNest</h4>
+                <p>
+                    Nền tảng học từ vựng & flashcards giúp bạn học tiếng Anh hiệu quả mỗi ngày.
+                </p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Động lực hôm nay</h4>
+
+                <p id="quoteEn" class="footer-quote-en"></p>
+                <p id="quoteVi" class="footer-quote-vi"></p>
+            </div>
+
+            <div class="footer-col">
+                <h4>Thông tin</h4>
+                <ul class="footer-links">
+                    <li><a href="./home.html">Trang chủ</a></li>
+                    <li><a href="./vocab-sets.html">Bộ từ vựng</a></li>
+                    <li><a href="./account.html">Tài khoản</a></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+            © 2025 VocaNest · Learn English every day
+        </div>
+    </footer>
+
     <script src="../assets/js/config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
     <script src="../assets/js/supabaseClient.js"></script>
 
     <script src="../assets/js/authGuard.js"></script>
     <script src="../assets/js/home.js"></script>
+    <script src="../assets/js/footer.js"></script>
 </body>
 
 </html>

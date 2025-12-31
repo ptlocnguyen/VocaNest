@@ -27,9 +27,3 @@
   align-items: center;
   gap: 10px;
 }
-
-@media (max-width: 768px){
-  .user-area .badge{
-    display: none;
-  }
-}

@@ -1,0 +1,102 @@
+/* =========================
+   FOOTER – ALIGN FIX
+========================= */
+
+.app-footer{
+  margin-top: 48px;
+  border-top: 1px solid var(--border);
+  background: rgba(0,0,0,0.25);
+}
+
+/* Trung tâm hoá toàn bộ footer */
+.footer-inner{
+  max-width: 1000px;              /* thu hẹp nhẹ để đỡ loãng */
+  margin: 0 auto;
+  padding: 32px 20px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+
+  text-align: center;             /* QUAN TRỌNG */
+}
+
+/* Mỗi cột */
+.footer-col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;            /* cân trục dọc */
+}
+
+/* Title */
+.footer-col h4{
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 700;
+}
+
+/* Nội dung mô tả */
+.footer-col p{
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 360px;               /* tránh dòng quá dài */
+}
+
+/* ===== Quote ===== */
+.footer-quote-en{
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.footer-quote-vi{
+  font-size: 13px;
+  color: var(--muted);
+  font-style: italic;
+}
+
+/* ===== Links ===== */
+.footer-links{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;            /* QUAN TRỌNG */
+}
+
+.footer-links a{
+  font-size: 14px;
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.footer-links a:hover{
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ===== Bottom ===== */
+.footer-bottom{
+  text-align: center;
+  padding: 14px 10px;
+  font-size: 13px;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+}
+
+/* ===== Mobile tinh chỉnh ===== */
+@media (max-width: 768px){
+  .footer-inner{
+    padding: 24px 16px;
+    gap: 22px;
+  }
+
+  .footer-col p{
+    max-width: 100%;
+  }
+}

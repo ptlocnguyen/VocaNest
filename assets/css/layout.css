@@ -3,9 +3,17 @@
 ========================= */
 
 .main {
+  flex: 1;
   max-width: 1200px;
   margin: 0 auto;
   padding: 28px 20px 56px;
+}
+
+.center {
+  flex: 1;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
 
 /* ===== Header ===== */
@@ -104,4 +112,70 @@
   display: grid;
   place-items: center;
   padding: 24px;
+}
+
+/* =========================
+   USER AREA RESPONSIVE
+========================= */
+
+/* Mobile: không ẩn user, chỉ rút gọn */
+@media (max-width: 768px){
+  .user-area .badge{
+    max-width: 120px;
+    padding: 6px 10px;
+    font-size: 12px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+/* =========================
+   USER ACCOUNT (HEADER)
+========================= */
+
+.user-account{
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(0,0,0,0.16);
+
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+}
+
+.user-account:hover{
+  background: rgba(255,255,255,0.08);
+  text-decoration: none;
+}
+
+/* Icon luôn hiển thị */
+.user-account__icon{
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Text (email) */
+.user-account__text{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 180px;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 768px){
+  .user-account__text{
+    display: none;
+  }
+
+  .user-account{
+    padding: 8px;
+  }
 }
