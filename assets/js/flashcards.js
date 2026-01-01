@@ -141,15 +141,17 @@
   }
 
   function renderCard() {
+    // Reset card về mặt trước
+    resetCardFace();
+
     const card = cards[currentIndex];
     if (!card) return;
 
+    // Render CHỈ TỪ
     wordEl.textContent = card.word;
-    meaningEl.textContent = card.meaning;
 
-    // Reset flip
-    isFlipped = false;
-    flashcardEl.classList.remove("is-flipped");
+    // KHÔNG render meaning ở đây
+    meaningEl.textContent = "";
 
     // Nav state
     if (prevBtn) prevBtn.disabled = currentIndex <= 0;
@@ -169,16 +171,33 @@
     }
   }
 
+  function resetCardFace() {
+    if (isFlipped) {
+      flashcardEl.classList.remove("is-flipped");
+      isFlipped = false;
+    }
+  }
+
   // ===== Events =====
 
   // Flip card
-  if (flashcardEl) {
-    flashcardEl.addEventListener("click", () => {
-      if (!cards.length) return;
-      isFlipped = !isFlipped;
-      flashcardEl.classList.toggle("is-flipped", isFlipped);
-    });
-  }
+  flashcardEl.addEventListener("click", () => {
+    if (!cards.length) return;
+
+    isFlipped = !isFlipped;
+    flashcardEl.classList.toggle("is-flipped", isFlipped);
+
+    // Chỉ khi lật sang mặt sau mới render meaning
+    if (isFlipped) {
+      const card = cards[currentIndex];
+      if (card) {
+        meaningEl.textContent = card.meaning;
+      }
+    } else {
+      // Quay về mặt trước thì ẩn nghĩa
+      meaningEl.textContent = "";
+    }
+  });
 
   // Navigation
   if (prevBtn) {
