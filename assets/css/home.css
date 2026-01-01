@@ -1,29 +1,120 @@
-.main{
+/* ================================
+   HOME – DESKTOP FIT / MOBILE SCROLL
+================================ */
+
+/* ===== DESKTOP DEFAULT ===== */
+.home-page{
+  height: 100vh;
+  overflow: hidden; /* desktop: không scroll */
+}
+
+.home-page body{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== MAIN ===== */
+.home-page .main{
+  flex: 1;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 28px 20px 56px;
+
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  overflow: hidden;
 }
 
-.muted{
-  color: var(--muted);
-  font-size: 14px;
-  margin: 0;
-}
-
-/* Grid */
+/* ===== Grid ===== */
 .grid{
-  margin-top: 14px;
+  flex: 1;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 16px;
 }
 
-.grid--cards .card{
-  height: 100%;
+/* ================================
+   FOOTER – COMPACT (HOME ONLY)
+================================ */
+.home-page .app-footer{
+  margin-top: 0;
 }
 
-.user-area{
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.home-page .footer-inner{
+  padding: 18px 16px;
+  gap: 18px;
+}
+
+.home-page .footer-col h4{
+  font-size: 14px;
+  margin-bottom: 6px;
+}
+
+.home-page .footer-col p{
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.home-page .footer-quote-en{
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.home-page .footer-quote-vi{
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.home-page .footer-links{
+  gap: 4px;
+}
+
+.home-page .footer-links a{
+  font-size: 13px;
+}
+
+.home-page .footer-bottom{
+  padding: 10px 8px;
+  font-size: 12px;
+}
+
+/* ================================
+   MOBILE – ALLOW SCROLL
+================================ */
+@media (max-width: 520px){
+
+  /* Quan trọng: mở lại scroll */
+  .home-page{
+    height: auto;
+    overflow: auto;
+  }
+
+  .home-page body{
+    height: auto;
+  }
+
+  .home-page .main{
+    padding: 14px;
+    gap: 12px;
+    overflow: visible;
+  }
+
+  .grid{
+    grid-template-columns: 1fr;
+  }
+
+  /* Ẩn footer nội dung, giữ footer-bottom */
+  .home-page .footer-inner{
+    display: none;
+  }
+
+  .home-page .footer-bottom{
+    padding: 12px 10px;
+    font-size: 12px;
+    text-align: center;
+  }
 }

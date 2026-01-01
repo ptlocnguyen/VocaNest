@@ -97,7 +97,6 @@
   position: fixed;
   inset: 0;
   z-index: 50;
-
   background: rgba(0,0,0,0.60);
   display: flex;
   justify-content: center;
@@ -192,7 +191,6 @@
   gap: 10px;
 }
 
-/* Tiêu đề + mô tả gọn hơn */
 .vocab-card h3{
   margin: 0;
 }
@@ -202,16 +200,15 @@
   color: var(--muted);
 }
 
-/* Hàng meta: badge + creator cùng dòng */
+/* Meta */
 .set-meta{
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  min-height: 28px; /* giúp 2 bên cân chiều cao hơn */
+  min-height: 28px;
 }
 
-/* Dòng tạo bởi: nhỏ, gọn, ellipsis */
 .set-meta__creator{
   color: var(--muted);
   font-size: 13px;
@@ -222,7 +219,7 @@
   text-align: right;
 }
 
-/* Nút actions gọn & đều */
+/* Actions */
 .vocab-card .row--actions{
   margin-top: 2px;
   display: flex;
@@ -231,7 +228,7 @@
 }
 
 .vocab-card .row--actions .btn{
-  min-width: 140px; /* giúp các nút nhìn đều hơn */
+  min-width: 140px;
 }
 
 @media (max-width: 520px){
@@ -249,23 +246,20 @@
   }
 }
 
-
-/* ===== Visibility badges ===== */
-/* Công khai */
+/* Visibility badges */
 .badge--public{
   color: #9ee7c1;
   border-color: rgba(98, 211, 154, 0.45);
   background: rgba(98, 211, 154, 0.18);
 }
 
-/* Riêng tư */
 .badge--private{
   color: #ffd08a;
   border-color: rgba(255, 180, 90, 0.45);
   background: rgba(255, 180, 90, 0.18);
 }
 
-/* ===== Danger button ===== */
+/* Danger button */
 .btn-danger{
   color: #ffb3b3;
   border-color: rgba(255, 106, 106, 0.55);
@@ -282,55 +276,25 @@
   cursor: not-allowed;
 }
 
-/* ===== Vocab card background refinement ===== */
-.vocab-card{
-  background: linear-gradient(
-    180deg,
-    rgba(255,255,255,0.06),
-    rgba(0,0,0,0.22)
-  );
-  border: 1px solid rgba(255,255,255,0.18);
-  box-shadow:
-    0 10px 24px rgba(0,0,0,0.35),
-    inset 0 1px 0 rgba(255,255,255,0.06);
-
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* ===== Footer: giữ lại duy nhất dòng © ===== */
+.app-footer .footer-inner{
+  display: none;
 }
 
-/* Hover nhẹ cho cảm giác nổi */
-.vocab-card:hover{
-  transform: translateY(-2px);
-  box-shadow:
-    0 16px 36px rgba(0,0,0,0.45),
-    inset 0 1px 0 rgba(255,255,255,0.08);
-}
-
-/* Badge số lượng từ */
-.badge--count{
-  color: #cfdcff;
-  border-color: rgba(140,170,255,0.45);
-  background: rgba(140,170,255,0.16);
+.app-footer .footer-bottom{
+  padding: 10px 0;
   font-size: 12px;
-  font-weight: 600;
+  color: var(--muted);
+  text-align: center;
+  border-top: 1px solid rgba(255,255,255,0.08);
 }
 
-/* Nhóm badge bên trái */
-.set-meta__left{
-  display: flex;
-  gap: 6px;
-  align-items: center;
-}
-
-/* =================================================
-   iOS Safari / WebView fix (card bị trắng mờ)
-================================================= */
+/* iOS Safari fix */
 @supports (-webkit-touch-callout: none) {
-
   .vocab-card,
   .card{
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
-
     background: linear-gradient(
       180deg,
       rgba(255,255,255,0.10),
