@@ -649,6 +649,7 @@ const levelMeta = {
   function createTopic(topic, index) {
     const details = document.createElement("details");
     details.className = "grammar-item";
+    details.id = topic.id;
     details.dataset.topicId = topic.id;
 
     const summary = document.createElement("summary");
@@ -851,4 +852,13 @@ const levelMeta = {
 
   updateProgress();
   render();
+
+  const requestedTopic = window.location.hash.slice(1);
+  if (requestedTopic) {
+    const topicElement = document.getElementById(requestedTopic);
+    if (topicElement) {
+      topicElement.open = true;
+      requestAnimationFrame(() => topicElement.scrollIntoView({ behavior: "smooth", block: "start" }));
+    }
+  }
 })();

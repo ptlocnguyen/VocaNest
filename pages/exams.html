@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#35c6a1" />
+  <meta name="description" content="Luyện TOEIC Reading Part 5 với câu hỏi tự biên soạn, giải thích chi tiết và thống kê điểm yếu." />
+  <title>VocaNest - Luyện TOEIC Part 5</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/exams.css" />
+</head>
+<body class="exam-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link" href="./vocab-sets.html">Bộ từ vựng</a>
+        <a class="nav__link" href="./grammar.html">Ngữ pháp</a>
+        <a class="nav__link is-active" href="./exams.html">Luyện đề</a>
+      </nav>
+    </div>
+    <div class="user-area">
+      <a class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="exam-main">
+    <section id="setupView" class="exam-setup">
+      <div class="exam-intro">
+        <div>
+          <span class="exam-eyebrow">TOEIC Reading · Part 5</span>
+          <h1>Incomplete Sentences</h1>
+          <p>Chọn từ hoặc cụm từ phù hợp nhất để hoàn thành câu. Bộ câu hỏi được VocaNest tự biên soạn theo ngữ cảnh công việc thường gặp trong TOEIC.</p>
+        </div>
+        <div class="exam-format" aria-label="Cấu trúc Part 5">
+          <span><strong>30</strong> câu</span>
+          <span><strong>4</strong> lựa chọn</span>
+          <span><strong>12</strong> phút gợi ý</span>
+        </div>
+      </div>
+
+      <div class="setup-layout">
+        <section class="setup-panel">
+          <div class="setup-panel__heading">
+            <span class="setup-panel__icon"><i data-lucide="sliders-horizontal"></i></span>
+            <div>
+              <h2>Thiết lập phiên học</h2>
+              <p>Chọn cách luyện phù hợp với mục tiêu hiện tại.</p>
+            </div>
+          </div>
+
+          <fieldset class="mode-options">
+            <legend>Chế độ</legend>
+            <label class="mode-card">
+              <input type="radio" name="examMode" value="practice" checked />
+              <span class="mode-card__icon"><i data-lucide="graduation-cap"></i></span>
+              <span>
+                <strong>Luyện tập</strong>
+                <small>Xem đáp án và giải thích ngay sau mỗi câu.</small>
+              </span>
+            </label>
+            <label class="mode-card">
+              <input type="radio" name="examMode" value="simulation" />
+              <span class="mode-card__icon"><i data-lucide="timer"></i></span>
+              <span>
+                <strong>Mô phỏng</strong>
+                <small>Chỉ xem kết quả sau khi nộp bài, có giới hạn thời gian.</small>
+              </span>
+            </label>
+          </fieldset>
+
+          <div class="setup-fields">
+            <label>
+              <span>Số câu</span>
+              <select id="questionCount" class="exam-select">
+                <option value="10">10 câu · Khởi động</option>
+                <option value="20">20 câu · Luyện sâu</option>
+                <option value="30" selected>30 câu · Đúng format Part 5</option>
+              </select>
+            </label>
+            <label>
+              <span>Chủ điểm</span>
+              <select id="topicFilter" class="exam-select">
+                <option value="all">Tất cả chủ điểm</option>
+              </select>
+            </label>
+          </div>
+
+          <button id="startExamBtn" class="btn primary start-exam-btn" type="button">
+            <i data-lucide="play"></i>
+            Bắt đầu luyện
+          </button>
+        </section>
+
+        <aside class="progress-overview">
+          <div class="progress-overview__heading">
+            <div>
+              <span class="exam-eyebrow">Tiến độ trên thiết bị này</span>
+              <h2>Học từ lỗi sai</h2>
+            </div>
+            <i data-lucide="chart-no-axes-combined"></i>
+          </div>
+          <div class="overview-metrics">
+            <div><strong id="totalAttempts">0</strong><span>lượt luyện</span></div>
+            <div><strong id="bestScore">--</strong><span>tốt nhất</span></div>
+            <div><strong id="mistakeCount">0</strong><span>câu cần ôn</span></div>
+          </div>
+          <button id="reviewMistakesBtn" class="btn block" type="button" disabled>
+            <i data-lucide="rotate-ccw"></i>
+            Ôn lại câu sai
+          </button>
+          <p class="privacy-note"><i data-lucide="hard-drive"></i> Kết quả hiện được lưu cục bộ trong trình duyệt.</p>
+        </aside>
+      </div>
+
+      <section class="exam-principles" aria-label="Cách VocaNest hỗ trợ luyện Part 5">
+        <div><i data-lucide="message-square-text"></i><strong>Giải thích đáp án</strong><span>Hiểu quy tắc thay vì chỉ biết đúng hoặc sai.</span></div>
+        <div><i data-lucide="bookmark"></i><strong>Đánh dấu câu khó</strong><span>Quay lại câu còn phân vân trước khi nộp.</span></div>
+        <div><i data-lucide="scan-search"></i><strong>Phân tích điểm yếu</strong><span>Xem độ chính xác theo từng chủ điểm.</span></div>
+      </section>
+    </section>
+
+    <section id="sessionView" class="exam-session" hidden>
+      <header class="session-header">
+        <div>
+          <span id="sessionModeLabel" class="exam-eyebrow">Luyện tập</span>
+          <h1>TOEIC Reading Part 5</h1>
+        </div>
+        <div class="session-status">
+          <div class="timer-box" aria-label="Thời gian">
+            <i data-lucide="clock-3"></i>
+            <span id="timerText">00:00</span>
+          </div>
+          <button id="exitSessionBtn" class="icon-command" type="button" title="Thoát phiên học" aria-label="Thoát phiên học">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+      </header>
+
+      <div class="session-progress" aria-hidden="true">
+        <span id="sessionProgressBar"></span>
+      </div>
+
+      <div class="session-layout">
+        <section class="question-panel">
+          <div class="question-meta">
+            <span id="questionNumber">Câu 1 / 30</span>
+            <span id="questionTopic" class="topic-badge">Từ loại</span>
+            <button id="flagQuestionBtn" class="flag-btn" type="button" aria-pressed="false" aria-keyshortcuts="F">
+              <i data-lucide="bookmark"></i>
+              <span>Đánh dấu</span>
+            </button>
+          </div>
+
+          <p id="questionSentence" class="question-sentence"></p>
+          <div id="answerOptions" class="answer-options" role="radiogroup" aria-label="Các đáp án"></div>
+
+          <div id="answerFeedback" class="answer-feedback" hidden aria-live="polite">
+            <div class="feedback-heading">
+              <span id="feedbackIcon"></span>
+              <div>
+                <strong id="feedbackTitle"></strong>
+                <p id="feedbackAnswer"></p>
+              </div>
+            </div>
+            <p id="feedbackExplanation"></p>
+            <div id="feedbackTip" class="feedback-tip"></div>
+            <a id="grammarLink" class="grammar-link" href="./grammar.html">
+              <i data-lucide="book-open-check"></i>
+              Xem lại chuyên đề ngữ pháp
+            </a>
+          </div>
+
+          <footer class="question-actions">
+            <button id="previousQuestionBtn" class="btn" type="button" aria-keyshortcuts="ArrowLeft">
+              <i data-lucide="chevron-left"></i>
+              Câu trước
+            </button>
+            <span class="keyboard-hint"><kbd>1–4</kbd> chọn · <kbd>F</kbd> đánh dấu</span>
+            <button id="nextQuestionBtn" class="btn primary" type="button" aria-keyshortcuts="ArrowRight">
+              Câu tiếp
+              <i data-lucide="chevron-right"></i>
+            </button>
+          </footer>
+        </section>
+
+        <aside class="question-map-panel">
+          <div class="question-map-heading">
+            <div>
+              <h2>Danh sách câu</h2>
+              <p><span id="answeredCount">0</span> / <span id="sessionQuestionCount">30</span> đã trả lời</p>
+            </div>
+            <button id="toggleMapBtn" class="icon-command" type="button" aria-label="Thu gọn danh sách câu" title="Thu gọn">
+              <i data-lucide="panel-right-close"></i>
+            </button>
+          </div>
+          <div id="questionMap" class="question-map"></div>
+          <div class="map-legend">
+            <span><i class="legend-dot legend-dot--answered"></i>Đã làm</span>
+            <span><i class="legend-dot legend-dot--flagged"></i>Đánh dấu</span>
+          </div>
+          <button id="submitExamBtn" class="btn primary block" type="button">
+            <i data-lucide="send"></i>
+            Nộp bài
+          </button>
+        </aside>
+      </div>
+    </section>
+
+    <section id="resultView" class="exam-results" hidden>
+      <header class="result-heading">
+        <div>
+          <span class="exam-eyebrow">Kết quả phiên học</span>
+          <h1 id="resultHeadline">Bạn đang tiến bộ</h1>
+          <p id="resultSummary"></p>
+        </div>
+        <div id="scoreRing" class="score-ring">
+          <strong id="resultPercent">0%</strong>
+          <span>chính xác</span>
+        </div>
+      </header>
+
+      <div class="result-layout">
+        <section class="result-details">
+          <div class="result-metrics">
+            <div><i data-lucide="circle-check"></i><strong id="correctResult">0</strong><span>câu đúng</span></div>
+            <div><i data-lucide="circle-x"></i><strong id="incorrectResult">0</strong><span>câu sai</span></div>
+            <div><i data-lucide="clock-3"></i><strong id="timeResult">00:00</strong><span>thời gian</span></div>
+          </div>
+          <div class="topic-analysis">
+            <div class="result-section-heading">
+              <div>
+                <h2>Độ chính xác theo chủ điểm</h2>
+                <p>Ưu tiên ôn nhóm có tỷ lệ thấp nhất.</p>
+              </div>
+            </div>
+            <div id="topicResults"></div>
+          </div>
+        </section>
+
+        <aside class="result-actions">
+          <h2>Bước tiếp theo</h2>
+          <button id="reviewResultBtn" class="btn primary block" type="button">
+            <i data-lucide="list-checks"></i>
+            Xem lại từng câu
+          </button>
+          <button id="retryMistakesBtn" class="btn block" type="button">
+            <i data-lucide="rotate-ccw"></i>
+            Luyện lại câu sai
+          </button>
+          <button id="newSessionBtn" class="btn block" type="button">
+            <i data-lucide="plus"></i>
+            Tạo phiên mới
+          </button>
+        </aside>
+      </div>
+
+      <section id="answerReview" class="answer-review" hidden>
+        <div class="result-section-heading">
+          <div>
+            <h2>Chi tiết đáp án</h2>
+            <p>Đọc lại giải thích ở những câu bạn chưa chắc.</p>
+          </div>
+          <select id="reviewFilter" class="exam-select" aria-label="Lọc kết quả">
+            <option value="all">Tất cả câu</option>
+            <option value="incorrect">Chỉ câu sai</option>
+            <option value="flagged">Câu đã đánh dấu</option>
+          </select>
+        </div>
+        <div id="reviewList" class="review-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <div id="confirmDialog" class="exam-dialog" hidden>
+    <div class="exam-dialog__backdrop" data-close-dialog></div>
+    <section class="exam-dialog__panel" role="dialog" aria-modal="true" aria-labelledby="dialogTitle">
+      <span class="exam-dialog__icon"><i data-lucide="circle-alert"></i></span>
+      <h2 id="dialogTitle">Nộp bài ngay?</h2>
+      <p id="dialogMessage"></p>
+      <div class="exam-dialog__actions">
+        <button id="cancelDialogBtn" class="btn" type="button">Tiếp tục làm</button>
+        <button id="confirmDialogBtn" class="btn primary" type="button">Nộp bài</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/part5Data.js"></script>
+  <script src="../assets/js/exams.js"></script>
+</body>
+</html>

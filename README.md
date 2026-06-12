@@ -10,7 +10,7 @@
 
 ## Giới thiệu
 
-VocaNest là một dự án full-stack serverless tập trung vào trải nghiệm tự học tiếng Anh. Người dùng có thể xây dựng thư viện từ vựng riêng, chia sẻ bộ từ công khai, import dữ liệu từ Excel, luyện flashcards có phát âm và ôn hệ thống ngữ pháp TOEIC từ cơ bản đến nâng cao.
+VocaNest là một dự án full-stack serverless tập trung vào trải nghiệm tự học tiếng Anh. Người dùng có thể xây dựng thư viện từ vựng riêng, chia sẻ bộ từ công khai, import dữ liệu từ Excel, luyện flashcards có phát âm, ôn hệ thống ngữ pháp và luyện TOEIC Reading Part 5.
 
 Dự án ban đầu sử dụng Supabase, sau đó được thiết kế lại để vận hành trên hệ sinh thái Google Drive:
 
@@ -61,6 +61,15 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 - Tìm kiếm không dấu và lọc theo cấp độ hoặc chủ điểm.
 - Mở/thu gọn toàn bộ nội dung.
 - Đánh dấu chuyên đề đã học và theo dõi tiến độ.
+
+### Luyện TOEIC Part 5
+
+- 30 câu Incomplete Sentences tự biên soạn theo ngữ cảnh công việc.
+- Chế độ luyện tập xem giải thích ngay và chế độ mô phỏng có giới hạn thời gian.
+- Luyện 10, 20 hoặc 30 câu; hỗ trợ lọc theo chủ điểm.
+- Đánh dấu câu phân vân, bảng điều hướng câu hỏi và phím tắt bàn phím.
+- Báo cáo độ chính xác theo từng chủ điểm sau khi nộp bài.
+- Lưu câu sai để tạo phiên ôn tập riêng ngay trên thiết bị.
 
 ### Trải nghiệm người dùng
 
@@ -142,12 +151,15 @@ VocaNest/
 │   │   ├── layout.css
 │   │   ├── ui.css
 │   │   ├── grammar.css
+│   │   ├── exams.css
 │   │   └── ...styles theo từng trang
 │   └── js/
 │       ├── apiClient.js
 │       ├── authGuard.js
 │       ├── grammar.js
 │       ├── flashcards.js
+│       ├── exams.js
+│       ├── part5Data.js
 │       └── ...logic theo từng trang
 ├── cloudflare-worker/
 │   ├── src/index.js
@@ -160,6 +172,7 @@ VocaNest/
 │   ├── vocab-set-detail.html
 │   ├── flashcards.html
 │   ├── grammar.html
+│   ├── exams.html
 │   ├── account.html
 │   ├── forgot-password.html
 │   └── reset-password.html
