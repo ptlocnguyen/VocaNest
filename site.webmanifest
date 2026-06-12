@@ -1,0 +1,21 @@
+{
+  "name": "VocaNest",
+  "short_name": "VocaNest",
+  "description": "Ứng dụng học từ vựng và ngữ pháp TOEIC.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0b1118",
+  "theme_color": "#35c6a1",
+  "icons": [
+    {
+      "src": "./assets/images/vocanest-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "./assets/images/vocanest-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
