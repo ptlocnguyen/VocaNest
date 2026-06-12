@@ -4,8 +4,12 @@ async function requireAuth() {
     return null;
   }
 
+  const cachedUser = window.vocaApi.getCachedUser();
+  if (cachedUser) return cachedUser;
+
   try {
     const { user } = await window.vocaApi.authPost("me");
+    window.vocaApi.setCurrentUser(user);
     return user;
   } catch (err) {
     console.error(err);

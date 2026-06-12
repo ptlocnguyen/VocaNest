@@ -1,4 +1,5 @@
 const MAX_BODY_BYTES = 2 * 1024 * 1024;
+const UPSTREAM_TIMEOUT_MS = 25000;
 
 function getAllowedOrigin(request, env) {
   const origin = request.headers.get("Origin");
@@ -80,13 +81,25 @@ export default {
         return json({ ok: false, error: "Request body is too large" }, 413, allowedOrigin);
       }
 
+      let payload;
+      try {
+        payload = JSON.parse(body);
+      } catch {
+        return json({ ok: false, error: "Invalid JSON body" }, 400, allowedOrigin);
+      }
+
+      if (!payload || typeof payload.action !== "string" || !payload.action) {
+        return json({ ok: false, error: "Missing action" }, 400, allowedOrigin);
+      }
+
       const upstream = await fetch(env.APPS_SCRIPT_URL, {
         method: "POST",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
         body,
-        redirect: "follow"
+        redirect: "follow",
+        signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS)
       });
 
       const responseBody = await upstream.text();

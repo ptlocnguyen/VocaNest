@@ -28,7 +28,13 @@
           return;
         }
 
-        await window.vocaApi.authPost("me");
+        if (window.vocaApi.getCachedUser()) {
+          window.location.href = "./pages/home.html";
+          return;
+        }
+
+        const { user } = await window.vocaApi.authPost("me");
+        window.vocaApi.setCurrentUser(user);
         window.location.href = "./pages/home.html";
       } catch (err) {
         console.error(err);

@@ -23,6 +23,7 @@
 
   const mySearchInput = document.getElementById("mySearchInput");
   const publicSearchInput = document.getElementById("publicSearchInput");
+  let searchTimer = null;
 
   function openModal() {
     modal.classList.remove("hidden");
@@ -146,7 +147,8 @@
 
         try {
           await window.vocaApi.authPost("deleteSet", { setId: set.id });
-          loadLists();
+          mySetsCache = mySetsCache.filter(entry => entry.id !== set.id);
+          renderMySets(mySetsCache);
         } catch (err) {
           console.error(err);
           alert(err.message || "Xoá bộ từ vựng thất bại");
@@ -169,7 +171,9 @@
       return;
     }
 
-    list.forEach(set => renderSet(set, myVocabList, true));
+    const fragment = document.createDocumentFragment();
+    list.forEach(set => renderSet(set, fragment, true));
+    myVocabList.appendChild(fragment);
   }
 
   function renderPublicSets(list) {
@@ -180,7 +184,9 @@
       return;
     }
 
-    list.forEach(set => renderSet(set, publicVocabList, false));
+    const fragment = document.createDocumentFragment();
+    list.forEach(set => renderSet(set, fragment, false));
+    publicVocabList.appendChild(fragment);
   }
 
   createBtn.addEventListener("click", async () => {
@@ -193,14 +199,15 @@
     createBtn.disabled = true;
 
     try {
-      await window.vocaApi.authPost("createSet", {
+      const result = await window.vocaApi.authPost("createSet", {
         title,
         description: descInput.value.trim(),
         isPublic: publicCheckbox.checked
       });
 
+      mySetsCache.unshift(result.data);
       closeModal();
-      loadLists();
+      renderMySets(mySetsCache);
     } catch (err) {
       console.error(err);
       alert(err.message || "Tạo bộ từ vựng thất bại");
@@ -215,23 +222,29 @@
 
   if (mySearchInput) {
     mySearchInput.addEventListener("input", () => {
-      const q = mySearchInput.value.trim().toLowerCase();
-      const filtered = mySetsCache.filter(set =>
-        (set.title || "").toLowerCase().includes(q)
-      );
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        const q = mySearchInput.value.trim().toLowerCase();
+        const filtered = mySetsCache.filter(set =>
+          (set.title || "").toLowerCase().includes(q)
+        );
 
-      renderMySets(filtered);
+        renderMySets(filtered);
+      }, 120);
     });
   }
 
   if (publicSearchInput) {
     publicSearchInput.addEventListener("input", () => {
-      const q = publicSearchInput.value.trim().toLowerCase();
-      const filtered = publicSetsCache.filter(set =>
-        (set.title || "").toLowerCase().includes(q)
-      );
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        const q = publicSearchInput.value.trim().toLowerCase();
+        const filtered = publicSetsCache.filter(set =>
+          (set.title || "").toLowerCase().includes(q)
+        );
 
-      renderPublicSets(filtered);
+        renderPublicSets(filtered);
+      }, 120);
     });
   }
 

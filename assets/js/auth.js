@@ -56,8 +56,14 @@ function setMode(login) {
 async function redirectIfLoggedIn() {
   if (!window.vocaApi.getToken()) return;
 
+  if (window.vocaApi.getCachedUser()) {
+    window.location.replace("./home.html");
+    return;
+  }
+
   try {
-    await window.vocaApi.authPost("me");
+    const { user } = await window.vocaApi.authPost("me");
+    window.vocaApi.setCurrentUser(user);
     window.location.replace("./home.html");
   } catch (err) {
     window.vocaApi.setToken("");
@@ -96,12 +102,12 @@ submitBtn.addEventListener("click", async () => {
 
   try {
     const action = isLoginMode ? "login" : "register";
-    const { token } = await window.vocaApi.post(action, {
+    const { token, user } = await window.vocaApi.post(action, {
       email,
       password
     });
 
-    window.vocaApi.setToken(token);
+    window.vocaApi.setSession(token, user);
     window.location.replace("./home.html");
   } catch (err) {
     console.error(err);

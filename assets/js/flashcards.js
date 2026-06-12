@@ -251,17 +251,13 @@
     try {
       setLoading("Đang tải bộ từ...");
 
-      const { data: setData } = await window.vocaApi.authPost("getSet", {
+      const { data } = await window.vocaApi.authPost("getSetBundle", {
         setId
       });
+      const setData = data.set;
+      const items = data.items;
 
       document.title = `VocaNest - Flashcards: ${setData.title}`;
-
-      setLoading("Đang tải danh sách từ...");
-
-      const { data: items } = await window.vocaApi.authPost("listItems", {
-        setId
-      });
 
       if (!items || items.length === 0) {
         setLoading("Bộ từ chưa có từ nào");

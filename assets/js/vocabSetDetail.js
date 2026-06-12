@@ -29,65 +29,39 @@ let allItems = [];
   const importAlert = document.getElementById("importAlert");
 
   let isOwner = false;
+  let searchTimer = null;
 
-  async function loadSetInfo() {
-    try {
-      const { data } = await window.vocaApi.authPost("getSet", {
-        setId: vocabSetId
-      });
+  function applySetInfo(data) {
+    if (setTitleEl) setTitleEl.textContent = data.title || "";
 
-      if (setTitleEl) setTitleEl.textContent = data.title || "";
+    isOwner = data.is_owner;
+    if (!isOwner) {
+      document.body.classList.add("viewer-mode");
+    }
 
-      isOwner = data.is_owner;
-      if (!isOwner) {
-        document.body.classList.add("viewer-mode");
-      }
+    if (setMetaEl) {
+      setMetaEl.textContent = isOwner
+        ? (data.is_public ? "Bộ công khai của bạn" : "Bộ riêng tư của bạn")
+        : "Bạn đang xem bộ công khai";
+    }
 
-      if (setMetaEl) {
-        setMetaEl.textContent = isOwner
-          ? (data.is_public ? "Bộ công khai của bạn" : "Bộ riêng tư của bạn")
-          : "Bạn đang xem bộ công khai";
-      }
-
-      if (!isOwner && addSection) {
-        addSection.style.display = "none";
-      }
-
-      return true;
-    } catch (err) {
-      console.error(err);
-      alert(err.message || "Không tìm thấy bộ từ vựng");
-      window.location.replace("./vocab-sets.html");
-      return false;
+    if (!isOwner && addSection) {
+      addSection.style.display = "none";
     }
   }
 
-  async function loadItems() {
-    if (!vocabItemsEl) return;
-
-    vocabItemsEl.innerHTML = "<p>Đang tải...</p>";
-
-    try {
-      const { data } = await window.vocaApi.authPost("listItems", {
-        setId: vocabSetId
-      });
-
-      allItems = data || [];
-
-      if (!allItems.length) {
-        vocabItemsEl.innerHTML = "<p>Chưa có từ vựng</p>";
-        return;
-      }
-
-      renderItems(allItems);
-    } catch (err) {
-      console.error(err);
-      vocabItemsEl.innerHTML = "<p>Lỗi tải danh sách từ.</p>";
+  function applyItems(data) {
+    allItems = data || [];
+    if (!allItems.length) {
+      vocabItemsEl.innerHTML = "<p>Chưa có từ vựng</p>";
+      return;
     }
+
+    renderItems(allItems);
   }
 
   function renderItem(item) {
-    if (!vocabItemsEl) return;
+    if (!vocabItemsEl) return null;
 
     const row = document.createElement("div");
     row.className = "vocab-row";
@@ -122,7 +96,8 @@ let allItems = [];
           await window.vocaApi.authPost("deleteItem", {
             itemId: item.id
           });
-          loadItems();
+          allItems = allItems.filter(entry => entry.id !== item.id);
+          renderItems(allItems);
         } catch (err) {
           console.error(err);
           alert(err.message || "Xoá thất bại");
@@ -133,7 +108,7 @@ let allItems = [];
       row.appendChild(btn);
     }
 
-    vocabItemsEl.appendChild(row);
+    return row;
   }
 
   function renderItems(list) {
@@ -144,7 +119,13 @@ let allItems = [];
       return;
     }
 
-    list.forEach(renderItem);
+    const fragment = document.createDocumentFragment();
+    list.forEach(item => {
+      const row = renderItem(item);
+      if (row) fragment.appendChild(row);
+    });
+
+    vocabItemsEl.appendChild(fragment);
   }
 
   function showImportAlert(msg, type = "ok") {
@@ -168,7 +149,7 @@ let allItems = [];
     if (addBtn) addBtn.disabled = true;
 
     try {
-      await window.vocaApi.authPost("addItem", {
+      const result = await window.vocaApi.authPost("addItem", {
         setId: vocabSetId,
         word,
         meaning
@@ -176,7 +157,9 @@ let allItems = [];
 
       wordInput.value = "";
       meaningInput.value = "";
-      loadItems();
+      allItems.unshift(result.data);
+      renderItems(allItems);
+      wordInput.focus();
     } catch (err) {
       console.error(err);
       alert(err.message || "Thêm từ thất bại");
@@ -198,19 +181,22 @@ let allItems = [];
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
-      const q = searchInput.value.trim().toLowerCase();
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        const q = searchInput.value.trim().toLowerCase();
 
-      if (!q) {
-        renderItems(allItems);
-        return;
-      }
+        if (!q) {
+          renderItems(allItems);
+          return;
+        }
 
-      const filtered = allItems.filter(item =>
-        (item.word || "").toLowerCase().includes(q) ||
-        (item.meaning || "").toLowerCase().includes(q)
-      );
+        const filtered = allItems.filter(item =>
+          (item.word || "").toLowerCase().includes(q) ||
+          (item.meaning || "").toLowerCase().includes(q)
+        );
 
-      renderItems(filtered);
+        renderItems(filtered);
+      }, 120);
     });
   }
 
@@ -262,7 +248,8 @@ let allItems = [];
 
         showImportAlert(`Import thành công ${result.count || items.length} từ`, "ok");
         excelInput.value = "";
-        loadItems();
+        allItems = [...(result.data || []), ...allItems];
+        renderItems(allItems);
       } catch (err) {
         console.error(err);
         showImportAlert(err.message || "Lỗi đọc file Excel", "err");
@@ -270,7 +257,17 @@ let allItems = [];
     });
   }
 
-  const ok = await loadSetInfo();
-  if (!ok) return;
-  await loadItems();
+  try {
+    vocabItemsEl.innerHTML = "<p>Đang tải...</p>";
+    const { data } = await window.vocaApi.authPost("getSetBundle", {
+      setId: vocabSetId
+    });
+
+    applySetInfo(data.set);
+    applyItems(data.items);
+  } catch (err) {
+    console.error(err);
+    alert(err.message || "Không tìm thấy bộ từ vựng");
+    window.location.replace("./vocab-sets.html");
+  }
 })();
