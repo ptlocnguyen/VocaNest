@@ -1,50 +1,92 @@
-/* ===== Account page ===== */
+.account-page .main {
+  width: min(100%, 820px);
+}
 
-/* Nhóm thông tin tài khoản (email, created_at) */
+.account-heading {
+  margin-bottom: 22px;
+}
+
+.account-heading h1 {
+  margin-bottom: 6px;
+  font-size: 30px;
+}
+
+.account-layout {
+  display: grid;
+  gap: 20px;
+}
+
+.account-card__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.account-card__icon {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  border-radius: 7px;
+  color: var(--primary);
+  background: rgba(53, 198, 161, 0.1);
+}
+
+.account-card__head h2 {
+  margin: 0;
+  font-size: 18px;
+}
+
 .account-info {
-    display: grid;
-    gap: 8px;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
-/* Dòng hiển thị thông tin (read-only) */
 .account-info__item {
-    padding: 10px 12px;
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    background: rgba(0, 0, 0, 0.16);
+  min-width: 0;
+  padding: 14px;
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  background: #0d151e;
 }
 
-/* Value text */
 .account-info__value {
-    font-size: 14px;
-    color: var(--text);
-    word-break: break-all;
-}
-
-/* Separator giữa info và password */
-.account-divider {
-    margin: 16px 0;
-    height: 1px;
-    background: var(--border);
-    border: none;
-}
-
-/* Hint text dưới input password */
-.account-hint {
-    font-size: 13px;
-    color: var(--muted);
-    margin-top: -6px;
+  overflow-wrap: anywhere;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 650;
 }
 
 .account-field {
-    display: grid;
-    gap: 8px;
+  display: grid;
 }
 
 .account-hint {
-    margin-top: 4px;
-    margin-bottom: 8px;
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.4;
+  margin-top: 7px;
+  color: var(--subtle);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.account-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.account-actions .btn {
+  flex: 1;
+}
+
+@media (max-width: 580px) {
+  .account-info {
+    grid-template-columns: 1fr;
+  }
+
+  .account-actions {
+    flex-direction: column;
+  }
 }

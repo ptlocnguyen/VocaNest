@@ -1,120 +1,122 @@
-/* ================================
-   HOME – DESKTOP FIT / MOBILE SCROLL
-================================ */
-
-/* ===== DESKTOP DEFAULT ===== */
-.home-page{
-  height: 100vh;
-  overflow: hidden; /* desktop: không scroll */
+.home-page .main {
+  display: grid;
+  align-content: start;
+  gap: 22px;
 }
 
-.home-page body{
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
+.home-welcome {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 20px;
+  padding: 28px 0 10px;
+  border-bottom: 1px solid var(--border);
 }
 
-/* ===== MAIN ===== */
-.home-page .main{
-  flex: 1;
-  max-width: 1200px;
-  margin: 0 auto;
+.home-welcome__eyebrow {
+  margin-bottom: 8px;
+  color: var(--primary);
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
 
-  padding: 20px;
+.home-welcome h1 {
+  margin-bottom: 8px;
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.15;
+}
+
+.home-welcome p {
+  max-width: 680px;
+  margin-bottom: 0;
+}
+
+.home-welcome__badge {
+  display: grid;
+  justify-items: end;
+  gap: 4px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.home-welcome__badge strong {
+  color: var(--warning);
+  font-size: 24px;
+}
+
+.feature-card {
+  min-height: 250px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
-
+  position: relative;
   overflow: hidden;
 }
 
-/* ===== Grid ===== */
-.grid{
+.feature-card::before {
+  content: "";
+  width: 44px;
+  height: 4px;
+  margin-bottom: 22px;
+  border-radius: 4px;
+  background: var(--secondary);
+}
+
+.feature-card--learn::before {
+  background: var(--primary);
+}
+
+.feature-card--exam::before {
+  background: var(--warning);
+}
+
+.feature-card h2 {
+  margin-bottom: 10px;
+  font-size: 21px;
+}
+
+.feature-card p {
   flex: 1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
 }
 
-/* ================================
-   FOOTER – COMPACT (HOME ONLY)
-================================ */
-.home-page .app-footer{
-  margin-top: 0;
+.feature-card .btn {
+  align-self: flex-start;
 }
 
-.home-page .footer-inner{
-  padding: 18px 16px;
-  gap: 18px;
-}
-
-.home-page .footer-col h4{
-  font-size: 14px;
-  margin-bottom: 6px;
-}
-
-.home-page .footer-col p{
+.feature-card__status {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--warning);
   font-size: 13px;
-  line-height: 1.45;
+  font-weight: 700;
 }
 
-.home-page .footer-quote-en{
-  font-size: 13px;
-  font-weight: 600;
-  margin-bottom: 4px;
+.feature-card__status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
 }
 
-.home-page .footer-quote-vi{
-  font-size: 12px;
-  line-height: 1.4;
-}
-
-.home-page .footer-links{
-  gap: 4px;
-}
-
-.home-page .footer-links a{
-  font-size: 13px;
-}
-
-.home-page .footer-bottom{
-  padding: 10px 8px;
-  font-size: 12px;
-}
-
-/* ================================
-   MOBILE – ALLOW SCROLL
-================================ */
-@media (max-width: 520px){
-
-  /* Quan trọng: mở lại scroll */
-  .home-page{
-    height: auto;
-    overflow: auto;
-  }
-
-  .home-page body{
-    height: auto;
-  }
-
-  .home-page .main{
-    padding: 14px;
-    gap: 12px;
-    overflow: visible;
-  }
-
-  .grid{
+@media (max-width: 680px) {
+  .home-welcome {
     grid-template-columns: 1fr;
+    align-items: start;
+    padding-top: 12px;
   }
 
-  /* Ẩn footer nội dung, giữ footer-bottom */
-  .home-page .footer-inner{
+  .home-welcome__badge {
     display: none;
   }
 
-  .home-page .footer-bottom{
-    padding: 12px 10px;
-    font-size: 12px;
-    text-align: center;
+  .feature-card {
+    min-height: 220px;
+  }
+
+  .feature-card .btn {
+    width: 100%;
   }
 }

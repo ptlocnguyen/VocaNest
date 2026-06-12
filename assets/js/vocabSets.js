@@ -1,317 +1,239 @@
-// vocabSets.js
-// Trang danh sách bộ từ vựng
-// Supabase v1 + authGuard
+(async () => {
+  const userEmailEl = document.getElementById("userEmail");
+  const currentUser = await requireAuth();
+  if (!currentUser) return;
 
-const userEmailEl = document.getElementById("userEmail");
+  if (userEmailEl) userEmailEl.textContent = currentUser.email;
 
-// Guard
-const currentUser = requireAuth();
-if (!currentUser) {
-  // requireAuth đã redirect
-  throw new Error("Unauthenticated");
-}
+  let mySetsCache = [];
+  let publicSetsCache = [];
 
-userEmailEl.textContent = currentUser.email;
+  const myVocabList = document.getElementById("myVocabList");
+  const publicVocabList = document.getElementById("publicVocabList");
 
-let mySetsCache = [];
-let publicSetsCache = [];
+  const openBtn = document.getElementById("openCreateModal");
+  const modal = document.getElementById("modal");
+  const closeBtn = document.getElementById("closeModal");
+  const closeBtnX = document.getElementById("closeModalX");
 
-// ===== ELEMENTS =====
-const myVocabList = document.getElementById("myVocabList");
-const publicVocabList = document.getElementById("publicVocabList");
+  const titleInput = document.getElementById("titleInput");
+  const descInput = document.getElementById("descInput");
+  const publicCheckbox = document.getElementById("publicCheckbox");
+  const createBtn = document.getElementById("createBtn");
 
-const openBtn = document.getElementById("openCreateModal");
-const modal = document.getElementById("modal");
-const closeBtn = document.getElementById("closeModal");
-const closeBtnX = document.getElementById("closeModalX");
+  const mySearchInput = document.getElementById("mySearchInput");
+  const publicSearchInput = document.getElementById("publicSearchInput");
 
-const titleInput = document.getElementById("titleInput");
-const descInput = document.getElementById("descInput");
-const publicCheckbox = document.getElementById("publicCheckbox");
-const createBtn = document.getElementById("createBtn");
-
-const mySearchInput = document.getElementById("mySearchInput");
-const publicSearchInput = document.getElementById("publicSearchInput");
-
-// ===== MODAL =====
-function openModal() {
-  modal.classList.remove("hidden");
-  titleInput.focus();
-}
-
-function closeModal() {
-  modal.classList.add("hidden");
-  titleInput.value = "";
-  descInput.value = "";
-  publicCheckbox.checked = false;
-}
-
-openBtn.addEventListener("click", openModal);
-closeBtn.addEventListener("click", closeModal);
-if (closeBtnX) closeBtnX.addEventListener("click", closeModal);
-
-// Click nền để đóng modal
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) closeModal();
-});
-
-// ===== LOAD LIST =====
-async function loadLists() {
-  myVocabList.innerHTML = "";
-  publicVocabList.innerHTML = "";
-
-  // ===== Bộ của tôi =====
-  const { data: mySets, error: myErr } = await supabaseClient
-    .from("vocab_sets")
-    .select(`
-      *,
-        vocab_items(count)
-    `)
-    .eq("user_id", currentUser.id)
-    .order("created_at", { ascending: false });
-
-  if (myErr) {
-    console.error(myErr);
-    myVocabList.innerHTML = "<p>Lỗi tải bộ từ vựng.</p>";
-  } else if (!mySets || mySets.length === 0) {
-    myVocabList.innerHTML = "<p>Chưa có bộ từ vựng nào.</p>";
-  } else {
-    mySetsCache = mySets || [];
-    renderMySets(mySetsCache);
+  function openModal() {
+    modal.classList.remove("hidden");
+    titleInput.focus();
   }
 
-  // ===== Bộ công khai (JOIN user email) =====
-  const { data: publicSets, error: pubErr } = await supabaseClient
-    .from("vocab_sets")
-    .select(`
-  *,
-  profile:profiles (
-    email
-  ),
-  vocab_items(count)
-`)
-    .eq("is_public", true)
-    .neq("user_id", currentUser.id)
-    .order("created_at", { ascending: false });
-
-  if (pubErr) {
-    console.error(pubErr);
-    publicVocabList.innerHTML = "<p>Lỗi tải bộ công khai.</p>";
-  } else if (!publicSets || publicSets.length === 0) {
-    publicVocabList.innerHTML = "<p>Chưa có bộ công khai nào.</p>";
-  } else {
-    publicSetsCache = publicSets || [];
-    renderPublicSets(publicSetsCache);
+  function closeModal() {
+    modal.classList.add("hidden");
+    titleInput.value = "";
+    descInput.value = "";
+    publicCheckbox.checked = false;
   }
-}
 
-// ===== RENDER CARD =====
-function renderSet(set, container, isOwner) {
-  const el = document.createElement("div");
-  el.className = "card vocab-card";
+  openBtn.addEventListener("click", openModal);
+  closeBtn.addEventListener("click", closeModal);
+  if (closeBtnX) closeBtnX.addEventListener("click", closeModal);
 
-  const wordCount =
-    Array.isArray(set.vocab_items) && set.vocab_items.length
-      ? set.vocab_items[0].count
-      : 0;
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) closeModal();
+  });
 
-  const createdAt = set.created_at
-    ? new Date(set.created_at).toLocaleDateString("vi-VN")
-    : "";
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+      closeModal();
+    }
+  });
 
-  const creatorLine = (!isOwner && set.profile && set.profile.email)
-    ? `Tạo bởi ${set.profile.email}${createdAt ? ` · ${createdAt}` : ""}`
-    : "";
+  async function loadLists() {
+    myVocabList.innerHTML = "<p>Đang tải...</p>";
+    publicVocabList.innerHTML = "<p>Đang tải...</p>";
 
-  el.innerHTML = `
-  <h3>${set.title}</h3>
-  <p>${set.description || "Không có mô tả"}</p>
+    try {
+      const { data } = await window.vocaApi.authPost("listSets");
+      mySetsCache = data.filter(set => set.user_id === currentUser.id);
+      publicSetsCache = data.filter(set => set.user_id !== currentUser.id && set.is_public);
 
-  <div class="set-meta">
-    <div class="set-meta__left">
-      <span class="badge ${set.is_public ? "badge--public" : "badge--private"}">
-        ${set.is_public ? "Công khai" : "Riêng tư"}
-      </span>
+      renderMySets(mySetsCache);
+      renderPublicSets(publicSetsCache);
+    } catch (err) {
+      console.error(err);
+      myVocabList.innerHTML = "<p>Lỗi tải bộ từ vựng.</p>";
+      publicVocabList.innerHTML = "<p>Lỗi tải bộ công khai.</p>";
+    }
+  }
 
-      <span class="badge badge--count">
-        ${wordCount} từ
-      </span>
-    </div>
+  function appendText(parent, tag, text, className) {
+    const el = document.createElement(tag);
+    if (className) el.className = className;
+    el.textContent = text;
+    parent.appendChild(el);
+    return el;
+  }
 
-    ${!isOwner && set.profile ? `
-      <span class="set-meta__creator">
-        Tạo bởi ${set.profile.email} · ${createdAt}
-      </span>
-    ` : `<span></span>`}
-  </div>
+  function renderSet(set, container, isOwner) {
+    const el = document.createElement("div");
+    el.className = "card vocab-card";
 
-  <div class="row row--actions">
-    <a class="btn" href="./vocab-set-detail.html?id=${set.id}">
-      Mở bộ từ vựng
-    </a>
+    appendText(el, "h3", set.title || "");
+    appendText(el, "p", set.description || "Không có mô tả");
 
-    <a class="btn primary" href="./flashcards.html?set=${set.id}">
-      📚 Flashcards
-    </a>
+    const meta = document.createElement("div");
+    meta.className = "set-meta";
 
-    ${isOwner ? `
-      <button class="btn btn-danger btn-delete-set">Xoá</button>
-    ` : ""}
-  </div>
-`;
+    const metaLeft = document.createElement("div");
+    metaLeft.className = "set-meta__left";
 
-  // ===== DELETE SET (CHỈ OWNER) =====
-  if (isOwner) {
-    const deleteBtn = el.querySelector(".btn-delete-set");
+    const statusBadge = document.createElement("span");
+    statusBadge.className = "badge " + (set.is_public ? "badge--public" : "badge--private");
+    statusBadge.textContent = set.is_public ? "Công khai" : "Riêng tư";
+    metaLeft.appendChild(statusBadge);
 
-    deleteBtn.addEventListener("click", async () => {
-      const ok = confirm(
-        `Bạn chắc chắn muốn xoá bộ "${set.title}"?\n\nToàn bộ từ vựng trong bộ này sẽ bị xoá.`
+    const countBadge = document.createElement("span");
+    countBadge.className = "badge badge--count";
+    countBadge.textContent = `${set.word_count || 0} từ`;
+    metaLeft.appendChild(countBadge);
+
+    meta.appendChild(metaLeft);
+
+    const createdAt = set.created_at
+      ? new Date(set.created_at).toLocaleDateString("vi-VN")
+      : "";
+    const creator = document.createElement("span");
+
+    if (!isOwner && set.creator_email) {
+      creator.className = "set-meta__creator";
+      creator.textContent = `Tạo bởi ${set.creator_email}${createdAt ? ` · ${createdAt}` : ""}`;
+    }
+
+    meta.appendChild(creator);
+    el.appendChild(meta);
+
+    const actions = document.createElement("div");
+    actions.className = "row row--actions";
+
+    const openLink = document.createElement("a");
+    openLink.className = "btn";
+    openLink.href = `./vocab-set-detail.html?id=${encodeURIComponent(set.id)}`;
+    openLink.textContent = "Mở bộ từ vựng";
+    actions.appendChild(openLink);
+
+    const flashcardsLink = document.createElement("a");
+    flashcardsLink.className = "btn primary";
+    flashcardsLink.href = `./flashcards.html?set=${encodeURIComponent(set.id)}`;
+    flashcardsLink.textContent = "Flashcards";
+    actions.appendChild(flashcardsLink);
+
+    if (isOwner) {
+      const deleteBtn = document.createElement("button");
+      deleteBtn.className = "btn btn-danger btn-delete-set";
+      deleteBtn.type = "button";
+      deleteBtn.textContent = "Xoá";
+
+      deleteBtn.addEventListener("click", async () => {
+        const ok = confirm(
+          `Bạn chắc chắn muốn xoá bộ "${set.title}"?\n\nToàn bộ từ vựng trong bộ này sẽ bị xoá.`
+        );
+
+        if (!ok) return;
+
+        deleteBtn.disabled = true;
+
+        try {
+          await window.vocaApi.authPost("deleteSet", { setId: set.id });
+          loadLists();
+        } catch (err) {
+          console.error(err);
+          alert(err.message || "Xoá bộ từ vựng thất bại");
+          deleteBtn.disabled = false;
+        }
+      });
+
+      actions.appendChild(deleteBtn);
+    }
+
+    el.appendChild(actions);
+    container.appendChild(el);
+  }
+
+  function renderMySets(list) {
+    myVocabList.innerHTML = "";
+
+    if (!list.length) {
+      myVocabList.innerHTML = "<p>Không có bộ phù hợp.</p>";
+      return;
+    }
+
+    list.forEach(set => renderSet(set, myVocabList, true));
+  }
+
+  function renderPublicSets(list) {
+    publicVocabList.innerHTML = "";
+
+    if (!list.length) {
+      publicVocabList.innerHTML = "<p>Không có bộ phù hợp.</p>";
+      return;
+    }
+
+    list.forEach(set => renderSet(set, publicVocabList, false));
+  }
+
+  createBtn.addEventListener("click", async () => {
+    const title = titleInput.value.trim();
+    if (!title) {
+      alert("Vui lòng nhập tên bộ từ vựng");
+      return;
+    }
+
+    createBtn.disabled = true;
+
+    try {
+      await window.vocaApi.authPost("createSet", {
+        title,
+        description: descInput.value.trim(),
+        isPublic: publicCheckbox.checked
+      });
+
+      closeModal();
+      loadLists();
+    } catch (err) {
+      console.error(err);
+      alert(err.message || "Tạo bộ từ vựng thất bại");
+    } finally {
+      createBtn.disabled = false;
+    }
+  });
+
+  titleInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") createBtn.click();
+  });
+
+  if (mySearchInput) {
+    mySearchInput.addEventListener("input", () => {
+      const q = mySearchInput.value.trim().toLowerCase();
+      const filtered = mySetsCache.filter(set =>
+        (set.title || "").toLowerCase().includes(q)
       );
 
-      if (!ok) return;
-
-      deleteBtn.disabled = true;
-
-      try {
-        // Xoá vocab_items
-        const { error: itemErr } = await supabaseClient
-          .from("vocab_items")
-          .delete()
-          .eq("vocab_set_id", set.id);
-
-        if (itemErr) throw itemErr;
-
-        // Xoá vocab_set (đảm bảo đúng owner)
-        const { error: setErr } = await supabaseClient
-          .from("vocab_sets")
-          .delete()
-          .eq("id", set.id)
-          .eq("user_id", currentUser.id);
-
-        if (setErr) throw setErr;
-
-        loadLists();
-
-      } catch (err) {
-        console.error(err);
-        alert("Xoá bộ từ vựng thất bại");
-        deleteBtn.disabled = false;
-      }
+      renderMySets(filtered);
     });
   }
 
-  container.appendChild(el);
-}
+  if (publicSearchInput) {
+    publicSearchInput.addEventListener("input", () => {
+      const q = publicSearchInput.value.trim().toLowerCase();
+      const filtered = publicSetsCache.filter(set =>
+        (set.title || "").toLowerCase().includes(q)
+      );
 
-function renderMySets(list) {
-  myVocabList.innerHTML = "";
-
-  if (!list.length) {
-    myVocabList.innerHTML = "<p>Không có bộ phù hợp.</p>";
-    return;
+      renderPublicSets(filtered);
+    });
   }
 
-  list.forEach(set => renderSet(set, myVocabList, true));
-}
-
-function renderPublicSets(list) {
-  publicVocabList.innerHTML = "";
-
-  if (!list.length) {
-    publicVocabList.innerHTML = "<p>Không có bộ phù hợp.</p>";
-    return;
-  }
-
-  list.forEach(set => renderSet(set, publicVocabList, false));
-}
-
-// ===== CREATE SET =====
-createBtn.addEventListener("click", async () => {
-  const title = titleInput.value.trim();
-  if (!title) {
-    alert("Vui lòng nhập tên bộ từ vựng");
-    return;
-  }
-
-  createBtn.disabled = true;
-
-  try {
-    // ===== ĐẢM BẢO PROFILE TỒN TẠI =====
-    const { data: profile, error: profileErr } = await supabaseClient
-      .from("profiles")
-      .select("id")
-      .eq("id", currentUser.id)
-      .maybeSingle();
-
-    if (profileErr && profileErr.code !== "PGRST116") {
-      throw profileErr;
-    }
-
-    if (!profile) {
-      const { error: insertProfileErr } = await supabaseClient
-        .from("profiles")
-        .insert({
-          id: currentUser.id,
-          email: currentUser.email
-        });
-
-      if (insertProfileErr) {
-        throw insertProfileErr;
-      }
-    }
-
-    // ===== TẠO VOCAB SET =====
-    const payload = {
-      user_id: currentUser.id,
-      title,
-      description: descInput.value.trim() || null,
-      is_public: publicCheckbox.checked
-    };
-
-    const { error } = await supabaseClient
-      .from("vocab_sets")
-      .insert(payload);
-
-    if (error) {
-      throw error;
-    }
-
-    closeModal();
-    loadLists();
-
-  } catch (err) {
-    console.error(err);
-    alert("Tạo bộ từ vựng thất bại");
-  } finally {
-    createBtn.disabled = false;
-  }
-});
-
-// ===== SEARCH =====
-if (mySearchInput) {
-  mySearchInput.addEventListener("input", () => {
-    const q = mySearchInput.value.trim().toLowerCase();
-
-    const filtered = mySetsCache.filter(set =>
-      set.title.toLowerCase().includes(q)
-    );
-
-    renderMySets(filtered);
-  });
-}
-
-if (publicSearchInput) {
-  publicSearchInput.addEventListener("input", () => {
-    const q = publicSearchInput.value.trim().toLowerCase();
-
-    const filtered = publicSetsCache.filter(set =>
-      set.title.toLowerCase().includes(q)
-    );
-
-    renderPublicSets(filtered);
-  });
-}
-
-// ===== INIT =====
-loadLists();
+  loadLists();
+})();

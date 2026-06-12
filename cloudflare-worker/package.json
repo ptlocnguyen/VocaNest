@@ -1,0 +1,13 @@
+{
+  "name": "vocanest-api-proxy",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "secret": "wrangler secret put APPS_SCRIPT_URL"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}
+

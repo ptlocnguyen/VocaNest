@@ -1,8 +1,5 @@
-// account.js
-// Trang private: yêu cầu đăng nhập
-
-(() => {
-  const user = window.requireAuth();
+(async () => {
+  const user = await window.requireAuth();
   if (!user) return;
 
   const emailEl = document.getElementById("accountEmail");
@@ -11,7 +8,6 @@
   const changeBtn = document.getElementById("changePasswordBtn");
   const alertBox = document.getElementById("alertBox");
 
-  // Hiển thị thông tin tài khoản
   emailEl.textContent = user.email || "-";
 
   if (user.created_at) {
@@ -32,7 +28,6 @@
     alertBox.textContent = "";
   }
 
-  // Đổi mật khẩu
   changeBtn.addEventListener("click", async () => {
     hideAlert();
 
@@ -44,22 +39,18 @@
 
     changeBtn.disabled = true;
 
-    const { error } = await supabaseClient.auth.update({
-      password: password
-    });
-
-    changeBtn.disabled = false;
-
-    if (error) {
-      showAlert("err", error.message);
-      return;
+    try {
+      await window.vocaApi.authPost("changePassword", { password });
+      passwordInput.value = "";
+      showAlert("ok", "Đổi mật khẩu thành công");
+    } catch (err) {
+      console.error(err);
+      showAlert("err", err.message || "Đổi mật khẩu thất bại");
+    } finally {
+      changeBtn.disabled = false;
     }
-
-    passwordInput.value = "";
-    showAlert("ok", "Đổi mật khẩu thành công");
   });
 
-  // Logout
   const logoutBtn = document.getElementById("logoutBtn");
 
   if (logoutBtn) {
@@ -69,8 +60,14 @@
 
       logoutBtn.disabled = true;
 
-      await supabaseClient.auth.signOut();
-      window.location.replace("./auth.html");
+      try {
+        await window.vocaApi.authPost("logout");
+      } catch (err) {
+        console.error(err);
+      } finally {
+        window.vocaApi.setToken("");
+        window.location.replace("./auth.html");
+      }
     });
   }
 })();

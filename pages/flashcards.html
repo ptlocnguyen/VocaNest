@@ -4,95 +4,52 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VocaNest - Flashcards</title>
-
   <link rel="stylesheet" href="../assets/css/base.css" />
   <link rel="stylesheet" href="../assets/css/layout.css" />
   <link rel="stylesheet" href="../assets/css/ui.css" />
   <link rel="stylesheet" href="../assets/css/flashcards.css" />
 </head>
-
 <body class="flashcards-page">
-
-  <!-- ===== HEADER ===== -->
   <header class="app-header">
     <div class="app-header__left">
-      <a id="backBtn" class="btn">← Quay lại</a>
-      <strong class="logo">Flashcards</strong>
+      <a id="backBtn" class="btn" role="button">← Quay lại</a>
+      <strong>Flashcards</strong>
     </div>
-
     <div class="user-area">
       <a class="user-account" href="./account.html" title="Tài khoản">
-        <span class="user-account__icon">👤</span>
+        <span class="user-account__icon" aria-hidden="true"></span>
         <span id="userEmail" class="user-account__text"></span>
       </a>
     </div>
   </header>
 
-  <!-- ===== MAIN ===== -->
   <main class="main">
-
-    <section class="card flashcard-wrapper">
-
-      <!-- Flashcard -->
+    <section class="flashcard-wrapper">
       <div class="flashcard-container">
-        <div id="flashcard" class="flashcard">
-
-          <!-- Front -->
+        <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Lật flashcard">
           <div class="flashcard-face flashcard-front">
             <span id="cardWord"></span>
-
             <div class="flashcard-actions flashcard-actions--left">
-              <button
-                id="cardSpeakBtn"
-                class="icon-btn"
-                data-tip="Nghe"
-                type="button"
-              >🔊</button>
-
-              <button
-                id="cardAutoSpeakBtn"
-                class="icon-btn"
-                data-tip="Tự động đọc"
-                type="button"
-              >🔈</button>
+              <button id="cardSpeakBtn" class="icon-btn" data-tip="Nghe phát âm" type="button" aria-label="Nghe phát âm">🔊</button>
+              <button id="cardAutoSpeakBtn" class="icon-btn" data-tip="Tự động đọc" type="button" aria-label="Bật tắt tự động đọc">◉</button>
             </div>
-
             <div class="flashcard-actions flashcard-actions--right">
-              <button
-                id="cardMarkHardBtn"
-                class="icon-btn"
-                data-tip="Từ khó"
-                type="button"
-              >⭐</button>
-
-              <button
-                id="cardMarkKnownBtn"
-                class="icon-btn"
-                data-tip="Đã nhớ"
-                type="button"
-              >✅</button>
+              <button id="cardMarkHardBtn" class="icon-btn" data-tip="Đánh dấu từ khó" type="button" aria-label="Đánh dấu từ khó">★</button>
+              <button id="cardMarkKnownBtn" class="icon-btn" data-tip="Đã nhớ" type="button" aria-label="Đánh dấu đã nhớ">✓</button>
             </div>
           </div>
-
-          <!-- Back -->
           <div class="flashcard-face flashcard-back">
             <span id="cardMeaning"></span>
           </div>
-
         </div>
       </div>
 
-      <!-- Controls -->
-      <div class="flashcard-controls flashcard-controls--fixed">
+      <div class="flashcard-controls">
         <button id="prevBtn" class="btn" type="button">← Trước</button>
-
         <span id="progressText" class="flashcard-progress">0 / 0</span>
-
         <button id="nextBtn" class="btn" type="button">Sau →</button>
-
-        <button id="shuffleBtn" class="btn" type="button">🔀</button>
-
-        <select id="speedSelect" class="input speed-select" title="Tốc độ đọc">
+        <button id="shuffleBtn" class="btn" type="button" title="Xáo trộn">Xáo trộn</button>
+        <select id="speedSelect" class="input speed-select" title="Tốc độ đọc" aria-label="Tốc độ đọc">
           <option value="0.6">0.6x</option>
           <option value="0.8">0.8x</option>
           <option value="1" selected>1x</option>
@@ -100,16 +57,12 @@
           <option value="1.4">1.4x</option>
         </select>
       </div>
-
     </section>
   </main>
 
-  <!-- ===== JS ===== -->
   <script src="../assets/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-  <script src="../assets/js/supabaseClient.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
   <script src="../assets/js/authGuard.js"></script>
   <script src="../assets/js/flashcards.js"></script>
-
 </body>
 </html>

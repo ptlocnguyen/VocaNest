@@ -5,28 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VocaNest</title>
   <link rel="stylesheet" href="./assets/css/base.css" />
+  <link rel="stylesheet" href="./assets/css/layout.css" />
   <link rel="stylesheet" href="./assets/css/index.css" />
 </head>
 <body>
-  <div class="center">
-    <div class="card card--narrow">
+  <main class="center">
+    <section class="loading-shell" aria-live="polite">
+      <div class="loading-mark">V</div>
       <h1>VocaNest</h1>
-      <p>Đang kiểm tra đăng nhập...</p>
-    </div>
-  </div>
+      <p>Đang chuẩn bị không gian học của bạn...</p>
+      <div class="loading-line" aria-hidden="true"></div>
+    </section>
+  </main>
 
   <script src="./assets/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-  <script src="./assets/js/supabaseClient.js"></script>
-
+  <script src="./assets/js/apiClient.js"></script>
   <script>
     (async () => {
       try {
-        const session = window.supabaseClient.auth.session();
-        const hasSession = !!session?.user;
-        window.location.href = hasSession ? "./pages/home.html" : "./pages/auth.html";
+        if (!window.vocaApi.getToken()) {
+          window.location.href = "./pages/auth.html";
+          return;
+        }
+
+        await window.vocaApi.authPost("me");
+        window.location.href = "./pages/home.html";
       } catch (err) {
         console.error(err);
+        window.vocaApi.setToken("");
         window.location.href = "./pages/auth.html";
       }
     })();

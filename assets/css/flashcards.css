@@ -1,292 +1,247 @@
-/* ================================
-   FLASHCARDS – DESKTOP PROMINENT
-================================ */
-
-.flashcards-page{
+.flashcards-page {
   min-height: 100vh;
   overflow-x: hidden;
 }
 
-/* ================================
-   MAIN
-================================ */
-
-.flashcards-page .main{
-  min-height: calc(100vh - 64px);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 16px;
+.flashcards-page .main {
+  width: min(100%, 1120px);
+  display: grid;
+  align-content: center;
+  padding-top: 26px;
 }
 
-/* ================================
-   WRAPPER
-================================ */
+.flashcard-wrapper {
+  display: grid;
+  gap: 18px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
 
-.flashcard-wrapper{
+.flashcard-container {
   width: 100%;
-  max-width: 1600px; /* mở rộng wrapper cho desktop */
-
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  perspective: 1400px;
 }
 
-/* ================================
-   CARD CONTAINER
-================================ */
-
-.flashcard-container{
+.flashcard {
   width: 100%;
-  display: flex;
-  justify-content: center;
-  perspective: 1200px;
-}
-
-/* ================================
-   FLASHCARD – DESKTOP DEFAULT
-================================ */
-
-.flashcard{
-  width: 82vw;              /* CHÌA KHÓA: card chiếm phần lớn viewport */
-  max-width: 1400px;        /* cho desktop lớn */
   aspect-ratio: 16 / 9;
-
   position: relative;
   transform-style: preserve-3d;
-  transition: transform 0.6s ease;
+  transition: transform 480ms ease;
   cursor: pointer;
-
   user-select: none;
 }
 
-.flashcard.is-flipped{
+.flashcard.is-flipped {
   transform: rotateY(180deg);
 }
 
-/* ================================
-   CARD FACE
-================================ */
-
-.flashcard-face{
+.flashcard-face {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-
   display: flex;
   align-items: center;
   justify-content: center;
-
-  border-radius: 24px;
-  border: 1px solid var(--border);
-  background: linear-gradient(180deg, var(--card), var(--card2));
-
-  padding: 48px;
-  padding-bottom: 120px;
-
+  overflow: hidden;
+  padding: 48px 48px 106px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  backface-visibility: hidden;
+  color: var(--text);
+  background: #121d27;
+  box-shadow: var(--shadow);
+  font-size: clamp(40px, 6vw, 76px);
   font-weight: 800;
+  line-height: 1.2;
   text-align: center;
-  line-height: 1.35;
-
-  font-size: clamp(52px, 2.8vw, 80px);
+  overflow-wrap: anywhere;
 }
 
-.flashcard-back{
-  transform: rotateY(180deg);
-  font-weight: 600;
-  color: var(--muted);
-  font-size: clamp(30px, 1.6vw, 44px);
-}
-
-/* ================================
-   CARD ACTIONS
-================================ */
-
-.flashcard-actions{
+.flashcard-face::before {
+  content: "TỪ VỰNG";
   position: absolute;
-  bottom: 24px;
-  display: flex;
-  gap: 14px;
+  top: 22px;
+  left: 24px;
+  color: var(--primary);
+  font-size: 11px;
+  font-weight: 800;
 }
 
-.flashcard-actions--left{ left: 24px; }
-.flashcard-actions--right{ right: 24px; }
+.flashcard-back {
+  transform: rotateY(180deg);
+  color: #dce4e9;
+  background: #17231f;
+  font-size: clamp(28px, 4vw, 52px);
+  font-weight: 700;
+}
 
-.icon-btn{
-  background: rgba(255,255,255,0.16);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  padding: 12px 16px;
-  font-size: 20px;
+.flashcard-back::before {
+  content: "NGHĨA";
+  color: var(--warning);
+}
+
+.flashcard-actions {
+  position: absolute;
+  bottom: 22px;
+  display: flex;
+  gap: 8px;
+}
+
+.flashcard-actions--left {
+  left: 22px;
+}
+
+.flashcard-actions--right {
+  right: 22px;
+}
+
+.icon-btn {
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--border-strong);
+  border-radius: 7px;
+  color: #c9d4dc;
+  background: rgba(8, 14, 19, 0.78);
+  font-size: 19px;
   cursor: pointer;
 }
 
-.icon-btn.active{
-  border-color: rgba(106,169,255,0.7);
-  background: rgba(106,169,255,0.3);
+.icon-btn:hover,
+.icon-btn.active {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(53, 198, 161, 0.12);
 }
 
-/* ================================
-   CONTROLS
-================================ */
+.icon-btn[data-tip] {
+  position: relative;
+}
 
-.flashcard-controls{
-  width: 82vw;              /* theo card */
-  max-width: 1400px;
+.icon-btn[data-tip]::after {
+  content: attr(data-tip);
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  z-index: 5;
+  padding: 5px 7px;
+  border-radius: 5px;
+  color: var(--text);
+  background: #03070a;
+  font-size: 11px;
+  font-weight: 650;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(-50%, 4px);
+  transition: opacity 120ms ease, transform 120ms ease;
+}
 
-  display: flex;
-  justify-content: center;
+.icon-btn[data-tip]:hover::after {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.flashcard-controls {
+  min-height: 62px;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr auto auto;
   align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
-.flashcard-progress{
-  min-width: 100px;
-  text-align: center;
-  font-size: 16px;
+.flashcard-controls #prevBtn {
+  justify-self: end;
+}
+
+.flashcard-controls #nextBtn {
+  justify-self: start;
+}
+
+.flashcard-progress {
+  min-width: 86px;
   color: var(--muted);
+  font-size: 14px;
+  font-weight: 750;
+  text-align: center;
 }
 
-.speed-select{
-  width: auto;              /* không ăn full */
-  min-width: 84px;          /* đủ cho “1x” */
-  max-width: 120px;         /* KHÓA chiều dài */
-
-  height: 44px;
-  padding: 8px 12px;
-
-  background: linear-gradient(
-    180deg,
-    rgba(40, 48, 66, 0.95),
-    rgba(26, 32, 48, 0.95)
-  );
-  color: #fff;
-
-  border: 1px solid rgba(255,255,255,0.18);
-  border-radius: 12px;
-
-  appearance: none;
+.speed-select {
+  width: 92px;
 }
 
-/* Dropdown options */
-.speed-select option{
-  background-color: #1c2335; /* nền tối */
-  color: #ffffff;
-}
-
-/* Option khi hover / focus */
-.speed-select option:hover,
-.speed-select option:focus{
-  background-color: #2a3555;
-}
-
-/* Option đang chọn */
-.speed-select option:checked{
-  background-color: #3559a6;
-  color: #ffffff;
-}
-
-.speed-select{
-  box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,0.06),
-    0 8px 24px rgba(0,0,0,0.35);
-}
-
-
-/* ================================
-   LARGE DESKTOP / WIDE
-================================ */
-
-@media (min-width: 1600px){
-  .flashcard{
-    width: 78vw;
-    max-width: 1500px;
+@media (max-width: 680px) {
+  .flashcards-page .main {
+    align-content: start;
+    padding: 14px 10px 30px;
   }
 
-  .flashcard-controls{
-    width: 78vw;
-    max-width: 1500px;
+  .flashcard {
+    aspect-ratio: 4 / 5;
   }
 
-  .flashcard-face{
-    font-size: clamp(60px, 2.6vw, 92px);
+  .flashcard-face {
+    padding: 54px 18px 92px;
+    font-size: clamp(30px, 10vw, 46px);
   }
 
-  .flashcard-back{
-    font-size: clamp(34px, 1.8vw, 52px);
-  }
-}
-
-/* ================================
-   MOBILE – GIỮ NGUYÊN
-================================ */
-
-@media (max-width: 520px){
-
-  .flashcards-page .main{
-    align-items: flex-start;
-    padding: 10px;
+  .flashcard-back {
+    font-size: clamp(23px, 7vw, 34px);
   }
 
-  .flashcard-wrapper{
-    gap: 14px;
-  }
-
-  .flashcard{
-    width: 100%;
-    aspect-ratio: 3 / 4;
-  }
-
-  .flashcard-face{
-    font-size: clamp(28px, 7.5vw, 40px);
-    padding: 18px;
-    padding-bottom: 88px;
-  }
-
-  .flashcard-back{
-    font-size: clamp(20px, 5.5vw, 28px);
-  }
-
-  .flashcard-actions{
+  .flashcard-actions {
     bottom: 16px;
   }
 
-  .flashcard-controls{
-    display: grid;
+  .flashcard-actions--left {
+    left: 14px;
+  }
+
+  .flashcard-actions--right {
+    right: 14px;
+  }
+
+  .icon-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .flashcard-controls {
     grid-template-columns: 1fr auto 1fr;
     grid-template-areas:
       "prev progress next"
       "shuffle speed speed";
-    gap: 10px;
   }
 
-  /* Đẩy icon sát mép hơn để tránh đè */
-  .flashcard-actions--left{
-    left: 10px;
+  #prevBtn {
+    grid-area: prev;
+    width: 100%;
   }
 
-  .flashcard-actions--right{
-    right: 10px;
+  #nextBtn {
+    grid-area: next;
+    width: 100%;
   }
 
-  /* Cho phép wrap nhẹ nếu màn hình quá hẹp */
-  .flashcard-actions{
-    gap: 8px;
-    flex-wrap: wrap;
-    max-width: calc(100% - 20px);
+  #shuffleBtn {
+    grid-area: shuffle;
+    width: 100%;
   }
 
-  /* Icon nhỏ lại 1 chút cho mobile */
-  .icon-btn{
-    padding: 8px 10px;
-    font-size: 16px;
+  #speedSelect {
+    grid-area: speed;
+    width: 100%;
   }
 
-  #prevBtn{ grid-area: prev; width: 100%; }
-  #nextBtn{ grid-area: next; width: 100%; }
-  #shuffleBtn{ grid-area: shuffle; width: 100%; }
-  #speedSelect{ grid-area: speed; width: 100%; }
-  .flashcard-progress{ grid-area: progress; }
+  .flashcard-progress {
+    grid-area: progress;
+  }
 }

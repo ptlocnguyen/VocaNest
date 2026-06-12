@@ -1,59 +1,70 @@
 <!doctype html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VocaNest - Đăng nhập</title>
-    <link rel="stylesheet" href="../assets/css/base.css" />
-    <link rel="stylesheet" href="../assets/css/layout.css" />
-    <link rel="stylesheet" href="../assets/css/ui.css" />
-    <link rel="stylesheet" href="../assets/css/auth.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaNest - Đăng nhập</title>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/auth.css" />
 </head>
-
-<body>
-    <div class="center">
-        <div class="card card--narrow">
-            <div class="auth-header">
-                <div>
-                    <h1 id="authTitle">Đăng nhập</h1>
-                    <p id="authDesc">
-                        Truy cập tài khoản để quản lý bộ từ vựng và flashcards.
-                    </p>
-                </div>
-                <span class="badge" id="modeBadge">Login</span>
-            </div>
-
-            <div class="auth-form">
-                <label class="label" for="emailInput">Email</label>
-                <input id="emailInput" class="input" type="email" placeholder="you@example.com" autocomplete="email" />
-
-                <label class="label" for="passwordInput">Mật khẩu</label>
-                <input id="passwordInput" class="input" type="password" placeholder="Tối thiểu 6 ký tự"
-                    autocomplete="current-password" />
-
-                <p class="muted" style="text-align:right; margin-top:4px;">
-                    <a href="./forgot-password.html">Quên mật khẩu?</a>
-                </p>
-
-                <button id="submitBtn" class="btn primary block">Đăng nhập</button>
-
-                <div class="helper">
-                    <span id="toggleText">Chưa có tài khoản?</span>
-                    <a href="#" id="toggleMode">Đăng ký</a>
-                </div>
-
-                <div id="alertBox" class="alert" style="display:none;"></div>
-            </div>
+<body class="auth-page">
+  <main class="center">
+    <div class="auth-shell">
+      <aside class="auth-brand">
+        <div class="auth-brand__mark">VocaNest</div>
+        <div class="auth-brand__copy">
+          <h2>Ghi nhớ từ vựng theo cách của bạn.</h2>
+          <p>Tạo bộ từ cá nhân, ôn bằng flashcards và học đều đặn mỗi ngày.</p>
+          <div class="auth-points">
+            <div class="auth-point"><i data-lucide="library"></i><span>Quản lý bộ từ gọn gàng</span></div>
+            <div class="auth-point"><i data-lucide="layers-3"></i><span>Ôn tập với flashcards</span></div>
+            <div class="auth-point"><i data-lucide="volume-2"></i><span>Luyện phát âm trực tiếp</span></div>
+          </div>
         </div>
+        <div class="auth-brand__foot">Dữ liệu của bạn được lưu trên Google Drive.</div>
+      </aside>
+
+      <section class="auth-panel card">
+        <div class="auth-header">
+          <div>
+            <h1 id="authTitle">Đăng nhập</h1>
+            <p id="authDesc">Tiếp tục hành trình học từ vựng của bạn.</p>
+          </div>
+          <span class="badge" id="modeBadge">Login</span>
+        </div>
+
+        <div class="auth-form">
+          <div class="auth-field">
+            <label class="label" for="emailInput">Email</label>
+            <input id="emailInput" class="input" type="email" placeholder="you@example.com" autocomplete="email" />
+          </div>
+
+          <div class="auth-field">
+            <label class="label" for="passwordInput">Mật khẩu</label>
+            <input id="passwordInput" class="input" type="password" minlength="6" placeholder="Tối thiểu 6 ký tự" autocomplete="current-password" />
+          </div>
+
+          <p class="auth-forgot"><a href="./forgot-password.html">Quên mật khẩu?</a></p>
+
+          <button id="submitBtn" class="btn primary block" type="button">Đăng nhập</button>
+
+          <div class="helper">
+            <span id="toggleText">Chưa có tài khoản?</span>
+            <a href="#" id="toggleMode">Đăng ký</a>
+          </div>
+
+          <div id="alertBox" class="alert" style="display:none;"></div>
+        </div>
+      </section>
     </div>
+  </main>
 
-    <script src="../assets/js/config.js"></script>
-
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-
-    <script src="../assets/js/supabaseClient.js"></script>
-    <script src="../assets/js/auth.js"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </body>
-
 </html>

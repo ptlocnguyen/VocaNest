@@ -1,7 +1,8 @@
-const userEmailEl = document.getElementById("userEmail");
+(async () => {
+  const userEmailEl = document.getElementById("userEmail");
+  const user = await requireAuth();
 
-// Guard
-const user = requireAuth();
-if (user) {
-  userEmailEl.textContent = user.email;
-}
+  if (user && userEmailEl) {
+    userEmailEl.textContent = user.email;
+  }
+})();

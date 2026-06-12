@@ -15,7 +15,7 @@
     const viEl = document.getElementById("quoteVi");
 
     if (enEl) {
-      enEl.textContent = `“${data.en}” — ${data.author}`;
+      enEl.textContent = `"${data.en}" — ${data.author}`;
     }
 
     if (viEl) {

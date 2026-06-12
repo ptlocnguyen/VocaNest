@@ -1,113 +1,94 @@
 <!doctype html>
 <html lang="vi">
-
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VocaNest - Home</title>
-
+  <title>VocaNest - Trang chủ</title>
   <link rel="stylesheet" href="../assets/css/base.css" />
   <link rel="stylesheet" href="../assets/css/layout.css" />
   <link rel="stylesheet" href="../assets/css/ui.css" />
   <link rel="stylesheet" href="../assets/css/home.css" />
   <link rel="stylesheet" href="../assets/css/footer.css" />
 </head>
-
 <body class="home-page">
-
-  <!-- ===== HEADER ===== -->
   <header class="app-header">
     <div class="app-header__left">
       <a href="./home.html" class="logo">VocaNest</a>
-
-      <nav class="nav">
+      <nav class="nav" aria-label="Điều hướng chính">
         <a class="nav__link" href="./vocab-sets.html">Bộ từ vựng</a>
       </nav>
     </div>
-
     <div class="user-area">
       <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
-        <span class="user-account__icon">👤</span>
+        <span class="user-account__icon" aria-hidden="true"></span>
         <span id="userEmail" class="user-account__text"></span>
       </a>
     </div>
   </header>
 
-  <!-- ===== MAIN ===== -->
   <main class="main">
-
-    <section class="card">
-      <h2>Chào mừng</h2>
-      <p>
-        Đây là nơi bạn quản lý các bộ từ vựng, flashcards và đề thi TOEIC / IELTS.
-      </p>
-    </section>
-
-    <section class="grid grid--cards">
-      <div class="card">
-        <h3>Bộ từ vựng</h3>
-        <p>Tạo và quản lý các bộ từ vựng cá nhân, hoặc xem bộ công khai.</p>
-        <a class="btn primary" href="./vocab-sets.html">Mở danh sách bộ từ</a>
+    <section class="home-welcome">
+      <div>
+        <div class="home-welcome__eyebrow">Không gian học của bạn</div>
+        <h1>Học ít một, nhớ lâu hơn.</h1>
+        <p>Tạo bộ từ theo chủ đề, luyện với flashcards và quay lại ôn tập bất cứ lúc nào.</p>
       </div>
-
-      <div class="card">
-        <h3>Flashcards</h3>
-        <p>Học từ vựng bằng thẻ, gắn với từng bộ từ vựng cụ thể.</p>
-        <a class="btn primary" href="./vocab-sets.html">
-          Chọn bộ để học
-        </a>
-      </div>
-
-      <div class="card">
-        <h3>Đề thi TOEIC</h3>
-        <p>Upload đề, file nghe, đáp án. Không gian tập trung và đếm giờ trong lúc giải đề.</p>
-        <button class="btn" disabled>Đang phát triển</button>
+      <div class="home-welcome__badge" aria-hidden="true">
+        <strong>15 phút</strong>
+        <span>mỗi ngày để duy trì thói quen</span>
       </div>
     </section>
 
+    <section class="grid grid--cards" aria-label="Tính năng học tập">
+      <article class="card feature-card">
+        <h2>Bộ từ vựng</h2>
+        <p>Tạo bộ từ cá nhân, tìm kiếm nhanh và khám phá những bộ công khai từ cộng đồng.</p>
+        <a class="btn primary" href="./vocab-sets.html"><i data-lucide="library"></i> Mở bộ từ</a>
+      </article>
+
+      <article class="card feature-card feature-card--learn">
+        <h2>Flashcards</h2>
+        <p>Lật thẻ, nghe phát âm, đánh dấu từ khó và xáo trộn thứ tự để ôn tập hiệu quả hơn.</p>
+        <a class="btn" href="./vocab-sets.html"><i data-lucide="layers-3"></i> Chọn bộ để học</a>
+      </article>
+
+      <article class="card feature-card feature-card--exam">
+        <h2>Đề thi TOEIC</h2>
+        <p>Không gian luyện đề tập trung với file nghe, đáp án và đồng hồ đếm giờ.</p>
+        <span class="feature-card__status">Đang phát triển</span>
+      </article>
+    </section>
   </main>
 
-  <!-- ===== FOOTER (GIỮ NGUYÊN – FULL) ===== -->
   <footer class="app-footer">
     <div class="footer-inner">
-
       <div class="footer-col">
         <h4>VocaNest</h4>
-        <p>
-          Nền tảng học từ vựng & flashcards giúp bạn học tiếng Anh hiệu quả mỗi ngày.
-        </p>
+        <p>Công cụ học từ vựng và flashcards đơn giản, riêng tư, dễ quay lại mỗi ngày.</p>
       </div>
-
       <div class="footer-col">
         <h4>Động lực hôm nay</h4>
         <p id="quoteEn" class="footer-quote-en"></p>
         <p id="quoteVi" class="footer-quote-vi"></p>
       </div>
-
       <div class="footer-col">
-        <h4>Thông tin</h4>
+        <h4>Điều hướng</h4>
         <ul class="footer-links">
           <li><a href="./home.html">Trang chủ</a></li>
           <li><a href="./vocab-sets.html">Bộ từ vựng</a></li>
           <li><a href="./account.html">Tài khoản</a></li>
         </ul>
       </div>
-
     </div>
-
-    <div class="footer-bottom">
-      © 2025 VocaNest · Learn English every day
-    </div>
+    <div class="footer-bottom">© 2026 VocaNest · Learn English every day</div>
   </footer>
 
-  <!-- ===== JS ===== -->
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
   <script src="../assets/js/config.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-  <script src="../assets/js/supabaseClient.js"></script>
-
+  <script src="../assets/js/apiClient.js"></script>
   <script src="../assets/js/authGuard.js"></script>
   <script src="../assets/js/home.js"></script>
   <script src="../assets/js/footer.js"></script>
 </body>
-
 </html>

@@ -1,19 +1,12 @@
-// assets/js/flashcards.js
-// Flashcards: load vocab_items theo vocab_set_id (URL ?set=...)
-// Supabase v1 + JS thuần
-
-(() => {
-  // ===== Auth =====
-  const user = window.requireAuth();
+(async () => {
+  const user = await window.requireAuth();
   if (!user) return;
 
-  // Header email
   const userEmailEl = document.getElementById("userEmail");
   if (userEmailEl) {
     userEmailEl.textContent = user.email;
   }
 
-  // Back button (quay lại trang trước)
   const backBtn = document.getElementById("backBtn");
   if (backBtn) {
     backBtn.addEventListener("click", () => {
@@ -25,7 +18,6 @@
     });
   }
 
-  // ===== Read setId from URL =====
   const params = new URLSearchParams(window.location.search);
   const setId = params.get("set");
 
@@ -35,7 +27,6 @@
     return;
   }
 
-  // ===== Elements =====
   const flashcardEl = document.getElementById("flashcard");
   const wordEl = document.getElementById("cardWord");
   const meaningEl = document.getElementById("cardMeaning");
@@ -45,16 +36,12 @@
   const shuffleBtn = document.getElementById("shuffleBtn");
   const progressText = document.getElementById("progressText");
 
-  // Embedded actions in card
   const cardSpeakBtn = document.getElementById("cardSpeakBtn");
   const cardAutoSpeakBtn = document.getElementById("cardAutoSpeakBtn");
   const cardMarkHardBtn = document.getElementById("cardMarkHardBtn");
   const cardMarkKnownBtn = document.getElementById("cardMarkKnownBtn");
-
-  // Speed select
   const speedSelect = document.getElementById("speedSelect");
 
-  // ===== State =====
   let cards = [];
   let originalCards = [];
   let currentIndex = 0;
@@ -62,17 +49,14 @@
 
   let speakRate = 1;
   let isShuffle = false;
-  let autoSpeak = false;
 
-  // ===== Auto speak persistence =====
   const AUTO_SPEAK_KEY = "voca_auto_speak";
-  autoSpeak = localStorage.getItem(AUTO_SPEAK_KEY) === "1";
+  let autoSpeak = localStorage.getItem(AUTO_SPEAK_KEY) === "1";
 
   if (cardAutoSpeakBtn) {
     cardAutoSpeakBtn.classList.toggle("active", autoSpeak);
   }
 
-  // ===== Mark persistence =====
   const MARK_KEY_PREFIX = "voca_flashcard_mark_";
 
   function getMark(itemId) {
@@ -105,7 +89,6 @@
     }
   }
 
-  // ===== TTS =====
   function speakWord(word) {
     if (!word) return;
 
@@ -117,7 +100,6 @@
     speechSynthesis.speak(utter);
   }
 
-  // ===== Shuffle =====
   function shuffleArray(arr) {
     const a = [...arr];
     for (let i = a.length - 1; i > 0; i--) {
@@ -127,7 +109,6 @@
     return a;
   }
 
-  // ===== UI helpers =====
   function setLoading(text) {
     if (wordEl) wordEl.textContent = text || "Đang tải...";
     if (meaningEl) meaningEl.textContent = " ";
@@ -140,37 +121,6 @@
     if (progressText) progressText.textContent = "0 / 0";
   }
 
-  function renderCard() {
-    // Reset card về mặt trước
-    resetCardFace();
-
-    const card = cards[currentIndex];
-    if (!card) return;
-
-    // Render CHỈ TỪ
-    wordEl.textContent = card.word;
-
-    // KHÔNG render meaning ở đây
-    meaningEl.textContent = "";
-
-    // Nav state
-    if (prevBtn) prevBtn.disabled = currentIndex <= 0;
-    if (nextBtn) nextBtn.disabled = currentIndex >= cards.length - 1;
-
-    // Progress
-    if (progressText) {
-      progressText.textContent = `${currentIndex + 1} / ${cards.length}`;
-    }
-
-    // Mark UI
-    updateMarkUI(card.id);
-
-    // Auto speak
-    if (autoSpeak) {
-      speakWord(card.word);
-    }
-  }
-
   function resetCardFace() {
     if (isFlipped) {
       flashcardEl.classList.remove("is-flipped");
@@ -178,28 +128,50 @@
     }
   }
 
-  // ===== Events =====
+  function renderCard() {
+    resetCardFace();
 
-  // Flip card
+    const card = cards[currentIndex];
+    if (!card) return;
+
+    wordEl.textContent = card.word;
+    meaningEl.textContent = "";
+
+    if (prevBtn) prevBtn.disabled = currentIndex <= 0;
+    if (nextBtn) nextBtn.disabled = currentIndex >= cards.length - 1;
+
+    if (progressText) {
+      progressText.textContent = `${currentIndex + 1} / ${cards.length}`;
+    }
+
+    updateMarkUI(card.id);
+
+    if (autoSpeak) {
+      speakWord(card.word);
+    }
+  }
+
   flashcardEl.addEventListener("click", () => {
     if (!cards.length) return;
 
     isFlipped = !isFlipped;
     flashcardEl.classList.toggle("is-flipped", isFlipped);
 
-    // Chỉ khi lật sang mặt sau mới render meaning
     if (isFlipped) {
       const card = cards[currentIndex];
-      if (card) {
-        meaningEl.textContent = card.meaning;
-      }
+      if (card) meaningEl.textContent = card.meaning;
     } else {
-      // Quay về mặt trước thì ẩn nghĩa
       meaningEl.textContent = "";
     }
   });
 
-  // Navigation
+  flashcardEl.addEventListener("keydown", (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      flashcardEl.click();
+    }
+  });
+
   if (prevBtn) {
     prevBtn.addEventListener("click", () => {
       if (currentIndex > 0) {
@@ -218,7 +190,6 @@
     });
   }
 
-  // Shuffle
   if (shuffleBtn) {
     shuffleBtn.addEventListener("click", () => {
       if (!cards.length) return;
@@ -232,14 +203,11 @@
     });
   }
 
-  // Speed select
   if (speedSelect) {
     speedSelect.addEventListener("change", () => {
       speakRate = parseFloat(speedSelect.value);
     });
   }
-
-  // ===== Embedded card actions =====
 
   if (cardSpeakBtn) {
     cardSpeakBtn.addEventListener("click", (e) => {
@@ -279,67 +247,45 @@
     });
   }
 
-  // ===== Load data =====
   async function loadSetAndItems() {
     try {
       setLoading("Đang tải bộ từ...");
 
-      const { data: setData, error: setErr } = await supabaseClient
-        .from("vocab_sets")
-        .select("id,title,is_public,user_id")
-        .eq("id", setId)
-        .single();
-
-      if (setErr || !setData) {
-        alert("Không tìm thấy bộ từ vựng.");
-        window.location.replace("./vocab-sets.html");
-        return;
-      }
-
-      const canView = setData.user_id === user.id || setData.is_public;
-      if (!canView) {
-        alert("Bạn không có quyền học bộ từ này.");
-        window.location.replace("./vocab-sets.html");
-        return;
-      }
+      const { data: setData } = await window.vocaApi.authPost("getSet", {
+        setId
+      });
 
       document.title = `VocaNest - Flashcards: ${setData.title}`;
 
       setLoading("Đang tải danh sách từ...");
 
-      const { data: items, error: itemsErr } = await supabaseClient
-        .from("vocab_items")
-        .select("id,word,meaning")
-        .eq("vocab_set_id", setId)
-        .order("id", { ascending: true });
+      const { data: items } = await window.vocaApi.authPost("listItems", {
+        setId
+      });
 
-      if (itemsErr || !items) {
-        alert("Lỗi tải danh sách từ.");
-        window.location.replace("./vocab-set-detail.html?id=" + setId);
-        return;
-      }
-
-      if (items.length === 0) {
+      if (!items || items.length === 0) {
         setLoading("Bộ từ chưa có từ nào");
         return;
       }
 
-      cards = items.map(it => ({
-        id: it.id,
-        word: it.word || "",
-        meaning: it.meaning || ""
-      }));
+      cards = items
+        .slice()
+        .reverse()
+        .map(it => ({
+          id: it.id,
+          word: it.word || "",
+          meaning: it.meaning || ""
+        }));
 
       originalCards = [...cards];
       currentIndex = 0;
       renderCard();
     } catch (err) {
       console.error(err);
-      alert("Có lỗi xảy ra khi tải flashcards.");
+      alert(err.message || "Có lỗi xảy ra khi tải flashcards.");
       window.location.replace("./vocab-sets.html");
     }
   }
 
-  // ===== Init =====
   loadSetAndItems();
 })();

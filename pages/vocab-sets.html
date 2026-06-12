@@ -1,125 +1,110 @@
 <!doctype html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VocaNest - Bộ từ vựng</title>
-    <link rel="stylesheet" href="../assets/css/base.css" />
-    <link rel="stylesheet" href="../assets/css/layout.css" />
-    <link rel="stylesheet" href="../assets/css/ui.css" />
-    <link rel="stylesheet" href="../assets/css/vocab-sets.css" />
-    <link rel="stylesheet" href="../assets/css/footer.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaNest - Bộ từ vựng</title>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/vocab-sets.css" />
+  <link rel="stylesheet" href="../assets/css/footer.css" />
 </head>
-
 <body class="vocab-sets-page">
-    <header class="app-header">
-        <div class="app-header__left">
-            <a href="./home.html" class="logo">
-                VocaNest
-            </a>
-
-            <nav class="nav">
-                <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
-            </nav>
-        </div>
-
-        <div class="user-area">
-            <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
-                <span class="user-account__icon">👤</span>
-                <span id="userEmail" class="user-account__text"></span>
-            </a>
-        </div>
-    </header>
-
-    <main class="main">
-        <section class="card header-card">
-            <div class="header-row">
-                <div>
-                    <h2>Bộ từ vựng</h2>
-                    <p class="muted">Quản lý bộ của bạn và khám phá bộ công khai</p>
-                </div>
-
-                <button id="openCreateModal" class="btn primary">Tạo bộ mới</button>
-            </div>
-        </section>
-
-        <div class="two-cols">
-            <section class="card">
-                <div class="section-head">
-                    <h3>Của tôi</h3>
-                    <p class="muted">Bạn có toàn quyền chỉnh sửa</p>
-                </div>
-                <div class="vocab-box">
-                    <input id="mySearchInput" class="input vocab-box__search" placeholder="Tìm bộ từ vựng của bạn..." />
-
-                    <div id="myVocabList" class="grid vocab-box__list"></div>
-                </div>
-            </section>
-
-            <section class="card">
-                <div class="section-head">
-                    <h3>Công khai</h3>
-                    <p class="muted">Chỉ xem, không chỉnh sửa</p>
-                </div>
-                <div class="vocab-box">
-                    <input id="publicSearchInput" class="input vocab-box__search"
-                        placeholder="Tìm bộ từ vựng công khai..." />
-
-                    <div id="publicVocabList" class="grid vocab-box__list"></div>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <div id="modal" class="modal hidden" aria-hidden="true">
-        <div class="modal-card">
-            <div class="card">
-                <div class="modal-head">
-                    <h3>Tạo bộ từ vựng</h3>
-                    <button id="closeModalX" class="btn btn-icon" type="button" aria-label="Đóng">×</button>
-                </div>
-
-                <div class="form-grid">
-                    <div>
-                        <label class="label" for="titleInput">Tên bộ</label>
-                        <input id="titleInput" class="input" placeholder="Ví dụ: 600 TOEIC Words" />
-                    </div>
-
-                    <div>
-                        <label class="label" for="descInput">Mô tả</label>
-                        <input id="descInput" class="input" placeholder="Không bắt buộc" />
-                    </div>
-
-                    <label class="check">
-                        <input id="publicCheckbox" type="checkbox" />
-                        <span>Công khai (mọi người có thể xem)</span>
-                    </label>
-
-                    <div class="row row--actions">
-                        <button id="createBtn" class="btn primary" type="button">Tạo</button>
-                        <button id="closeModal" class="btn" type="button">Huỷ</button>
-                    </div>
-
-                    <div id="modalAlert" class="alert" style="display:none;"></div>
-                </div>
-            </div>
-        </div>
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
+      </nav>
     </div>
+    <div class="user-area">
+      <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
 
-    <footer class="app-footer simple-footer">
-        <div class="footer-bottom">
-            © 2025 VocaNest · Learn English every day
+  <main class="main">
+    <section class="page-heading">
+      <div>
+        <h1>Thư viện từ vựng</h1>
+        <p>Quản lý bộ từ của bạn và học thêm từ những bộ công khai.</p>
+      </div>
+      <button id="openCreateModal" class="btn primary" type="button"><i data-lucide="plus"></i> Tạo bộ mới</button>
+    </section>
+
+    <div class="two-cols">
+      <section class="card collection-panel">
+        <div class="collection-panel__head">
+          <div>
+            <h2>Bộ của tôi</h2>
+            <p class="muted">Bạn có toàn quyền chỉnh sửa</p>
+          </div>
+          <span class="collection-panel__count">Cá nhân</span>
         </div>
-    </footer>
+        <div class="vocab-box">
+          <input id="mySearchInput" class="input vocab-box__search" type="search" placeholder="Tìm trong bộ của tôi..." />
+          <div id="myVocabList" class="grid vocab-box__list"></div>
+        </div>
+      </section>
 
-    <script src="../assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-    <script src="../assets/js/supabaseClient.js"></script>
+      <section class="card collection-panel">
+        <div class="collection-panel__head">
+          <div>
+            <h2>Khám phá</h2>
+            <p class="muted">Bộ công khai từ người học khác</p>
+          </div>
+          <span class="collection-panel__count">Cộng đồng</span>
+        </div>
+        <div class="vocab-box">
+          <input id="publicSearchInput" class="input vocab-box__search" type="search" placeholder="Tìm bộ công khai..." />
+          <div id="publicVocabList" class="grid vocab-box__list"></div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-    <script src="../assets/js/authGuard.js"></script>
-    <script src="../assets/js/vocabSets.js"></script>
-    <script src="../assets/js/footer.js"></script>
+  <div id="modal" class="modal hidden" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="createSetTitle">
+      <section class="card">
+        <div class="modal-head">
+          <h2 id="createSetTitle">Tạo bộ từ vựng</h2>
+          <button id="closeModalX" class="btn btn-icon" type="button" aria-label="Đóng">×</button>
+        </div>
+        <div class="form-grid">
+          <div>
+            <label class="label" for="titleInput">Tên bộ</label>
+            <input id="titleInput" class="input" placeholder="Ví dụ: 600 TOEIC Words" />
+          </div>
+          <div>
+            <label class="label" for="descInput">Mô tả</label>
+            <input id="descInput" class="input" placeholder="Mục tiêu hoặc chủ đề của bộ từ" />
+          </div>
+          <label class="check">
+            <input id="publicCheckbox" type="checkbox" />
+            <span>Cho phép mọi người xem bộ từ này</span>
+          </label>
+          <div class="row row--actions">
+            <button id="closeModal" class="btn" type="button">Hủy</button>
+            <button id="createBtn" class="btn primary" type="button">Tạo bộ</button>
+          </div>
+          <div id="modalAlert" class="alert" style="display:none;"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <footer class="app-footer simple-footer">
+    <div class="footer-bottom">© 2026 VocaNest · Learn English every day</div>
+  </footer>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/vocabSets.js"></script>
 </body>
-
 </html>

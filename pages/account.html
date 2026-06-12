@@ -1,83 +1,72 @@
 <!doctype html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VocaNest - Tài khoản</title>
-
-    <!-- Base + auth + account CSS -->
-    <link rel="stylesheet" href="../assets/css/base.css" />
-    <link rel="stylesheet" href="../assets/css/layout.css" />
-    <link rel="stylesheet" href="../assets/css/ui.css" />
-    <link rel="stylesheet" href="../assets/css/account.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaNest - Tài khoản</title>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/account.css" />
 </head>
+<body class="account-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link" href="./vocab-sets.html">Bộ từ vựng</a>
+      </nav>
+    </div>
+  </header>
 
-<body>
-    <div class="center">
-        <div class="card card--narrow">
-
-            <!-- Header -->
-            <div class="auth-header">
-                <div>
-                    <h1>Tài khoản</h1>
-                    <p>Thông tin đăng ký và bảo mật</p>
-                </div>
-            </div>
-
-            <!-- ===== Thông tin tài khoản ===== -->
-            <div class="account-info">
-                <div class="account-info__item">
-                    <span class="label">Email</span>
-                    <div id="accountEmail" class="account-info__value"></div>
-                </div>
-
-                <div class="account-info__item">
-                    <span class="label">Ngày tạo tài khoản</span>
-                    <div id="accountCreatedAt" class="account-info__value"></div>
-                </div>
-            </div>
-
-            <hr class="account-divider" />
-
-            <!-- ===== Đổi mật khẩu ===== -->
-            <div class="form-grid">
-
-                <div class="account-field">
-                    <label class="label" for="newPassword">Mật khẩu mới</label>
-                    <input id="newPassword" class="input" type="password" placeholder="Tối thiểu 6 ký tự" />
-                    <div class="account-hint">
-                        Sau khi đổi mật khẩu, bạn không cần đăng nhập lại
-                    </div>
-                </div>
-
-                <button id="changePasswordBtn" class="btn primary block">
-                    Đổi mật khẩu
-                </button>
-
-                <hr class="account-divider" />
-
-                <button id="logoutBtn" class="btn btn-danger block">
-                    Đăng xuất
-                </button>
-
-                <div id="alertBox" class="alert" style="display:none;"></div>
-            </div>
-
-            <!-- Back -->
-            <p style="margin-top:14px; text-align:center;">
-                <a href="./home.html">← Quay về Home</a>
-            </p>
-
-        </div>
+  <main class="main">
+    <div class="account-heading">
+      <h1>Tài khoản</h1>
+      <p>Quản lý thông tin đăng ký, mật khẩu và phiên đăng nhập.</p>
     </div>
 
-    <!-- JS -->
-    <script src="../assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-    <script src="../assets/js/supabaseClient.js"></script>
-    <script src="../assets/js/authGuard.js"></script>
-    <script src="../assets/js/account.js"></script>
-</body>
+    <div class="account-layout">
+      <section class="card">
+        <div class="account-card__head">
+          <span class="account-card__icon"><i data-lucide="user-round"></i></span>
+          <h2>Thông tin cá nhân</h2>
+        </div>
+        <div class="account-info">
+          <div class="account-info__item">
+            <span class="label">Email</span>
+            <div id="accountEmail" class="account-info__value"></div>
+          </div>
+          <div class="account-info__item">
+            <span class="label">Ngày tạo tài khoản</span>
+            <div id="accountCreatedAt" class="account-info__value"></div>
+          </div>
+        </div>
+      </section>
 
+      <section class="card">
+        <div class="account-card__head">
+          <span class="account-card__icon"><i data-lucide="shield-check"></i></span>
+          <h2>Bảo mật</h2>
+        </div>
+        <div class="account-field">
+          <label class="label" for="newPassword">Mật khẩu mới</label>
+          <input id="newPassword" class="input" type="password" minlength="6" placeholder="Tối thiểu 6 ký tự" autocomplete="new-password" />
+          <div class="account-hint">Sau khi đổi mật khẩu, phiên đăng nhập hiện tại vẫn được giữ nguyên.</div>
+        </div>
+        <div class="account-actions">
+          <button id="changePasswordBtn" class="btn primary" type="button">Đổi mật khẩu</button>
+          <button id="logoutBtn" class="btn btn-danger" type="button">Đăng xuất</button>
+        </div>
+        <div id="alertBox" class="alert" style="display:none;"></div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/account.js"></script>
+</body>
 </html>

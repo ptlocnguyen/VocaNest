@@ -1,160 +1,106 @@
 <!doctype html>
 <html lang="vi">
-
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VocaNest - Chi tiết bộ từ</title>
-
-    <link rel="stylesheet" href="../assets/css/base.css" />
-    <link rel="stylesheet" href="../assets/css/layout.css" />
-    <link rel="stylesheet" href="../assets/css/ui.css" />
-    <link rel="stylesheet" href="../assets/css/vocab-set-detail.css" />
-    <link rel="stylesheet" href="../assets/css/footer.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VocaNest - Chi tiết bộ từ</title>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/vocab-set-detail.css" />
+  <link rel="stylesheet" href="../assets/css/footer.css" />
 </head>
+<body class="detail-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
+      </nav>
+    </div>
+    <div class="user-area">
+      <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
 
-<body>
-    <!-- Header -->
-    <header class="app-header">
-        <div class="app-header__left">
-            <a href="./vocab-sets.html" class="btn">Quay lại</a>
+  <main class="main">
+    <section class="card set-info-card">
+      <div class="set-info-card__copy">
+        <p id="setMeta" class="set-info-meta"></p>
+        <h1 id="setTitle" class="set-info-title"></h1>
+      </div>
+      <a href="./vocab-sets.html" class="btn">← Quay lại thư viện</a>
+    </section>
+
+    <div class="two-cols two-cols--detail">
+      <section id="addSection" class="card detail-panel">
+        <div class="section-head">
+          <h2>Thêm từ mới</h2>
+          <p class="muted" id="editHint">Nhập từ tiếng Anh và nghĩa tương ứng.</p>
         </div>
-
-        <div class="user-area">
-            <a id="userAccount" class="user-account" href="./account.html" title="Tài khoản">
-                <span class="user-account__icon">👤</span>
-                <span id="userEmail" class="user-account__text"></span>
-            </a>
-        </div>
-    </header>
-
-    <main class="main">
-
-        <!-- ===== Set info card ===== -->
-        <section class="card set-info-card">
-            <h1 id="setTitle" class="set-info-title"></h1>
-            <p id="setMeta" class="set-info-meta"></p>
-        </section>
-
-        <!-- ===== Main content ===== -->
-        <div class="two-cols two-cols--detail">
-
-            <!-- Thêm từ (owner only) -->
-            <section id="addSection" class="card">
-                <div class="section-head">
-                    <h3>Thêm từ vựng</h3>
-                    <p class="muted" id="editHint">
-                        Nhập từ và nghĩa, sau đó bấm Thêm
-                    </p>
-                </div>
-
-                <div class="form-grid">
-                    <div class="row">
-                        <div class="col">
-                            <label class="label" for="wordInput">Từ vựng</label>
-                            <input id="wordInput" class="input" placeholder="Ví dụ: benefit" />
-                        </div>
-
-                        <div class="col">
-                            <label class="label" for="meaningInput">Nghĩa</label>
-                            <input id="meaningInput" class="input" placeholder="Ví dụ: lợi ích" />
-                        </div>
-                    </div>
-
-                    <button id="addBtn" class="btn primary" type="button">
-                        Thêm
-                    </button>
-
-                    <div id="addAlert" class="alert" style="display:none;"></div>
-                </div>
-
-                <div class="import-box">
-                    <label class="label">Import từ Excel</label>
-                    <input id="excelInput" type="file" class="input" accept=".xlsx,.xls" />
-
-                    <p class="muted">
-                        File Excel gồm 2 cột: từ vựng | nghĩa
-                    </p>
-
-                    <div id="importAlert" class="alert" style="display:none;"></div>
-                </div>
-            </section>
-
-            <!-- ===== Danh sách từ + Flashcards ===== -->
-            <section class="card vocab-list-card">
-                <div class="section-head section-head--between">
-                    <h3>Danh sách từ</h3>
-
-                    <a id="flashcardsLink" class="btn primary btn-flashcards" href="#">
-                        📚 Học Flashcards
-                    </a>
-                </div>
-
-                <div class="row row--tight">
-                    <input id="searchInput" class="input" placeholder="Tìm nhanh (word hoặc meaning)..." />
-                </div>
-
-                <div id="vocabItems" class="list"></div>
-            </section>
-        </div>
-    </main>
-
-    <footer class="app-footer">
-        <div class="footer-inner">
-
-            <div class="footer-col">
-                <h4>VocaNest</h4>
-                <p>
-                    Nền tảng học từ vựng & flashcards giúp bạn học tiếng Anh hiệu quả mỗi ngày.
-                </p>
+        <div class="form-grid">
+          <div class="row">
+            <div class="col">
+              <label class="label" for="wordInput">Từ vựng</label>
+              <input id="wordInput" class="input" placeholder="Ví dụ: benefit" />
             </div>
-
-            <div class="footer-col">
-                <h4>Động lực hôm nay</h4>
-
-                <p id="quoteEn" class="footer-quote-en"></p>
-                <p id="quoteVi" class="footer-quote-vi"></p>
+            <div class="col">
+              <label class="label" for="meaningInput">Nghĩa</label>
+              <input id="meaningInput" class="input" placeholder="Ví dụ: lợi ích" />
             </div>
-
-            <div class="footer-col">
-                <h4>Thông tin</h4>
-                <ul class="footer-links">
-                    <li><a href="./home.html">Trang chủ</a></li>
-                    <li><a href="./vocab-sets.html">Bộ từ vựng</a></li>
-                    <li><a href="./account.html">Tài khoản</a></li>
-                </ul>
-            </div>
-
+          </div>
+          <button id="addBtn" class="btn primary" type="button">Thêm vào bộ</button>
+          <div id="addAlert" class="alert" style="display:none;"></div>
         </div>
 
-        <div class="footer-bottom">
-            © 2025 VocaNest · Learn English every day
+        <div class="import-box">
+          <div>
+            <label class="label" for="excelInput">Nhập từ file Excel</label>
+            <p class="muted">Sử dụng hai cột: từ vựng và nghĩa.</p>
+          </div>
+          <input id="excelInput" type="file" class="input file-input" accept=".xlsx,.xls" />
+          <div id="importAlert" class="alert" style="display:none;"></div>
         </div>
-    </footer>
+      </section>
 
-    <!-- JS giữ nguyên -->
-    <script src="../assets/js/config.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
-    <script src="../assets/js/supabaseClient.js"></script>
-    <script src="../assets/js/authGuard.js"></script>
-    <script src="../assets/js/vocabSetDetail.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+      <section class="card vocab-list-card detail-panel">
+        <div class="section-head section-head--between">
+          <div>
+            <h2>Danh sách từ</h2>
+            <p class="muted">Tìm kiếm và quản lý từ trong bộ.</p>
+          </div>
+          <a id="flashcardsLink" class="btn primary btn-flashcards" href="#"><i data-lucide="layers-3"></i> Học flashcards</a>
+        </div>
+        <input id="searchInput" class="input" type="search" placeholder="Tìm theo từ hoặc nghĩa..." />
+        <div id="vocabItems" class="list"></div>
+      </section>
+    </div>
+  </main>
 
-    <script>
-        (function () {
-            const params = new URLSearchParams(window.location.search);
-            const setId = params.get("id");
-            const flashLink = document.getElementById("flashcardsLink");
+  <footer class="app-footer simple-footer">
+    <div class="footer-bottom">© 2026 VocaNest · Learn English every day</div>
+  </footer>
 
-            if (setId && flashLink) {
-                flashLink.href = `./flashcards.html?set=${setId}`;
-            } else if (flashLink) {
-                flashLink.style.display = "none";
-            }
-        })();
-    </script>
-
-    <script src="../assets/js/footer.js"></script>
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="../assets/js/vocabSetDetail.js"></script>
+  <script>
+    (() => {
+      const setId = new URLSearchParams(window.location.search).get("id");
+      const flashLink = document.getElementById("flashcardsLink");
+      if (setId && flashLink) {
+        flashLink.href = `./flashcards.html?set=${encodeURIComponent(setId)}`;
+      } else if (flashLink) {
+        flashLink.style.display = "none";
+      }
+    })();
+  </script>
 </body>
-
 </html>

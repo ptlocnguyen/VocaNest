@@ -1,5 +1,5 @@
-if (!window.supabaseClient) {
-  throw new Error("Supabase client chưa sẵn sàng trong auth.js");
+if (!window.vocaApi) {
+  throw new Error("API client chưa sẵn sàng trong auth.js");
 }
 
 const emailInput = document.getElementById("emailInput");
@@ -53,11 +53,14 @@ function setMode(login) {
   }
 }
 
-// CHỈ redirect nếu đã login
 async function redirectIfLoggedIn() {
-  const session = supabaseClient.auth.session();
-  if (session) {
+  if (!window.vocaApi.getToken()) return;
+
+  try {
+    await window.vocaApi.authPost("me");
     window.location.replace("./home.html");
+  } catch (err) {
+    window.vocaApi.setToken("");
   }
 }
 
@@ -77,54 +80,40 @@ submitBtn.addEventListener("click", async () => {
     return;
   }
 
+  if (!emailInput.validity.valid) {
+    showAlert("err", "Email không đúng định dạng");
+    emailInput.focus();
+    return;
+  }
+
+  if (!isLoginMode && password.length < 6) {
+    showAlert("err", "Mật khẩu phải có ít nhất 6 ký tự");
+    passwordInput.focus();
+    return;
+  }
+
   submitBtn.disabled = true;
 
   try {
-    if (isLoginMode) {
-      const { error } = await supabaseClient.auth.signIn({
-        email,
-        password
-      });
+    const action = isLoginMode ? "login" : "register";
+    const { token } = await window.vocaApi.post(action, {
+      email,
+      password
+    });
 
-      if (error) {
-        showAlert("err", error.message);
-        return;
-      }
-
-      window.location.replace("./home.html");
-    } else {
-      const { user, error } = await supabaseClient.auth.signUp({
-        email,
-        password
-      });
-
-      if (error) {
-        showAlert("err", error.message);
-        return;
-      }
-
-      // ===== TẠO PROFILE PUBLIC =====
-      if (user) {
-        const { error: profileErr } = await supabaseClient
-          .from("profiles")
-          .insert({
-            id: user.id,
-            email: user.email
-          });
-
-        if (profileErr) {
-          console.error("Create profile failed:", profileErr);
-        }
-      }
-
-      showAlert("ok", "Đăng ký thành công, bạn có thể đăng nhập");
-      setMode(true);
-    }
+    window.vocaApi.setToken(token);
+    window.location.replace("./home.html");
   } catch (err) {
     console.error(err);
-    showAlert("err", "Có lỗi xảy ra");
+    showAlert("err", err.message || "Có lỗi xảy ra");
   } finally {
     submitBtn.disabled = false;
+  }
+});
+
+passwordInput.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") {
+    submitBtn.click();
   }
 });
 
