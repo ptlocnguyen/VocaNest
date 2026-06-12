@@ -50,6 +50,7 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 - Phát âm tiếng Anh bằng Web Speech API.
 - Điều chỉnh tốc độ đọc và bật tự động phát âm.
 - Đánh dấu từ khó hoặc từ đã nhớ.
+- Điều hướng bằng thao tác vuốt và các phím tắt bàn phím.
 - Lưu trạng thái học cục bộ trên trình duyệt.
 
 ### Ngữ pháp TOEIC
@@ -64,7 +65,8 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 ### Trải nghiệm người dùng
 
 - Giao diện responsive cho desktop, tablet và mobile.
-- Thiết kế dark theme đồng nhất, tối ưu cho thời gian học dài.
+- Chế độ sáng/tối mặc định theo thiết bị và ghi nhớ lựa chọn của người dùng.
+- Hai bảng màu sáng/tối đồng nhất, tối ưu cho thời gian học dài.
 - Hỗ trợ thao tác bàn phím và trạng thái focus rõ ràng.
 - Tìm kiếm có debounce để hạn chế render không cần thiết.
 - Tôn trọng thiết lập `prefers-reduced-motion`.

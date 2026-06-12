@@ -3,23 +3,19 @@
   if (!user) return;
 
   const userEmailEl = document.getElementById("userEmail");
-  if (userEmailEl) {
-    userEmailEl.textContent = user.email;
-  }
+  if (userEmailEl) userEmailEl.textContent = user.email;
 
   const backBtn = document.getElementById("backBtn");
-  if (backBtn) {
-    backBtn.addEventListener("click", () => {
-      if (window.history.length > 1) {
-        window.history.back();
-      } else {
-        window.location.href = "./home.html";
-      }
-    });
-  }
-
+  const setTitleEl = document.getElementById("setTitle");
   const params = new URLSearchParams(window.location.search);
   const setId = params.get("set");
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      if (window.history.length > 1) window.history.back();
+      else window.location.href = "./vocab-sets.html";
+    });
+  }
 
   if (!setId) {
     alert("Thiếu mã bộ từ vựng. Vui lòng chọn bộ từ vựng để học.");
@@ -30,12 +26,12 @@
   const flashcardEl = document.getElementById("flashcard");
   const wordEl = document.getElementById("cardWord");
   const meaningEl = document.getElementById("cardMeaning");
-
   const prevBtn = document.getElementById("prevBtn");
   const nextBtn = document.getElementById("nextBtn");
   const shuffleBtn = document.getElementById("shuffleBtn");
   const progressText = document.getElementById("progressText");
-
+  const progressBar = document.getElementById("progressBar");
+  const cardStatus = document.getElementById("cardStatus");
   const cardSpeakBtn = document.getElementById("cardSpeakBtn");
   const cardAutoSpeakBtn = document.getElementById("cardAutoSpeakBtn");
   const cardMarkHardBtn = document.getElementById("cardMarkHardBtn");
@@ -46,18 +42,26 @@
   let originalCards = [];
   let currentIndex = 0;
   let isFlipped = false;
-
   let speakRate = 1;
   let isShuffle = false;
+  let gestureStart = null;
+  let suppressFlip = false;
 
   const AUTO_SPEAK_KEY = "voca_auto_speak";
+  const MARK_KEY_PREFIX = "voca_flashcard_mark_";
   let autoSpeak = localStorage.getItem(AUTO_SPEAK_KEY) === "1";
 
-  if (cardAutoSpeakBtn) {
-    cardAutoSpeakBtn.classList.toggle("active", autoSpeak);
+  function setPressed(button, pressed) {
+    if (!button) return;
+    button.classList.toggle("active", pressed);
+    button.setAttribute("aria-pressed", String(pressed));
   }
 
-  const MARK_KEY_PREFIX = "voca_flashcard_mark_";
+  setPressed(cardAutoSpeakBtn, autoSpeak);
+
+  function getCurrentCard() {
+    return cards[currentIndex] || null;
+  }
 
   function getMark(itemId) {
     return localStorage.getItem(`${MARK_KEY_PREFIX}${setId}_${itemId}`);
@@ -65,220 +69,241 @@
 
   function setMark(itemId, value) {
     const key = `${MARK_KEY_PREFIX}${setId}_${itemId}`;
-    if (!value) {
-      localStorage.removeItem(key);
-    } else {
-      localStorage.setItem(key, value);
-    }
+    if (value) localStorage.setItem(key, value);
+    else localStorage.removeItem(key);
   }
 
   function toggleMark(itemId, value) {
-    const current = getMark(itemId);
-    const next = current === value ? null : value;
+    const next = getMark(itemId) === value ? null : value;
     setMark(itemId, next);
+    return next;
   }
 
   function updateMarkUI(itemId) {
     const mark = getMark(itemId);
+    setPressed(cardMarkHardBtn, mark === "hard");
+    setPressed(cardMarkKnownBtn, mark === "known");
 
-    if (cardMarkHardBtn) {
-      cardMarkHardBtn.classList.toggle("active", mark === "hard");
-    }
-    if (cardMarkKnownBtn) {
-      cardMarkKnownBtn.classList.toggle("active", mark === "known");
+    cardStatus.className = "card-status";
+    if (mark === "hard") {
+      cardStatus.textContent = "Từ khó";
+      cardStatus.classList.add("is-hard");
+    } else if (mark === "known") {
+      cardStatus.textContent = "Đã nhớ";
+      cardStatus.classList.add("is-known");
+    } else {
+      cardStatus.textContent = "Chưa đánh dấu";
     }
   }
 
   function speakWord(word) {
-    if (!word) return;
-
+    if (!word || !("speechSynthesis" in window)) return;
     const utter = new SpeechSynthesisUtterance(word);
     utter.lang = "en-US";
     utter.rate = speakRate;
-
     speechSynthesis.cancel();
     speechSynthesis.speak(utter);
   }
 
-  function shuffleArray(arr) {
-    const a = [...arr];
-    for (let i = a.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [a[i], a[j]] = [a[j], a[i]];
+  function shuffleArray(list) {
+    const shuffled = [...list];
+    for (let index = shuffled.length - 1; index > 0; index--) {
+      const target = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[target]] = [shuffled[target], shuffled[index]];
     }
-    return a;
-  }
-
-  function setLoading(text) {
-    if (wordEl) wordEl.textContent = text || "Đang tải...";
-    if (meaningEl) meaningEl.textContent = " ";
-    if (flashcardEl) flashcardEl.classList.remove("is-flipped");
-    isFlipped = false;
-
-    if (prevBtn) prevBtn.disabled = true;
-    if (nextBtn) nextBtn.disabled = true;
-
-    if (progressText) progressText.textContent = "0 / 0";
+    return shuffled;
   }
 
   function resetCardFace() {
-    if (isFlipped) {
-      flashcardEl.classList.remove("is-flipped");
-      isFlipped = false;
-    }
+    flashcardEl.classList.remove("is-flipped");
+    flashcardEl.setAttribute("aria-label", "Lật flashcard để xem nghĩa");
+    isFlipped = false;
+  }
+
+  function flipCard() {
+    const card = getCurrentCard();
+    if (!card) return;
+
+    isFlipped = !isFlipped;
+    flashcardEl.classList.toggle("is-flipped", isFlipped);
+    meaningEl.textContent = isFlipped ? card.meaning : "";
+    flashcardEl.setAttribute(
+      "aria-label",
+      isFlipped ? "Lật flashcard để xem từ vựng" : "Lật flashcard để xem nghĩa"
+    );
   }
 
   function renderCard() {
     resetCardFace();
-
-    const card = cards[currentIndex];
+    const card = getCurrentCard();
     if (!card) return;
 
     wordEl.textContent = card.word;
     meaningEl.textContent = "";
-
-    if (prevBtn) prevBtn.disabled = currentIndex <= 0;
-    if (nextBtn) nextBtn.disabled = currentIndex >= cards.length - 1;
-
-    if (progressText) {
-      progressText.textContent = `${currentIndex + 1} / ${cards.length}`;
-    }
-
+    prevBtn.disabled = currentIndex <= 0;
+    nextBtn.disabled = currentIndex >= cards.length - 1;
+    progressText.textContent = `${currentIndex + 1} / ${cards.length}`;
+    progressBar.style.width = `${((currentIndex + 1) / cards.length) * 100}%`;
     updateMarkUI(card.id);
 
+    if (autoSpeak) speakWord(card.word);
+  }
+
+  function showPrevious() {
+    if (currentIndex <= 0) return;
+    currentIndex--;
+    renderCard();
+  }
+
+  function showNext() {
+    if (currentIndex >= cards.length - 1) return;
+    currentIndex++;
+    renderCard();
+  }
+
+  function toggleShuffle() {
+    if (!cards.length) return;
+    isShuffle = !isShuffle;
+    cards = isShuffle ? shuffleArray(originalCards) : [...originalCards];
+    currentIndex = 0;
+    setPressed(shuffleBtn, isShuffle);
+    renderCard();
+  }
+
+  function toggleAutoSpeak() {
+    autoSpeak = !autoSpeak;
+    setPressed(cardAutoSpeakBtn, autoSpeak);
+    localStorage.setItem(AUTO_SPEAK_KEY, autoSpeak ? "1" : "0");
     if (autoSpeak) {
-      speakWord(card.word);
+      const card = getCurrentCard();
+      if (card) speakWord(card.word);
     }
+  }
+
+  function markCurrent(value) {
+    const card = getCurrentCard();
+    if (!card) return;
+    toggleMark(card.id, value);
+    updateMarkUI(card.id);
+  }
+
+  function setLoading(text) {
+    wordEl.textContent = text || "Đang tải...";
+    meaningEl.textContent = "";
+    resetCardFace();
+    prevBtn.disabled = true;
+    nextBtn.disabled = true;
+    progressText.textContent = "0 / 0";
+    progressBar.style.width = "0";
+    cardStatus.textContent = "Đang chuẩn bị";
   }
 
   flashcardEl.addEventListener("click", () => {
-    if (!cards.length) return;
-
-    isFlipped = !isFlipped;
-    flashcardEl.classList.toggle("is-flipped", isFlipped);
-
-    if (isFlipped) {
-      const card = cards[currentIndex];
-      if (card) meaningEl.textContent = card.meaning;
-    } else {
-      meaningEl.textContent = "";
+    if (suppressFlip) {
+      suppressFlip = false;
+      return;
     }
+    flipCard();
   });
 
-  flashcardEl.addEventListener("keydown", (e) => {
-    if (e.key === "Enter" || e.key === " ") {
-      e.preventDefault();
-      flashcardEl.click();
-    }
+  flashcardEl.addEventListener("pointerdown", event => {
+    if (event.pointerType === "mouse") return;
+    gestureStart = { x: event.clientX, y: event.clientY };
   });
 
-  if (prevBtn) {
-    prevBtn.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        renderCard();
-      }
-    });
-  }
+  flashcardEl.addEventListener("pointerup", event => {
+    if (!gestureStart || event.pointerType === "mouse") return;
 
-  if (nextBtn) {
-    nextBtn.addEventListener("click", () => {
-      if (currentIndex < cards.length - 1) {
-        currentIndex++;
-        renderCard();
-      }
-    });
-  }
+    const deltaX = event.clientX - gestureStart.x;
+    const deltaY = event.clientY - gestureStart.y;
+    gestureStart = null;
 
-  if (shuffleBtn) {
-    shuffleBtn.addEventListener("click", () => {
-      if (!cards.length) return;
+    if (Math.abs(deltaX) < 50 || Math.abs(deltaX) <= Math.abs(deltaY) * 1.2) return;
+    suppressFlip = true;
+    if (deltaX < 0) showNext();
+    else showPrevious();
+  });
 
-      isShuffle = !isShuffle;
-      cards = isShuffle ? shuffleArray(originalCards) : [...originalCards];
-      shuffleBtn.classList.toggle("shuffle-active", isShuffle);
+  flashcardEl.addEventListener("pointercancel", () => {
+    gestureStart = null;
+  });
+  prevBtn.addEventListener("click", showPrevious);
+  nextBtn.addEventListener("click", showNext);
+  shuffleBtn.addEventListener("click", toggleShuffle);
+  cardAutoSpeakBtn.addEventListener("click", toggleAutoSpeak);
+  cardMarkHardBtn.addEventListener("click", () => markCurrent("hard"));
+  cardMarkKnownBtn.addEventListener("click", () => markCurrent("known"));
 
-      currentIndex = 0;
-      renderCard();
-    });
-  }
+  cardSpeakBtn.addEventListener("click", () => {
+    const card = getCurrentCard();
+    if (card) speakWord(card.word);
+  });
 
-  if (speedSelect) {
-    speedSelect.addEventListener("change", () => {
-      speakRate = parseFloat(speedSelect.value);
-    });
-  }
+  speedSelect.addEventListener("change", () => {
+    speakRate = Number.parseFloat(speedSelect.value) || 1;
+  });
 
-  if (cardSpeakBtn) {
-    cardSpeakBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = cards[currentIndex];
-      if (!card) return;
-      speakWord(card.word);
-    });
-  }
+  document.addEventListener("keydown", event => {
+    if (event.altKey || event.ctrlKey || event.metaKey) return;
 
-  if (cardAutoSpeakBtn) {
-    cardAutoSpeakBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      autoSpeak = !autoSpeak;
-      cardAutoSpeakBtn.classList.toggle("active", autoSpeak);
-      localStorage.setItem(AUTO_SPEAK_KEY, autoSpeak ? "1" : "0");
-    });
-  }
+    const target = event.target;
+    const tagName = target && target.tagName;
+    if (tagName === "INPUT" || tagName === "TEXTAREA" || tagName === "SELECT") return;
+    if (tagName === "BUTTON" && (event.key === " " || event.key === "Enter")) return;
 
-  if (cardMarkHardBtn) {
-    cardMarkHardBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = cards[currentIndex];
-      if (!card) return;
-      toggleMark(card.id, "hard");
-      updateMarkUI(card.id);
-    });
-  }
+    const key = event.key.toLowerCase();
+    const actions = {
+      arrowleft: showPrevious,
+      arrowright: showNext,
+      " ": flipCard,
+      enter: flipCard,
+      s: () => {
+        const card = getCurrentCard();
+        if (card) speakWord(card.word);
+      },
+      a: toggleAutoSpeak,
+      h: () => markCurrent("hard"),
+      k: () => markCurrent("known"),
+      r: toggleShuffle
+    };
 
-  if (cardMarkKnownBtn) {
-    cardMarkKnownBtn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const card = cards[currentIndex];
-      if (!card) return;
-      toggleMark(card.id, "known");
-      updateMarkUI(card.id);
-    });
-  }
+    const action = actions[key];
+    if (!action) return;
+    event.preventDefault();
+    action();
+  });
 
   async function loadSetAndItems() {
     try {
       setLoading("Đang tải bộ từ...");
-
-      const { data } = await window.vocaApi.authPost("getSetBundle", {
-        setId
-      });
+      const { data } = await window.vocaApi.authPost("getSetBundle", { setId });
       const setData = data.set;
       const items = data.items;
 
       document.title = `VocaNest - Flashcards: ${setData.title}`;
+      setTitleEl.textContent = setData.title || "Bộ từ vựng";
 
       if (!items || items.length === 0) {
         setLoading("Bộ từ chưa có từ nào");
+        cardStatus.textContent = "Không có dữ liệu";
         return;
       }
 
       cards = items
         .slice()
         .reverse()
-        .map(it => ({
-          id: it.id,
-          word: it.word || "",
-          meaning: it.meaning || ""
+        .map(item => ({
+          id: item.id,
+          word: item.word || "",
+          meaning: item.meaning || ""
         }));
 
       originalCards = [...cards];
       currentIndex = 0;
       renderCard();
-    } catch (err) {
-      console.error(err);
-      alert(err.message || "Có lỗi xảy ra khi tải flashcards.");
+    } catch (error) {
+      console.error(error);
+      alert(error.message || "Có lỗi xảy ra khi tải flashcards.");
       window.location.replace("./vocab-sets.html");
     }
   }

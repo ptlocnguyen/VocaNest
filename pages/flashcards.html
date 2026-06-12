@@ -8,16 +8,22 @@
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
   <link rel="manifest" href="../site.webmanifest" />
+  <script src="../assets/js/theme.js"></script>
   <link rel="stylesheet" href="../assets/css/base.css" />
   <link rel="stylesheet" href="../assets/css/layout.css" />
   <link rel="stylesheet" href="../assets/css/ui.css" />
   <link rel="stylesheet" href="../assets/css/flashcards.css" />
 </head>
 <body class="flashcards-page">
-  <header class="app-header">
-    <div class="app-header__left">
-      <a id="backBtn" class="btn" role="button">← Quay lại</a>
-      <strong>Flashcards</strong>
+  <header class="app-header flashcard-header">
+    <div class="app-header__left flashcard-header__left">
+      <button id="backBtn" class="header-icon-btn" type="button" aria-label="Quay lại" title="Quay lại">
+        <i data-lucide="arrow-left"></i>
+      </button>
+      <div class="study-heading">
+        <span>Flashcards</span>
+        <strong id="setTitle">Đang tải bộ từ...</strong>
+      </div>
     </div>
     <div class="user-area">
       <a class="user-account" href="./account.html" title="Tài khoản">
@@ -27,43 +33,96 @@
     </div>
   </header>
 
-  <main class="main">
-    <section class="flashcard-wrapper">
-      <div class="flashcard-container">
-        <div id="flashcard" class="flashcard" role="button" tabindex="0" aria-label="Lật flashcard">
+  <main class="main flashcard-main">
+    <section class="study-shell" aria-label="Phiên học flashcards">
+      <div class="study-progress">
+        <div class="study-progress__copy">
+          <span id="progressText">0 / 0</span>
+          <span id="cardStatus" class="card-status">Chưa đánh dấu</span>
+        </div>
+        <div class="study-progress__track" aria-hidden="true">
+          <span id="progressBar"></span>
+        </div>
+      </div>
+
+      <div class="flashcard-stage">
+        <div id="flashcard" class="flashcard" role="button" tabindex="0"
+          aria-label="Lật flashcard" aria-keyshortcuts="Space Enter">
           <div class="flashcard-face flashcard-front">
-            <span id="cardWord"></span>
-            <div class="flashcard-actions flashcard-actions--left">
-              <button id="cardSpeakBtn" class="icon-btn" data-tip="Nghe phát âm" type="button" aria-label="Nghe phát âm">🔊</button>
-              <button id="cardAutoSpeakBtn" class="icon-btn" data-tip="Tự động đọc" type="button" aria-label="Bật tắt tự động đọc">◉</button>
-            </div>
-            <div class="flashcard-actions flashcard-actions--right">
-              <button id="cardMarkHardBtn" class="icon-btn" data-tip="Đánh dấu từ khó" type="button" aria-label="Đánh dấu từ khó">★</button>
-              <button id="cardMarkKnownBtn" class="icon-btn" data-tip="Đã nhớ" type="button" aria-label="Đánh dấu đã nhớ">✓</button>
-            </div>
+            <span class="flashcard-face__label">Từ vựng</span>
+            <span id="cardWord" class="flashcard-face__content"></span>
           </div>
           <div class="flashcard-face flashcard-back">
-            <span id="cardMeaning"></span>
+            <span class="flashcard-face__label">Nghĩa</span>
+            <span id="cardMeaning" class="flashcard-face__content"></span>
           </div>
         </div>
       </div>
 
-      <div class="flashcard-controls">
-        <button id="prevBtn" class="btn" type="button">← Trước</button>
-        <span id="progressText" class="flashcard-progress">0 / 0</span>
-        <button id="nextBtn" class="btn" type="button">Sau →</button>
-        <button id="shuffleBtn" class="btn" type="button" title="Xáo trộn">Xáo trộn</button>
-        <select id="speedSelect" class="input speed-select" title="Tốc độ đọc" aria-label="Tốc độ đọc">
-          <option value="0.6">0.6x</option>
-          <option value="0.8">0.8x</option>
-          <option value="1" selected>1x</option>
-          <option value="1.2">1.2x</option>
-          <option value="1.4">1.4x</option>
-        </select>
+      <div class="study-toolbar" role="toolbar" aria-label="Công cụ học flashcard">
+        <div class="toolbar-group toolbar-navigation">
+          <button id="prevBtn" class="tool-btn tool-btn--square" type="button"
+            aria-label="Thẻ trước" title="Thẻ trước" aria-keyshortcuts="ArrowLeft">
+            <i data-lucide="chevron-left"></i>
+          </button>
+          <button id="nextBtn" class="tool-btn tool-btn--square" type="button"
+            aria-label="Thẻ tiếp theo" title="Thẻ tiếp theo" aria-keyshortcuts="ArrowRight">
+            <i data-lucide="chevron-right"></i>
+          </button>
+        </div>
+
+        <span class="toolbar-divider" aria-hidden="true"></span>
+
+        <div class="toolbar-group">
+          <button id="cardSpeakBtn" class="tool-btn tool-btn--square" type="button"
+            aria-label="Nghe phát âm" title="Nghe phát âm" aria-keyshortcuts="S">
+            <i data-lucide="volume-2"></i>
+          </button>
+          <button id="cardAutoSpeakBtn" class="tool-btn tool-btn--square" type="button"
+            aria-label="Bật hoặc tắt tự động đọc" title="Tự động đọc" aria-keyshortcuts="A" aria-pressed="false">
+            <i data-lucide="audio-lines"></i>
+          </button>
+        </div>
+
+        <span class="toolbar-divider" aria-hidden="true"></span>
+
+        <div class="toolbar-group toolbar-rating">
+          <button id="cardMarkHardBtn" class="tool-btn tool-btn--rating tool-btn--hard" type="button"
+            aria-label="Đánh dấu từ khó" title="Đánh dấu từ khó" aria-keyshortcuts="H" aria-pressed="false">
+            <i data-lucide="brain"></i>
+            <span>Khó</span>
+          </button>
+          <button id="cardMarkKnownBtn" class="tool-btn tool-btn--rating tool-btn--known" type="button"
+            aria-label="Đánh dấu đã nhớ" title="Đánh dấu đã nhớ" aria-keyshortcuts="K" aria-pressed="false">
+            <i data-lucide="circle-check"></i>
+            <span>Đã nhớ</span>
+          </button>
+        </div>
+
+        <span class="toolbar-divider" aria-hidden="true"></span>
+
+        <div class="toolbar-group toolbar-options">
+          <button id="shuffleBtn" class="tool-btn tool-btn--square" type="button"
+            aria-label="Bật hoặc tắt xáo trộn" title="Xáo trộn" aria-keyshortcuts="R" aria-pressed="false">
+            <i data-lucide="shuffle"></i>
+          </button>
+          <label class="speed-control" title="Tốc độ đọc">
+            <i data-lucide="gauge" aria-hidden="true"></i>
+            <select id="speedSelect" aria-label="Tốc độ đọc">
+              <option value="0.6">0.6x</option>
+              <option value="0.8">0.8x</option>
+              <option value="1" selected>1x</option>
+              <option value="1.2">1.2x</option>
+              <option value="1.4">1.4x</option>
+            </select>
+          </label>
+        </div>
       </div>
     </section>
   </main>
 
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script>if (window.lucide) window.lucide.createIcons();</script>
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/apiClient.js"></script>
   <script src="../assets/js/authGuard.js"></script>
