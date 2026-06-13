@@ -64,12 +64,19 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 
 ### Luyện TOEIC Part 5
 
-- 30 câu Incomplete Sentences tự biên soạn theo ngữ cảnh công việc.
+- Thư viện nhiều đề, tải dữ liệu độc lập từ các file JSON.
+- 40 câu Incomplete Sentences tự biên soạn trong hai đề đầu tiên.
+- Công cụ import Excel kiểm tra lỗi theo từng dòng, xem trước và xuất JSON.
+- Tạo workbook mẫu trực tiếp trên trình duyệt để biên soạn đề mới.
 - Chế độ luyện tập xem giải thích ngay và chế độ mô phỏng có giới hạn thời gian.
 - Luyện 10, 20 hoặc 30 câu; hỗ trợ lọc theo chủ điểm.
 - Đánh dấu câu phân vân, bảng điều hướng câu hỏi và phím tắt bàn phím.
 - Báo cáo độ chính xác theo từng chủ điểm sau khi nộp bài.
-- Lưu câu sai để tạo phiên ôn tập riêng ngay trên thiết bị.
+- Lưu điểm cao nhất, số lượt làm và câu sai riêng cho từng đề.
+- Đồng bộ lịch sử từng lần làm bài lên Google Sheets, hỗ trợ xem lại kết quả cũ và ôn câu sai.
+- Hiển thị trạng thái đồng bộ lịch sử để phân biệt dữ liệu Drive và dữ liệu cục bộ.
+- Tự lưu bài đang làm dở, đồng bộ draft lên Google Sheets và cho phép tiếp tục từ thiết bị khác.
+- Catalog cho phép bổ sung đề mới mà không cần sửa engine làm bài.
 
 ### Trải nghiệm người dùng
 
@@ -90,7 +97,7 @@ flowchart LR
     A --> S[(Google Sheets)]
     A --> M[Google Mail Service]
 
-    F -. localStorage .-> L[Session token<br/>Tiến độ học]
+    F -. localStorage .-> L[Session token<br/>Draft phiên học]
 ```
 
 ### Luồng request
@@ -113,7 +120,7 @@ URL Apps Script không xuất hiện trong mã nguồn frontend hoặc repositor
 | Text-to-Speech | Web Speech API | Phát âm từ tiếng Anh |
 | API proxy | Cloudflare Workers | CORS, validation và che URL upstream |
 | Backend | Google Apps Script | Xác thực, phân quyền và CRUD |
-| Database | Google Sheets | Lưu người dùng, bộ từ và từ vựng |
+| Database | Google Sheets | Lưu người dùng, bộ từ vựng và đề TOEIC |
 | Email | Apps Script MailApp | Gửi liên kết đặt lại mật khẩu |
 | Hosting | GitHub Pages | Triển khai frontend tĩnh |
 
@@ -152,15 +159,24 @@ VocaNest/
 │   │   ├── ui.css
 │   │   ├── grammar.css
 │   │   ├── exams.css
+│   │   ├── exam-import.css
 │   │   └── ...styles theo từng trang
-│   └── js/
-│       ├── apiClient.js
-│       ├── authGuard.js
-│       ├── grammar.js
-│       ├── flashcards.js
-│       ├── exams.js
-│       ├── part5Data.js
-│       └── ...logic theo từng trang
+│   ├── js/
+│   │   ├── apiClient.js
+│   │   ├── authGuard.js
+│   │   ├── grammar.js
+│   │   ├── flashcards.js
+│   │   ├── exams.js
+│   │   ├── examImport.js
+│   │   └── ...logic theo từng trang
+│   └── data/
+│       └── exams/
+│           ├── catalog.json
+│           └── part5/
+│               ├── test-001.json
+│               └── test-002.json
+├── scripts/
+│   └── validate-exams.js
 ├── cloudflare-worker/
 │   ├── src/index.js
 │   ├── package.json
@@ -173,11 +189,103 @@ VocaNest/
 │   ├── flashcards.html
 │   ├── grammar.html
 │   ├── exams.html
+│   ├── exam-import.html
 │   ├── account.html
 │   ├── forgot-password.html
 │   └── reset-password.html
 ├── index.html
 └── README.md
+```
+
+### Thêm đề TOEIC Part 5
+
+Frontend hiện ưu tiên tải đề từ Google Sheets thông qua Apps Script:
+
+```text
+exam_tests
+```
+
+Nếu sheet chưa có dữ liệu hoặc API chưa deploy, app sẽ fallback về dữ liệu local để tiện phát triển:
+
+```text
+assets/data/exams/catalog.json
+```
+
+Mỗi đề Part 5 là một file JSON độc lập trong:
+
+```text
+assets/data/exams/part5/
+```
+
+Cách thêm đề nhanh nhất:
+
+1. Mở `pages/exam-import.html`.
+2. Chọn **Import Excel** hoặc **Nhập thủ công**.
+3. Nếu dùng Excel, nhấn **Tải Excel mẫu**, điền sheet `Test_Info` và `Questions`, rồi import file.
+4. Nếu nhập thủ công, điền metadata, thêm từng câu hỏi và bấm **Kiểm tra đề**.
+5. Khi dữ liệu hợp lệ, bấm **Lưu lên Drive** để ghi trực tiếp vào sheet `exam_tests`.
+6. Nút **Xuất JSON** vẫn được giữ làm phương án sao lưu hoặc kiểm tra dữ liệu local.
+
+Nút **Lưu lên Drive** cho phép mọi tài khoản đã đăng nhập đóng góp đề mới. Backend vẫn kiểm tra cấu trúc đề trước khi ghi vào sheet `exam_tests`, nên file sai format sẽ bị từ chối.
+
+Nếu muốn đưa toàn bộ đề local hiện có lên Google Sheet, chạy:
+
+```bash
+node scripts/export-exam-sheet-rows.js
+```
+
+Sau đó mở `outputs/exam_tests_rows.tsv`, copy toàn bộ nội dung và dán vào sheet `exam_tests` từ ô `A1`.
+
+Lịch sử làm bài và draft phiên đang làm được lưu tự động vào các sheet:
+
+```text
+exam_attempts
+exam_drafts
+```
+
+Các sheet này được Apps Script tạo tự động. Mỗi lần người dùng nộp bài, frontend lưu một attempt gồm điểm số, thời gian làm, câu đã chọn, câu sai và thời điểm nộp. Trong lúc làm bài, draft được lưu local trước và đồng bộ lên `exam_drafts` theo nhịp throttle/debounce để tránh gửi quá nhiều request tới Apps Script. Khi mở trang luyện đề, app tải lại lịch sử và draft từ Google Sheets rồi merge với dữ liệu local.
+
+Các cột của sheet `exam_tests`:
+
+| Cột | Nội dung |
+|---|---|
+| `id` | ID đề, ví dụ `part5-test-003` |
+| `part` | Hiện là `5` |
+| `title` | Tên hiển thị |
+| `description` | Mô tả ngắn |
+| `difficulty` | `basic`, `intermediate` hoặc `advanced` |
+| `question_count` | Tổng số câu |
+| `duration_minutes` | Thời gian gợi ý |
+| `tags` | JSON array, ví dụ `["Mini test","Công việc"]` |
+| `published` | `true` để hiển thị trên web |
+| `version` | Tăng khi chỉnh nội dung |
+| `data_json` | Nguyên nội dung JSON của đề |
+| `updated_at` | Ngày cập nhật dạng ISO hoặc text |
+
+Nếu muốn viết JSON trực tiếp, sao chép `test-template.json`, đổi `id`, điền danh sách câu hỏi rồi lưu bằng nút **Lưu lên Drive** hoặc dán JSON hoàn chỉnh vào cột `data_json`.
+
+Các trường chính của đề:
+
+| Thuộc tính | Ý nghĩa |
+|---|---|
+| `schemaVersion` | Phiên bản cấu trúc dữ liệu, hiện là `1` |
+| `id` | ID duy nhất của đề |
+| `part` | Phần thi TOEIC, hiện hỗ trợ `5` |
+| `title` | Tên hiển thị |
+| `description` | Mô tả ngắn |
+| `difficulty` | `basic`, `intermediate` hoặc `advanced` |
+| `durationMinutes` | Thời gian mô phỏng |
+| `version` | Tăng khi cập nhật nội dung đề |
+| `questions` | Danh sách câu hỏi |
+
+Trong JSON, `answer` dùng chỉ số `0` đến `3`, tương ứng đáp án A đến D. Trong Excel, cột `answer` có thể dùng `A`, `B`, `C`, `D` hoặc `1`, `2`, `3`, `4`; importer sẽ tự chuyển về chỉ số JSON.
+
+Lưu ý: câu hỏi nên được tự biên soạn hoặc có quyền sử dụng. Không public nguyên bộ đề thương mại hoặc nội dung có bản quyền. Mỗi câu nên có giải thích và `grammarId` trỏ tới một chuyên đề trong `assets/js/grammar.js`.
+
+Trước khi commit dữ liệu đề, chạy:
+
+```bash
+node scripts/validate-exams.js
 ```
 
 > Mã nguồn Apps Script và cấu hình Google Sheet được giữ ngoài Git để không công khai thông tin triển khai backend.
@@ -280,12 +388,13 @@ Việc trình bày rõ các giới hạn này là một phần của quyết đ�
 |---|---|
 | Xác thực và quản lý tài khoản | Hoàn thành |
 | CRUD bộ từ và từ vựng | Hoàn thành |
-| Import Excel | Hoàn thành |
+| Import Excel từ vựng và đề Part 5 | Hoàn thành |
 | Flashcards và phát âm | Hoàn thành |
 | Thư viện 42 chuyên đề ngữ pháp | Hoàn thành |
 | Responsive desktop/mobile | Hoàn thành |
 | Cloudflare Worker proxy | Hoàn thành |
-| Bộ đề thi TOEIC hoàn chỉnh | Dự kiến phát triển |
+| Thư viện nhiều đề TOEIC Part 5 | Hoàn thành |
+| TOEIC Part 6, Part 7 và Listening | Dự kiến phát triển |
 | Automated tests và CI | Dự kiến phát triển |
 | Spaced repetition đồng bộ server | Dự kiến phát triển |
 

@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-06-13",
+  "tests": [
+    {
+      "id": "part5-test-001",
+      "part": 5,
+      "title": "Part 5 Test 01",
+      "description": "Bộ đề nền tảng bao quát 15 chủ điểm ngữ pháp và từ vựng thường gặp.",
+      "difficulty": "intermediate",
+      "questionCount": 30,
+      "durationMinutes": 12,
+      "tags": [
+        "Tổng hợp",
+        "Nền tảng"
+      ],
+      "dataFile": "part5/test-001.json",
+      "published": true
+    },
+    {
+      "id": "part5-test-002",
+      "part": 5,
+      "title": "Part 5 Test 02",
+      "description": "Mini test tập trung vào email, tuyển dụng, lịch trình và vận hành doanh nghiệp.",
+      "difficulty": "intermediate",
+      "questionCount": 10,
+      "durationMinutes": 5,
+      "tags": [
+        "Mini test",
+        "Công việc"
+      ],
+      "dataFile": "part5/test-002.json",
+      "published": true
+    },
+    {
+      "id": "part5-test-ets2026-t1",
+      "part": 5,
+      "title": "ETS 2026 Test 1 - Part 5",
+      "description": "Đề thi TOEIC ETS 2026 Test 1 - Part 5 đầy đủ 30 câu hỏi kèm giải thích chi tiết.",
+      "difficulty": "intermediate",
+      "questionCount": 30,
+      "durationMinutes": 15,
+      "tags": [],
+      "dataFile": "part5/test-ets2026-t1.json",
+      "published": true
+    }
+  ]
+}

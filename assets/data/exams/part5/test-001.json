@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "id": "part5-test-001",
+  "part": 5,
+  "title": "Part 5 Test 01",
+  "description": "Bộ đề nền tảng bao quát 15 chủ điểm ngữ pháp và từ vựng thường gặp.",
+  "difficulty": "intermediate",
+  "durationMinutes": 12,
+  "version": 1,
+  "questions": [
+    {
+      "id": "part5-test-001-q001",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "The marketing team presented a highly _____ proposal for the new product launch.",
+      "options": [
+        "persuade",
+        "persuasive",
+        "persuasively",
+        "persuasion"
+      ],
+      "answer": 1,
+      "explanation": "\"Proposal\" là danh từ, vì vậy cần tính từ \"persuasive\" đứng trước để bổ nghĩa.",
+      "tip": "Sau trạng từ chỉ mức độ như highly, thường là một tính từ bổ nghĩa cho danh từ."
+    },
+    {
+      "id": "part5-test-001-q002",
+      "topic": "Từ loại",
+      "grammarId": "adjectives-adverbs",
+      "difficulty": "basic",
+      "sentence": "All expense reports must be completed _____ before they are sent to the accounting department.",
+      "options": [
+        "accurate",
+        "accuracy",
+        "accurately",
+        "accurateness"
+      ],
+      "answer": 2,
+      "explanation": "Động từ \"completed\" cần trạng từ \"accurately\" bổ nghĩa cho cách hoàn thành báo cáo.",
+      "tip": "Hỏi hành động được thực hiện như thế nào để nhận diện trạng từ."
+    },
+    {
+      "id": "part5-test-001-q003",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "The director expressed her _____ with the progress of the renovation project.",
+      "options": [
+        "satisfy",
+        "satisfied",
+        "satisfaction",
+        "satisfactorily"
+      ],
+      "answer": 2,
+      "explanation": "Tính từ sở hữu \"her\" cần theo sau bởi danh từ \"satisfaction\".",
+      "tip": "Tính từ sở hữu my, your, his, her, our, their thường đứng trước danh từ."
+    },
+    {
+      "id": "part5-test-001-q004",
+      "topic": "Thì động từ",
+      "grammarId": "present-perfect",
+      "difficulty": "basic",
+      "sentence": "Ms. Patel _____ three regional offices since she joined the company in 2022.",
+      "options": [
+        "manages",
+        "managed",
+        "has managed",
+        "will manage"
+      ],
+      "answer": 2,
+      "explanation": "\"Since\" nối một mốc quá khứ với hiện tại, nên mệnh đề chính dùng hiện tại hoàn thành.",
+      "tip": "Since + mốc thời gian là dấu hiệu thường gặp của present perfect."
+    },
+    {
+      "id": "part5-test-001-q005",
+      "topic": "Thì động từ",
+      "grammarId": "future-forms",
+      "difficulty": "basic",
+      "sentence": "The maintenance crew _____ the air-conditioning system tomorrow morning.",
+      "options": [
+        "inspected",
+        "will inspect",
+        "has inspected",
+        "was inspecting"
+      ],
+      "answer": 1,
+      "explanation": "\"Tomorrow morning\" chỉ thời điểm tương lai, phù hợp với \"will inspect\".",
+      "tip": "Tìm trạng từ thời gian trước khi chọn thì của động từ."
+    },
+    {
+      "id": "part5-test-001-q006",
+      "topic": "Thì động từ",
+      "grammarId": "past-simple",
+      "difficulty": "basic",
+      "sentence": "The conference organizers _____ the final schedule to all participants yesterday.",
+      "options": [
+        "email",
+        "emailed",
+        "have emailed",
+        "are emailing"
+      ],
+      "answer": 1,
+      "explanation": "\"Yesterday\" là mốc quá khứ đã kết thúc, nên dùng quá khứ đơn \"emailed\".",
+      "tip": "Yesterday, last week và ago thường đi với past simple."
+    },
+    {
+      "id": "part5-test-001-q007",
+      "topic": "Hòa hợp S-V",
+      "grammarId": "subject-verb-agreement",
+      "difficulty": "intermediate",
+      "sentence": "Each of the applicants _____ required to provide two professional references.",
+      "options": [
+        "are",
+        "were",
+        "is",
+        "have been"
+      ],
+      "answer": 2,
+      "explanation": "Chủ ngữ chính là \"Each\", luôn được xem là số ít, nên dùng \"is\".",
+      "tip": "Đừng để danh từ số nhiều sau \"of\" làm nhiễu chủ ngữ chính."
+    },
+    {
+      "id": "part5-test-001-q008",
+      "topic": "Hòa hợp S-V",
+      "grammarId": "subject-verb-agreement",
+      "difficulty": "intermediate",
+      "sentence": "The quality of the materials _____ checked before production begins.",
+      "options": [
+        "are",
+        "is",
+        "have",
+        "were"
+      ],
+      "answer": 1,
+      "explanation": "Chủ ngữ là danh từ số ít \"quality\", không phải \"materials\", nên chọn \"is\".",
+      "tip": "Trong cấu trúc A of B, động từ thường hòa hợp với A."
+    },
+    {
+      "id": "part5-test-001-q009",
+      "topic": "Giới từ",
+      "grammarId": "prepositions",
+      "difficulty": "basic",
+      "sentence": "Employees must submit their vacation requests _____ Friday afternoon.",
+      "options": [
+        "at",
+        "by",
+        "during",
+        "among"
+      ],
+      "answer": 1,
+      "explanation": "\"By Friday afternoon\" nghĩa là không muộn hơn chiều thứ Sáu.",
+      "tip": "By diễn tả hạn chót; until diễn tả một hành động kéo dài đến một thời điểm."
+    },
+    {
+      "id": "part5-test-001-q010",
+      "topic": "Giới từ",
+      "grammarId": "prepositions",
+      "difficulty": "intermediate",
+      "sentence": "The hotel is conveniently located _____ walking distance of the convention center.",
+      "options": [
+        "within",
+        "along",
+        "through",
+        "beside"
+      ],
+      "answer": 0,
+      "explanation": "\"Within walking distance of\" là cụm cố định, nghĩa là trong khoảng cách có thể đi bộ.",
+      "tip": "Học giới từ theo cả cụm từ thay vì ghi nhớ từng từ riêng lẻ."
+    },
+    {
+      "id": "part5-test-001-q011",
+      "topic": "Liên từ",
+      "grammarId": "conjunctions",
+      "difficulty": "basic",
+      "sentence": "The outdoor event will continue _____ the weather conditions become unsafe.",
+      "options": [
+        "unless",
+        "because",
+        "although",
+        "so"
+      ],
+      "answer": 0,
+      "explanation": "\"Unless\" nghĩa là \"trừ khi\", tạo điều kiện khiến sự kiện phải dừng.",
+      "tip": "Unless tương đương với if ... not."
+    },
+    {
+      "id": "part5-test-001-q012",
+      "topic": "Liên từ",
+      "grammarId": "adverb-clauses",
+      "difficulty": "intermediate",
+      "sentence": "_____ the shipment arrived later than expected, the client accepted the revised schedule.",
+      "options": [
+        "Despite",
+        "Although",
+        "Because of",
+        "In spite"
+      ],
+      "answer": 1,
+      "explanation": "Sau chỗ trống là một mệnh đề đầy đủ, nên dùng liên từ \"Although\".",
+      "tip": "Although + mệnh đề; despite/in spite of + danh từ hoặc V-ing."
+    },
+    {
+      "id": "part5-test-001-q013",
+      "topic": "Đại từ",
+      "grammarId": "pronouns",
+      "difficulty": "basic",
+      "sentence": "Customers may exchange an item if _____ present the original receipt.",
+      "options": [
+        "they",
+        "them",
+        "their",
+        "theirs"
+      ],
+      "answer": 0,
+      "explanation": "Chỗ trống làm chủ ngữ của động từ \"present\", nên cần đại từ chủ ngữ \"they\".",
+      "tip": "Xác định chức năng của chỗ trống trong câu trước khi chọn dạng đại từ."
+    },
+    {
+      "id": "part5-test-001-q014",
+      "topic": "Đại từ",
+      "grammarId": "pronouns",
+      "difficulty": "intermediate",
+      "sentence": "Neither of the two proposals fully addresses the concerns raised by the board, so _____ will be revised.",
+      "options": [
+        "both",
+        "each",
+        "neither",
+        "it"
+      ],
+      "answer": 2,
+      "explanation": "\"Neither\" thay cho cả hai đề xuất trong ý phủ định: không đề xuất nào đáp ứng đầy đủ.",
+      "tip": "Neither dùng cho không đối tượng nào trong hai đối tượng."
+    },
+    {
+      "id": "part5-test-001-q015",
+      "topic": "Mệnh đề quan hệ",
+      "grammarId": "relative-clauses",
+      "difficulty": "basic",
+      "sentence": "The consultant _____ prepared the financial forecast will attend today's meeting.",
+      "options": [
+        "who",
+        "which",
+        "whose",
+        "where"
+      ],
+      "answer": 0,
+      "explanation": "Đại từ quan hệ thay cho người và làm chủ ngữ của \"prepared\" là \"who\".",
+      "tip": "Who dùng cho người; which dùng cho vật."
+    },
+    {
+      "id": "part5-test-001-q016",
+      "topic": "Mệnh đề quan hệ",
+      "grammarId": "relative-clauses",
+      "difficulty": "intermediate",
+      "sentence": "The warehouse installed a tracking system _____ allows staff to locate packages quickly.",
+      "options": [
+        "what",
+        "that",
+        "where",
+        "whom"
+      ],
+      "answer": 1,
+      "explanation": "\"That\" thay cho \"a tracking system\" và làm chủ ngữ của mệnh đề quan hệ.",
+      "tip": "That có thể thay cho who hoặc which trong mệnh đề quan hệ xác định."
+    },
+    {
+      "id": "part5-test-001-q017",
+      "topic": "Bị động",
+      "grammarId": "passive-voice",
+      "difficulty": "basic",
+      "sentence": "All visitors _____ to wear an identification badge while inside the laboratory.",
+      "options": [
+        "require",
+        "required",
+        "are required",
+        "have required"
+      ],
+      "answer": 2,
+      "explanation": "Khách tham quan là đối tượng nhận yêu cầu, nên dùng bị động \"are required\".",
+      "tip": "Bị động cơ bản: be + past participle."
+    },
+    {
+      "id": "part5-test-001-q018",
+      "topic": "Bị động",
+      "grammarId": "passive-voice",
+      "difficulty": "intermediate",
+      "sentence": "The revised safety guidelines will _____ to every department by the end of the week.",
+      "options": [
+        "distribute",
+        "be distributed",
+        "have distributed",
+        "distributing"
+      ],
+      "answer": 1,
+      "explanation": "Sau \"will\" và ở thể bị động cần cấu trúc \"be + V3\": will be distributed.",
+      "tip": "Bị động với modal: modal + be + past participle."
+    },
+    {
+      "id": "part5-test-001-q019",
+      "topic": "Từ vựng",
+      "grammarId": "preposition-collocations",
+      "difficulty": "basic",
+      "sentence": "The company plans to _____ a customer satisfaction survey next month.",
+      "options": [
+        "conduct",
+        "performing",
+        "attend",
+        "deliver"
+      ],
+      "answer": 0,
+      "explanation": "\"Conduct a survey\" là kết hợp từ tự nhiên, nghĩa là tiến hành một cuộc khảo sát.",
+      "tip": "Part 5 kiểm tra nhiều collocation trong ngữ cảnh công việc."
+    },
+    {
+      "id": "part5-test-001-q020",
+      "topic": "Từ vựng",
+      "grammarId": "preposition-collocations",
+      "difficulty": "intermediate",
+      "sentence": "Due to strong demand, the manufacturer has decided to _____ production capacity.",
+      "options": [
+        "expand",
+        "extendable",
+        "rise",
+        "grow up"
+      ],
+      "answer": 0,
+      "explanation": "\"Expand production capacity\" là cụm phù hợp, nghĩa là mở rộng năng lực sản xuất.",
+      "tip": "Rise thường là nội động từ; raise và expand có thể nhận tân ngữ."
+    },
+    {
+      "id": "part5-test-001-q021",
+      "topic": "Danh động từ",
+      "grammarId": "gerunds-infinitives",
+      "difficulty": "intermediate",
+      "sentence": "The operations manager recommended _____ the delivery route to reduce fuel costs.",
+      "options": [
+        "change",
+        "changed",
+        "to changing",
+        "changing"
+      ],
+      "answer": 3,
+      "explanation": "Động từ \"recommend\" được theo sau bởi danh động từ V-ing.",
+      "tip": "Recommend, suggest và consider thường đi với V-ing."
+    },
+    {
+      "id": "part5-test-001-q022",
+      "topic": "Danh động từ",
+      "grammarId": "gerunds-infinitives",
+      "difficulty": "intermediate",
+      "sentence": "Applicants are encouraged _____ their résumés before the closing date.",
+      "options": [
+        "submit",
+        "to submit",
+        "submitting",
+        "submitted"
+      ],
+      "answer": 1,
+      "explanation": "Cấu trúc \"encourage someone to do something\" ở bị động là \"be encouraged to do\".",
+      "tip": "Sau be encouraged, use to-infinitive."
+    },
+    {
+      "id": "part5-test-001-q023",
+      "topic": "So sánh",
+      "grammarId": "comparisons",
+      "difficulty": "basic",
+      "sentence": "The new printer operates much _____ than the model it replaced.",
+      "options": [
+        "quiet",
+        "quietly",
+        "more quietly",
+        "most quietly"
+      ],
+      "answer": 2,
+      "explanation": "\"Than\" báo hiệu so sánh hơn; bổ nghĩa cho \"operates\" cần trạng từ \"more quietly\".",
+      "tip": "Với trạng từ dài, dùng more + adverb + than."
+    },
+    {
+      "id": "part5-test-001-q024",
+      "topic": "So sánh",
+      "grammarId": "comparisons",
+      "difficulty": "intermediate",
+      "sentence": "Of the three candidates interviewed, Ms. Rivera has _____ experience in international sales.",
+      "options": [
+        "more",
+        "the most",
+        "most of",
+        "the more"
+      ],
+      "answer": 1,
+      "explanation": "So sánh trong nhóm ba người cần dạng so sánh nhất \"the most\".",
+      "tip": "Of/in + nhóm từ ba đối tượng trở lên thường gợi ý superlative."
+    },
+    {
+      "id": "part5-test-001-q025",
+      "topic": "Lượng từ",
+      "grammarId": "quantifiers",
+      "difficulty": "basic",
+      "sentence": "Only a _____ employees volunteered to work at the weekend charity event.",
+      "options": [
+        "little",
+        "few",
+        "much",
+        "number"
+      ],
+      "answer": 1,
+      "explanation": "\"Employees\" là danh từ đếm được số nhiều, nên dùng \"a few\".",
+      "tip": "A few + danh từ đếm được; a little + danh từ không đếm được."
+    },
+    {
+      "id": "part5-test-001-q026",
+      "topic": "Lượng từ",
+      "grammarId": "quantifiers",
+      "difficulty": "intermediate",
+      "sentence": "There is _____ information available about the updated warranty policy.",
+      "options": [
+        "many",
+        "several",
+        "a number of",
+        "very little"
+      ],
+      "answer": 3,
+      "explanation": "\"Information\" không đếm được; \"very little\" diễn tả lượng thông tin rất ít.",
+      "tip": "Information, advice và equipment là các danh từ không đếm được phổ biến."
+    },
+    {
+      "id": "part5-test-001-q027",
+      "topic": "Phân từ",
+      "grammarId": "participles",
+      "difficulty": "intermediate",
+      "sentence": "Customers were _____ by the speed of the technical support team's response.",
+      "options": [
+        "impress",
+        "impressive",
+        "impressed",
+        "impressing"
+      ],
+      "answer": 2,
+      "explanation": "Người cảm thấy ấn tượng dùng tính từ phân từ quá khứ \"impressed\".",
+      "tip": "-ed mô tả cảm xúc của người; -ing mô tả đặc điểm gây ra cảm xúc."
+    },
+    {
+      "id": "part5-test-001-q028",
+      "topic": "Phân từ",
+      "grammarId": "participles",
+      "difficulty": "advanced",
+      "sentence": "_____ in the employee handbook, the revised policy takes effect immediately.",
+      "options": [
+        "Outlining",
+        "Outlined",
+        "To outline",
+        "Having outline"
+      ],
+      "answer": 1,
+      "explanation": "Chính sách là đối tượng được trình bày trong sổ tay, nên mệnh đề rút gọn dùng V3 \"Outlined\".",
+      "tip": "Dùng past participle khi chủ ngữ nhận hành động trong mệnh đề rút gọn."
+    },
+    {
+      "id": "part5-test-001-q029",
+      "topic": "Điều kiện",
+      "grammarId": "conditionals-zero-first",
+      "difficulty": "intermediate",
+      "sentence": "If the supplier confirms the order today, the materials _____ by Monday.",
+      "options": [
+        "arrive",
+        "arrived",
+        "will arrive",
+        "would arrive"
+      ],
+      "answer": 2,
+      "explanation": "Đây là điều kiện loại 1: If + hiện tại đơn, mệnh đề chính dùng will + động từ.",
+      "tip": "Không dùng will trong mệnh đề if của điều kiện loại 1."
+    },
+    {
+      "id": "part5-test-001-q030",
+      "topic": "Cấu trúc câu",
+      "grammarId": "parallelism",
+      "difficulty": "advanced",
+      "sentence": "The training program aims to improve communication, increase productivity, and _____ workplace safety.",
+      "options": [
+        "enhancing",
+        "enhanced",
+        "enhance",
+        "enhancement"
+      ],
+      "answer": 2,
+      "explanation": "Ba thành phần song song sau \"aims to\" cần cùng dạng nguyên mẫu: improve, increase, enhance.",
+      "tip": "Trong một danh sách, kiểm tra các thành phần có cùng cấu trúc ngữ pháp hay không."
+    }
+  ]
+}

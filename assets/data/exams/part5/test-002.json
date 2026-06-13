@@ -1,0 +1,122 @@
+{
+  "schemaVersion": 1,
+  "id": "part5-test-002",
+  "part": 5,
+  "title": "Part 5 Test 02",
+  "description": "Mini test tập trung vào email, tuyển dụng, lịch trình và vận hành doanh nghiệp.",
+  "difficulty": "intermediate",
+  "durationMinutes": 5,
+  "version": 1,
+  "questions": [
+    {
+      "id": "part5-test-002-q001",
+      "topic": "Từ loại",
+      "grammarId": "adjectives-adverbs",
+      "difficulty": "basic",
+      "sentence": "The receptionist greeted every visitor _____ and offered assistance.",
+      "options": ["courteous", "courtesy", "courteously", "more courteous"],
+      "answer": 2,
+      "explanation": "Động từ \"greeted\" cần trạng từ \"courteously\" để mô tả cách nhân viên lễ tân chào khách.",
+      "tip": "Khi chỗ trống bổ nghĩa cho động từ hành động, hãy kiểm tra dạng trạng từ."
+    },
+    {
+      "id": "part5-test-002-q002",
+      "topic": "Thì động từ",
+      "grammarId": "present-perfect",
+      "difficulty": "intermediate",
+      "sentence": "The human resources department _____ more than 200 applications so far.",
+      "options": ["receives", "received", "has received", "will receive"],
+      "answer": 2,
+      "explanation": "\"So far\" diễn tả kết quả tính đến hiện tại, vì vậy dùng hiện tại hoàn thành.",
+      "tip": "So far, to date và up to now thường đi với present perfect."
+    },
+    {
+      "id": "part5-test-002-q003",
+      "topic": "Giới từ",
+      "grammarId": "prepositions",
+      "difficulty": "basic",
+      "sentence": "The interview has been rescheduled _____ 2:30 P.M. on Thursday.",
+      "options": ["at", "on", "in", "from"],
+      "answer": 0,
+      "explanation": "Dùng giới từ \"at\" trước một giờ cụ thể.",
+      "tip": "At + giờ; on + ngày; in + tháng, năm hoặc khoảng thời gian dài."
+    },
+    {
+      "id": "part5-test-002-q004",
+      "topic": "Liên từ",
+      "grammarId": "connectors-conjunctive-adverbs",
+      "difficulty": "intermediate",
+      "sentence": "The software update is optional; _____, it is strongly recommended for all users.",
+      "options": ["otherwise", "however", "because", "unless"],
+      "answer": 1,
+      "explanation": "\"However\" nối hai ý tương phản và phù hợp sau dấu chấm phẩy.",
+      "tip": "Trạng từ liên kết thường đứng sau dấu chấm hoặc chấm phẩy và có dấu phẩy theo sau."
+    },
+    {
+      "id": "part5-test-002-q005",
+      "topic": "Bị động",
+      "grammarId": "passive-voice",
+      "difficulty": "basic",
+      "sentence": "A confirmation email will _____ within two business days.",
+      "options": ["send", "be sent", "have sent", "sending"],
+      "answer": 1,
+      "explanation": "Email nhận hành động gửi nên dùng bị động tương lai \"will be sent\".",
+      "tip": "Bị động với will có cấu trúc will + be + V3."
+    },
+    {
+      "id": "part5-test-002-q006",
+      "topic": "Hòa hợp S-V",
+      "grammarId": "subject-verb-agreement",
+      "difficulty": "intermediate",
+      "sentence": "A list of approved suppliers _____ available on the company intranet.",
+      "options": ["are", "were", "is", "have been"],
+      "answer": 2,
+      "explanation": "Chủ ngữ chính là danh từ số ít \"A list\", nên động từ là \"is\".",
+      "tip": "Cụm giới từ of approved suppliers không làm thay đổi số của chủ ngữ chính."
+    },
+    {
+      "id": "part5-test-002-q007",
+      "topic": "Mệnh đề quan hệ",
+      "grammarId": "relative-clauses",
+      "difficulty": "intermediate",
+      "sentence": "Employees _____ parking permits expire this month should contact the facilities office.",
+      "options": ["who", "whose", "which", "whom"],
+      "answer": 1,
+      "explanation": "\"Whose\" thể hiện quan hệ sở hữu giữa nhân viên và giấy phép đỗ xe.",
+      "tip": "Whose + danh từ; who + động từ."
+    },
+    {
+      "id": "part5-test-002-q008",
+      "topic": "Từ vựng",
+      "grammarId": "preposition-collocations",
+      "difficulty": "intermediate",
+      "sentence": "The logistics team must _____ the delivery with the receiving department.",
+      "options": ["coordinate", "cooperate", "combine", "connective"],
+      "answer": 0,
+      "explanation": "\"Coordinate the delivery with a department\" nghĩa là phối hợp việc giao hàng với một bộ phận.",
+      "tip": "Coordinate thường nhận trực tiếp một kế hoạch hoặc hoạt động làm tân ngữ."
+    },
+    {
+      "id": "part5-test-002-q009",
+      "topic": "Danh động từ",
+      "grammarId": "gerunds-infinitives",
+      "difficulty": "intermediate",
+      "sentence": "The committee postponed _____ a final decision until additional data became available.",
+      "options": ["make", "to make", "making", "made"],
+      "answer": 2,
+      "explanation": "Động từ \"postpone\" được theo sau bởi danh động từ V-ing.",
+      "tip": "Avoid, consider, postpone và suggest thường đi với V-ing."
+    },
+    {
+      "id": "part5-test-002-q010",
+      "topic": "Lượng từ",
+      "grammarId": "quantifiers",
+      "difficulty": "intermediate",
+      "sentence": "The revised form requires _____ information than the previous version.",
+      "options": ["fewer", "few", "less", "least"],
+      "answer": 2,
+      "explanation": "\"Information\" là danh từ không đếm được; so sánh hơn của little là \"less\".",
+      "tip": "Fewer dùng với danh từ đếm được số nhiều; less dùng với danh từ không đếm được."
+    }
+  ]
+}

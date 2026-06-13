@@ -1,0 +1,492 @@
+{
+  "schemaVersion": 1,
+  "id": "part5-test-ets2026-t1",
+  "part": 5,
+  "title": "ETS 2026 Test 1 - Part 5",
+  "description": "Đề thi TOEIC ETS 2026 Test 1 - Part 5 đầy đủ 30 câu hỏi kèm giải thích chi tiết.",
+  "difficulty": "intermediate",
+  "durationMinutes": 15,
+  "version": 1,
+  "questions": [
+    {
+      "id": "part5-test-ets2026-t1-q101",
+      "topic": "Giới từ",
+      "grammarId": "prepositions",
+      "difficulty": "intermediate",
+      "sentence": "The lecture will take place at 6:00 P.M., ------- which attendees may ask questions.",
+      "options": [
+        "across",
+        "after",
+        "inside",
+        "among"
+      ],
+      "answer": 1,
+      "explanation": "\"After which\" (sau đó) mang nghĩa chỉ thời gian nối tiếp sau bài giảng.",
+      "tip": "Sau giới từ thường đi kèm với đại từ quan hệ (which/whom)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q102",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "The ------- antique shop in Pepper Valley will close down next month.",
+      "options": [
+        "last",
+        "lasts",
+        "lasted",
+        "lasting"
+      ],
+      "answer": 0,
+      "explanation": "Tính từ \"last\" (cuối cùng) phù hợp nhất về nghĩa để bổ nghĩa cho \"antique shop\".",
+      "tip": "Trước danh từ cần một tính từ bổ nghĩa."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q103",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "Merryville residents will receive an online status ------- about the ongoing bridge construction project.",
+      "options": [
+        "update",
+        "change",
+        "payment",
+        "request"
+      ],
+      "answer": 0,
+      "explanation": "Cụm \"status update\" mang nghĩa là \"cập nhật trạng thái\".",
+      "tip": "Lưu ý các danh từ hay đi liền kề nhau tạo thành danh từ ghép (collocations)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q104",
+      "topic": "Đại từ",
+      "grammarId": "pronouns",
+      "difficulty": "basic",
+      "sentence": "As a result of many years leading ------- media organizations, Ms. Ayo was selected for the Dowel Journalism Prize.",
+      "options": [
+        "she",
+        "her",
+        "hers",
+        "herself"
+      ],
+      "answer": 1,
+      "explanation": "\"her\" là tính từ sở hữu bổ nghĩa cho cụm danh từ \"media organizations\".",
+      "tip": "Trước cụm danh từ cần một tính từ sở hữu."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q105",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "To stop the ------- of computer viruses, do not open suspicious e-mails.",
+      "options": [
+        "break",
+        "spread",
+        "balance",
+        "surface"
+      ],
+      "answer": 1,
+      "explanation": "Danh từ \"spread\" mang nghĩa là \"sự lây lan\", phù hợp ngữ cảnh ngăn chặn virus.",
+      "tip": "Dựa vào \"computer viruses\" để chọn từ mang nghĩa \"sự lây lan\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q106",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "The hiring manager ------- considered each applicant's résumé and qualifications.",
+      "options": [
+        "caring",
+        "careful",
+        "carefully",
+        "carefulness"
+      ],
+      "answer": 2,
+      "explanation": "Cần một trạng từ (carefully) để bổ nghĩa cho động từ \"considered\".",
+      "tip": "Cấu trúc: Subject + Adverb + Verb."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q107",
+      "topic": "Liên từ",
+      "grammarId": "conjunctions",
+      "difficulty": "basic",
+      "sentence": "In October, Mr. Sakamoto will leave for New Zealand ------- will oversee the opening of the new Auckland branch.",
+      "options": [
+        "because",
+        "in addition",
+        "and",
+        "prior to"
+      ],
+      "answer": 2,
+      "explanation": "Liên từ \"and\" được dùng để nối hai động từ cùng chủ ngữ (will leave... and will oversee).",
+      "tip": "Dùng \"and\" để nối các thành phần song song, đồng đẳng."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q108",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "Tarateer Pharmaceuticals is varying its product ------- to include over-the-counter medications.",
+      "options": [
+        "to line",
+        "lining",
+        "lined",
+        "line"
+      ],
+      "answer": 3,
+      "explanation": "Cụm danh từ ghép \"product line\" mang nghĩa là \"dòng sản phẩm\".",
+      "tip": "Ghi nhớ cụm danh từ (collocation) \"product line\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q109",
+      "topic": "Thì động từ",
+      "grammarId": "present-simple",
+      "difficulty": "basic",
+      "sentence": "Dynart, Inc., continuously ------- new ways to reduce its use of plastics.",
+      "options": [
+        "seeks",
+        "seeker",
+        "to seek",
+        "seeking"
+      ],
+      "answer": 0,
+      "explanation": "Chủ ngữ số ít \"Dynart, Inc.\" cần động từ chia ở thì hiện tại đơn số ít \"seeks\".",
+      "tip": "Trạng từ \"continuously\" thường đi với thì hiện tại đơn chỉ tính chất/thói quen."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q110",
+      "topic": "Động từ",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "The cash registers at Pirkle Books automatically ------- the remaining inventory of books available.",
+      "options": [
+        "calculate",
+        "calculator",
+        "calculating",
+        "calculation"
+      ],
+      "answer": 0,
+      "explanation": "Chủ ngữ số nhiều \"The cash registers\" cần một động từ chính ở dạng số nhiều \"calculate\".",
+      "tip": "Xác định chủ ngữ chính để chia động từ tương ứng."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q111",
+      "topic": "Từ vựng",
+      "grammarId": "adjectives-adverbs",
+      "difficulty": "intermediate",
+      "sentence": "The product team is designing mapping software that can ------- locate underground minerals.",
+      "options": [
+        "infinitely",
+        "sincerely",
+        "precisely",
+        "greatly"
+      ],
+      "answer": 2,
+      "explanation": "Trạng từ \"precisely\" (một cách chính xác) phù hợp để bổ nghĩa cho động từ \"locate\".",
+      "tip": "Dịch nghĩa: precisely (chính xác), infinitely (vô hạn), sincerely (chân thành)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q112",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "According to CEO Mayu Yamada, it would not be ------- responsible to expand the warehouse at this time.",
+      "options": [
+        "finance",
+        "financials",
+        "financially",
+        "financing"
+      ],
+      "answer": 2,
+      "explanation": "Cần một trạng từ \"financially\" để bổ nghĩa cho tính từ \"responsible\" phía sau.",
+      "tip": "Cấu trúc: to be + Adverb + Adjective."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q113",
+      "topic": "Từ vựng",
+      "grammarId": "preposition-collocations",
+      "difficulty": "advanced",
+      "sentence": "Analysts cannot say with any ------- what the regional demand for electric trucks will be.",
+      "options": [
+        "certainty",
+        "justice",
+        "excellence",
+        "denial"
+      ],
+      "answer": 0,
+      "explanation": "Cụm từ \"with certainty\" mang nghĩa là \"chắc chắn\", phù hợp với ngữ cảnh dự đoán nhu cầu.",
+      "tip": "Học thuộc thành ngữ / cụm giới từ \"with certainty\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q114",
+      "topic": "Từ vựng",
+      "grammarId": "adjectives-adverbs",
+      "difficulty": "intermediate",
+      "sentence": "As part of its marketing campaign, Elegancia Dishware is ------- soliciting feedback from customers.",
+      "options": [
+        "lightly",
+        "loyally",
+        "actively",
+        "cleanly"
+      ],
+      "answer": 2,
+      "explanation": "\"actively soliciting\" có nghĩa là \"tích cực kêu gọi/thu thập\", phù hợp với ngữ cảnh marketing.",
+      "tip": "Trạng từ \"actively\" thường đi với các động từ chỉ sự tìm kiếm, thu thập."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q115",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "Rain gardens are intended to ------- water to prevent flooding of local roads.",
+      "options": [
+        "engage",
+        "undergo",
+        "absorb",
+        "overwhelm"
+      ],
+      "answer": 2,
+      "explanation": "Động từ \"absorb\" (hấp thụ) phù hợp với chủ ngữ \"Rain gardens\" và tân ngữ \"water\".",
+      "tip": "Dịch nghĩa các động từ để chọn từ kết hợp chuẩn với tân ngữ đi kèm."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q116",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "Theta Industries' training program aims to increase the ------- of its manufacturing systems.",
+      "options": [
+        "producer",
+        "produced",
+        "productive",
+        "productivity"
+      ],
+      "answer": 3,
+      "explanation": "Sau mạo từ \"the\" cần một danh từ. \"productivity\" (năng suất) phù hợp với ngữ cảnh hệ thống.",
+      "tip": "Cấu trúc: the + Noun + of."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q117",
+      "topic": "Giới từ",
+      "grammarId": "prepositions",
+      "difficulty": "intermediate",
+      "sentence": "The board of directors has voted to award Mr. Mitrakos a bonus for his role ------- obtaining the international contract.",
+      "options": [
+        "in",
+        "at",
+        "except",
+        "apart"
+      ],
+      "answer": 0,
+      "explanation": "Cụm \"role in + V-ing/Noun\" mang nghĩa là \"vai trò trong việc gì\".",
+      "tip": "Ghi nhớ cụm từ cố định: role in (doing) something."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q118",
+      "topic": "Liên từ",
+      "grammarId": "conjunctions",
+      "difficulty": "advanced",
+      "sentence": "The finance director gave his approval ------- the project can move forward.",
+      "options": [
+        "along",
+        "furthermore",
+        "cautiously",
+        "so that"
+      ],
+      "answer": 3,
+      "explanation": "\"so that\" (để mà) dùng để nối hai mệnh đề, chỉ mục đích của việc phê duyệt.",
+      "tip": "Phía sau là một mệnh đề (S + V) nên cần một liên từ nối mệnh đề phù hợp."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q119",
+      "topic": "Từ vựng",
+      "grammarId": "preposition-collocations",
+      "difficulty": "advanced",
+      "sentence": "The newspaper article describes ways job seekers can ------- for having little workplace experience.",
+      "options": [
+        "reply",
+        "capture",
+        "compensate",
+        "accumulate"
+      ],
+      "answer": 2,
+      "explanation": "Cụm động từ \"compensate for\" (bù đắp cho) hoàn toàn hợp lý với việc có ít kinh nghiệm.",
+      "tip": "Học thuộc cụm động từ \"compensate for something\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q120",
+      "topic": "Đại từ",
+      "grammarId": "pronouns",
+      "difficulty": "advanced",
+      "sentence": "Mr. Ellis and Ms. Barnes were both highly qualified, but ------- got the job.",
+      "options": [
+        "myself",
+        "neither",
+        "anybody",
+        "whoever"
+      ],
+      "answer": 1,
+      "explanation": "Từ \"but\" thể hiện sự tương phản, có 2 ứng viên (\"both\") nhưng không ai được nhận (\"neither\").",
+      "tip": "\"Neither\" dùng để chỉ \"không ai trong hai người/vật\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q121",
+      "topic": "Liên từ",
+      "grammarId": "conjunctions",
+      "difficulty": "intermediate",
+      "sentence": "Ennis Photography purchased all new lighting equipment ------- the high cost.",
+      "options": [
+        "even though",
+        "however",
+        "until",
+        "despite"
+      ],
+      "answer": 3,
+      "explanation": "Sau chỗ trống là cụm danh từ \"the high cost\", cần một giới từ như \"despite\" (mặc dù).",
+      "tip": "Despite / In spite of + Noun / V-ing."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q122",
+      "topic": "Động từ",
+      "grammarId": "gerunds-infinitives",
+      "difficulty": "basic",
+      "sentence": "Marburton residents who wish to ------- a home should contact the award-winning team at Kwan Real Estate.",
+      "options": [
+        "seller",
+        "sold",
+        "sell",
+        "selling"
+      ],
+      "answer": 2,
+      "explanation": "Sau \"to\" của cấu trúc \"wish to\" cần một động từ ở dạng nguyên mẫu.",
+      "tip": "Cấu trúc: wish to + Verb (infinitive)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q123",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "Maswa Bistro began a ------- agreement with local farmers to purchase a set amount of produce each week.",
+      "options": [
+        "disruptive",
+        "cooperative",
+        "grateful",
+        "concerned"
+      ],
+      "answer": 1,
+      "explanation": "Cụm \"cooperative agreement\" mang nghĩa \"thỏa thuận hợp tác\", hợp lý với việc mua nông sản.",
+      "tip": "Dịch nghĩa các tính từ để ghép với danh từ \"agreement\"."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q124",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "The City of Doyle's new downtown parking ------- have been met with opposition by residents and visitors.",
+      "options": [
+        "restricts",
+        "restricted",
+        "restrictions",
+        "restricting"
+      ],
+      "answer": 2,
+      "explanation": "Cần danh từ số nhiều làm chủ ngữ do động từ chính là \"have been\". \"restrictions\" (hạn chế) là hợp lý.",
+      "tip": "Chú ý sự hòa hợp giữa chủ ngữ và động từ (chia thì)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q125",
+      "topic": "Từ vựng",
+      "grammarId": "adjectives-adverbs",
+      "difficulty": "advanced",
+      "sentence": "The plumbing position requires extensive training, even for those who studied ------- in technical school.",
+      "options": [
+        "diligently",
+        "scientifically",
+        "objectively",
+        "decidedly"
+      ],
+      "answer": 0,
+      "explanation": "Trạng từ \"diligently\" (một cách chăm chỉ) phù hợp nhất để bổ nghĩa cho động từ \"studied\".",
+      "tip": "Dịch nghĩa trạng từ: diligently (chăm chỉ), objectively (khách quan)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q126",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "With its fixed price -------, Omega Cellular guarantees no phone bill increases for three years.",
+      "options": [
+        "assurance",
+        "assuredly",
+        "assuring",
+        "assures"
+      ],
+      "answer": 0,
+      "explanation": "Cần một danh từ để kết hợp tạo thành cụm danh từ \"fixed price assurance\" (sự đảm bảo giá cố định).",
+      "tip": "Danh từ ghép (Compound noun) thường được sử dụng trong TOEIC."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q127",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "advanced",
+      "sentence": "As chief analytics officer, Mr. Ko has worked at Lochston Ltd. with great ------- for more than twenty years.",
+      "options": [
+        "deduction",
+        "duplication",
+        "declaration",
+        "dedication"
+      ],
+      "answer": 3,
+      "explanation": "\"dedication\" (sự cống hiến/tận tâm) đi cùng \"with great\" thể hiện thái độ làm việc nhiệt huyết suốt 20 năm.",
+      "tip": "Dịch nghĩa danh từ: dedication (cống hiến), deduction (khấu trừ), declaration (tuyên bố)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q128",
+      "topic": "Liên từ",
+      "grammarId": "conjunctions",
+      "difficulty": "advanced",
+      "sentence": "Milltown Hospital's cafeteria serves lunch seven days a week ------- only on weekdays.",
+      "options": [
+        "up to",
+        "as though",
+        "each time",
+        "rather than"
+      ],
+      "answer": 3,
+      "explanation": "\"rather than\" (thay vì) được dùng để thiết lập sự tương phản giữa \"7 ngày/tuần\" và \"chỉ vào ngày trong tuần\".",
+      "tip": "Sử dụng \"rather than\" để so sánh và lựa chọn giữa hai đối tượng."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q129",
+      "topic": "Từ vựng",
+      "grammarId": "word-forms",
+      "difficulty": "intermediate",
+      "sentence": "The store's entire inventory of lumber comes from a nearby ------- supplier.",
+      "options": [
+        "financial",
+        "promotional",
+        "chemical",
+        "commercial"
+      ],
+      "answer": 3,
+      "explanation": "\"commercial supplier\" (nhà cung cấp thương mại) phù hợp với ngữ cảnh cửa hàng nhập kho.",
+      "tip": "Dịch nghĩa tính từ: commercial (thương mại), financial (tài chính)."
+    },
+    {
+      "id": "part5-test-ets2026-t1-q130",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "advanced",
+      "sentence": "For a $95 fee, our mechanics will run a ------- to determine what repairs are needed.",
+      "options": [
+        "diagnosed",
+        "diagnostic",
+        "diagnosable",
+        "diagnose"
+      ],
+      "answer": 1,
+      "explanation": "Khoảng trống cần một danh từ để làm tân ngữ. \"diagnostic\" ở đây đóng vai trò là danh từ (bài kiểm tra chẩn đoán).",
+      "tip": "Từ \"diagnostic\" vừa là tính từ (có tính chẩn đoán) vừa là danh từ (bài kiểm tra chẩn đoán)."
+    }
+  ]
+}

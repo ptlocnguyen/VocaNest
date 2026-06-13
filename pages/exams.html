@@ -34,17 +34,79 @@
   </header>
 
   <main class="exam-main">
-    <section id="setupView" class="exam-setup">
+    <section id="libraryView" class="exam-library">
       <div class="exam-intro">
         <div>
           <span class="exam-eyebrow">TOEIC Reading · Part 5</span>
-          <h1>Incomplete Sentences</h1>
-          <p>Chọn từ hoặc cụm từ phù hợp nhất để hoàn thành câu. Bộ câu hỏi được VocaNest tự biên soạn theo ngữ cảnh công việc thường gặp trong TOEIC.</p>
+          <h1>Thư viện đề Part 5</h1>
+          <p>Chọn một đề cố định để luyện theo chủ điểm hoặc mô phỏng áp lực thời gian. Mỗi đề lưu kết quả và danh sách câu sai riêng.</p>
         </div>
-        <div class="exam-format" aria-label="Cấu trúc Part 5">
-          <span><strong>30</strong> câu</span>
+        <div class="exam-format" aria-label="Tổng quan thư viện">
+          <span><strong id="catalogTestCount">0</strong> đề</span>
+          <span><strong id="catalogQuestionCount">0</strong> câu</span>
+          <span><strong id="catalogAttemptCount">0</strong> lượt luyện</span>
+        </div>
+      </div>
+
+      <div class="library-toolbar">
+        <div>
+          <h2>Chọn đề để bắt đầu</h2>
+          <p id="catalogSummary">Đang tải thư viện đề...</p>
+        </div>
+        <div class="library-toolbar__actions">
+          <a class="btn" href="./exam-import.html">
+            <i data-lucide="sheet"></i>
+            Import Excel
+          </a>
+          <label class="library-filter">
+            <span class="sr-only">Lọc theo độ khó</span>
+            <i data-lucide="list-filter"></i>
+            <select id="difficultyFilter" class="exam-select">
+              <option value="all">Mọi độ khó</option>
+              <option value="basic">Cơ bản</option>
+              <option value="intermediate">Trung cấp</option>
+              <option value="advanced">Nâng cao</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <div id="testCatalog" class="test-catalog" aria-live="polite"></div>
+
+      <section id="catalogError" class="catalog-state" hidden>
+        <i data-lucide="cloud-off"></i>
+        <h2>Không tải được thư viện đề</h2>
+        <p>Hãy kiểm tra kết nối hoặc chạy website bằng HTTP server thay vì mở trực tiếp file HTML.</p>
+        <button id="retryCatalogBtn" class="btn" type="button">
+          <i data-lucide="refresh-cw"></i>
+          Thử lại
+        </button>
+      </section>
+
+      <section class="exam-principles" aria-label="Cách VocaNest hỗ trợ luyện Part 5">
+        <div><i data-lucide="message-square-text"></i><strong>Giải thích đáp án</strong><span>Hiểu quy tắc thay vì chỉ biết đúng hoặc sai.</span></div>
+        <div><i data-lucide="bookmark"></i><strong>Đánh dấu câu khó</strong><span>Quay lại câu còn phân vân trước khi nộp.</span></div>
+        <div><i data-lucide="scan-search"></i><strong>Phân tích điểm yếu</strong><span>Xem độ chính xác theo từng chủ điểm.</span></div>
+      </section>
+    </section>
+
+    <section id="setupView" class="exam-setup" hidden>
+      <button id="backToLibraryBtn" class="back-to-library" type="button">
+        <i data-lucide="arrow-left"></i>
+        Thư viện đề
+      </button>
+
+      <div class="selected-test-heading">
+        <div>
+          <span id="selectedTestEyebrow" class="exam-eyebrow">TOEIC Reading · Part 5</span>
+          <h1 id="selectedTestTitle">Part 5 Test</h1>
+          <p id="selectedTestDescription"></p>
+          <div id="selectedTestTags" class="selected-test-tags"></div>
+        </div>
+        <div class="exam-format" aria-label="Cấu trúc đề">
+          <span><strong id="selectedQuestionCount">0</strong> câu</span>
           <span><strong>4</strong> lựa chọn</span>
-          <span><strong>12</strong> phút gợi ý</span>
+          <span><strong id="selectedDuration">0</strong> phút</span>
         </div>
       </div>
 
@@ -81,11 +143,7 @@
           <div class="setup-fields">
             <label>
               <span>Số câu</span>
-              <select id="questionCount" class="exam-select">
-                <option value="10">10 câu · Khởi động</option>
-                <option value="20">20 câu · Luyện sâu</option>
-                <option value="30" selected>30 câu · Đúng format Part 5</option>
-              </select>
+              <select id="questionCount" class="exam-select"></select>
             </label>
             <label>
               <span>Chủ điểm</span>
@@ -109,6 +167,7 @@
             </div>
             <i data-lucide="chart-no-axes-combined"></i>
           </div>
+          <div id="draftResumePanel" class="draft-resume-panel" hidden></div>
           <div class="overview-metrics">
             <div><strong id="totalAttempts">0</strong><span>lượt luyện</span></div>
             <div><strong id="bestScore">--</strong><span>tốt nhất</span></div>
@@ -118,22 +177,33 @@
             <i data-lucide="rotate-ccw"></i>
             Ôn lại câu sai
           </button>
-          <p class="privacy-note"><i data-lucide="hard-drive"></i> Kết quả hiện được lưu cục bộ trong trình duyệt.</p>
+          <p id="syncStatus" class="sync-status is-syncing">
+            <i data-lucide="refresh-cw"></i>
+            Đang kiểm tra đồng bộ lịch sử...
+          </p>
+          <p class="privacy-note"><i data-lucide="hard-drive"></i> Draft luôn lưu cục bộ trước, sau đó đồng bộ Drive khi có kết nối.</p>
         </aside>
       </div>
 
-      <section class="exam-principles" aria-label="Cách VocaNest hỗ trợ luyện Part 5">
-        <div><i data-lucide="message-square-text"></i><strong>Giải thích đáp án</strong><span>Hiểu quy tắc thay vì chỉ biết đúng hoặc sai.</span></div>
-        <div><i data-lucide="bookmark"></i><strong>Đánh dấu câu khó</strong><span>Quay lại câu còn phân vân trước khi nộp.</span></div>
-        <div><i data-lucide="scan-search"></i><strong>Phân tích điểm yếu</strong><span>Xem độ chính xác theo từng chủ điểm.</span></div>
+      <section class="attempt-history" aria-labelledby="attemptHistoryTitle">
+        <div class="result-section-heading">
+          <div>
+            <span class="exam-eyebrow">Lịch sử làm bài</span>
+            <h2 id="attemptHistoryTitle">Các lần luyện gần đây</h2>
+            <p>Xem lại kết quả cũ để nhận ra xu hướng tiến bộ và ôn đúng phần còn yếu.</p>
+          </div>
+          <i data-lucide="history"></i>
+        </div>
+        <div id="attemptHistoryList" class="attempt-history__list"></div>
       </section>
+
     </section>
 
     <section id="sessionView" class="exam-session" hidden>
       <header class="session-header">
         <div>
           <span id="sessionModeLabel" class="exam-eyebrow">Luyện tập</span>
-          <h1>TOEIC Reading Part 5</h1>
+          <h1 id="sessionTestTitle">TOEIC Reading Part 5</h1>
         </div>
         <div class="session-status">
           <div class="timer-box" aria-label="Thời gian">
@@ -298,7 +368,6 @@
   <script src="../assets/js/config.js"></script>
   <script src="../assets/js/apiClient.js"></script>
   <script src="../assets/js/authGuard.js"></script>
-  <script src="../assets/js/part5Data.js"></script>
   <script src="../assets/js/exams.js"></script>
 </body>
 </html>

@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "id": "part5-test-xxx",
+  "part": 5,
+  "title": "Part 5 Test XX",
+  "description": "Mô tả ngắn về phạm vi của đề.",
+  "difficulty": "intermediate",
+  "durationMinutes": 12,
+  "version": 1,
+  "questions": [
+    {
+      "id": "part5-test-xxx-q001",
+      "topic": "Từ loại",
+      "grammarId": "word-forms",
+      "difficulty": "basic",
+      "sentence": "The sentence contains a _____ for the learner to complete.",
+      "options": ["choice A", "choice B", "choice C", "choice D"],
+      "answer": 0,
+      "explanation": "Giải thích vì sao đáp án A đúng và các dạng còn lại không phù hợp.",
+      "tip": "Một mẹo ngắn giúp người học nhận diện dạng câu."
+    }
+  ]
+}

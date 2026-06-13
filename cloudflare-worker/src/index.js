@@ -103,12 +103,22 @@ export default {
       });
 
       const responseBody = await upstream.text();
+      let responseJson;
 
-      return new Response(responseBody, {
+      try {
+        responseJson = responseBody ? JSON.parse(responseBody) : {};
+      } catch {
+        return json({
+          ok: false,
+          error: "Apps Script URL không trả JSON. Kiểm tra Web App URL trong secret APPS_SCRIPT_URL và deploy Apps Script ở quyền Anyone."
+        }, 502, allowedOrigin);
+      }
+
+      return new Response(JSON.stringify(responseJson), {
         status: upstream.ok ? 200 : upstream.status,
         headers: {
           ...corsHeaders(allowedOrigin),
-          "Content-Type": upstream.headers.get("Content-Type") || "application/json; charset=utf-8"
+          "Content-Type": "application/json; charset=utf-8"
         }
       });
     } catch (error) {

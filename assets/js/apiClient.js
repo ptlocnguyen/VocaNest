@@ -79,7 +79,21 @@
         signal: controller.signal
       });
 
-      const data = await res.json();
+      const raw = await res.text();
+      let data = {};
+
+      try {
+        data = raw ? JSON.parse(raw) : {};
+      } catch {
+        const preview = raw
+          .slice(0, 120)
+          .replace(/\s+/g, " ")
+          .trim();
+        throw new Error(
+          `API không trả JSON (HTTP ${res.status}). Kiểm tra API_URL hoặc deploy lại Cloudflare Worker.${preview ? " Phản hồi: " + preview : ""}`
+        );
+      }
+
       if (!res.ok || !data.ok) {
         if (res.status === 401 || data.error === "Invalid session" || data.error === "Session expired") {
           setToken("");

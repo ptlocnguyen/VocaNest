@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#35c6a1" />
+  <meta name="description" content="Nhập đề TOEIC Part 5 từ Excel, kiểm tra dữ liệu và xuất JSON cho thư viện VocaNest." />
+  <title>VocaNest - Import đề Part 5</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/exam-import.css" />
+</head>
+<body class="exam-import-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link" href="./vocab-sets.html">Bộ từ vựng</a>
+        <a class="nav__link" href="./grammar.html">Ngữ pháp</a>
+        <a class="nav__link is-active" href="./exams.html">Luyện đề</a>
+      </nav>
+    </div>
+    <div class="user-area">
+      <a class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="main import-main">
+    <section class="import-heading">
+      <div>
+        <a class="back-link" href="./exams.html"><i data-lucide="arrow-left"></i> Thư viện đề</a>
+        <span class="import-eyebrow">Công cụ biên soạn</span>
+        <h1>Thêm đề Part 5</h1>
+        <p>Import từ Excel hoặc nhập thủ công, kiểm tra dữ liệu và lưu trực tiếp vào Google Sheet exam_tests.</p>
+      </div>
+      <button id="downloadTemplateBtn" class="btn" type="button">
+        <i data-lucide="file-down"></i>
+        Tải Excel mẫu
+      </button>
+    </section>
+
+    <section class="import-steps" aria-label="Quy trình import">
+      <div class="is-active"><strong>1</strong><span>Nhập dữ liệu</span></div>
+      <div><strong>2</strong><span>Kiểm tra</span></div>
+      <div><strong>3</strong><span>Lưu Drive</span></div>
+    </section>
+
+    <div class="import-mode-tabs" role="tablist" aria-label="Chọn cách thêm đề">
+      <button id="excelModeBtn" class="is-active" type="button">
+        <i data-lucide="sheet"></i>
+        Import Excel
+      </button>
+      <button id="manualModeBtn" type="button">
+        <i data-lucide="square-pen"></i>
+        Nhập thủ công
+      </button>
+    </div>
+
+    <section id="uploadPanel" class="upload-panel">
+      <label id="dropZone" class="drop-zone" for="examFileInput">
+        <input id="examFileInput" type="file" accept=".xlsx,.xls" />
+        <span class="drop-zone__icon"><i data-lucide="sheet"></i></span>
+        <strong>Thả file Excel vào đây</strong>
+        <span>hoặc nhấn để chọn file .xlsx / .xls</span>
+        <small>Tối đa 2 MB · Sheet Test_Info và Questions</small>
+      </label>
+
+      <aside class="format-panel">
+        <div class="format-panel__heading">
+          <i data-lucide="table-properties"></i>
+          <div>
+            <h2>Format câu hỏi</h2>
+            <p>Mỗi câu nằm trên một dòng trong sheet Questions.</p>
+          </div>
+        </div>
+        <div class="required-columns">
+          <code>question_id</code><code>topic</code><code>grammar_id</code>
+          <code>difficulty</code><code>sentence</code>
+          <code>option_a</code><code>option_b</code><code>option_c</code><code>option_d</code>
+          <code>answer</code><code>explanation</code><code>tip</code>
+        </div>
+        <a href="../README.md#thêm-đề-toeic-part-5" target="_blank" rel="noreferrer">
+          Xem tài liệu cấu trúc dữ liệu <i data-lucide="external-link"></i>
+        </a>
+      </aside>
+    </section>
+
+    <section id="manualPanel" class="manual-panel" hidden>
+      <form id="manualMetaForm" class="manual-card">
+        <div class="manual-card__heading">
+          <div>
+            <span class="import-eyebrow">Thông tin đề</span>
+            <h2>Metadata</h2>
+          </div>
+          <i data-lucide="file-text"></i>
+        </div>
+        <div class="manual-grid">
+          <label><span>Test ID</span><input name="test_id" required placeholder="part5-test-003" /></label>
+          <label><span>Tiêu đề</span><input name="title" required placeholder="Part 5 Test 03" /></label>
+          <label class="wide"><span>Mô tả</span><input name="description" placeholder="Đề luyện tổng hợp theo ngữ cảnh công việc." /></label>
+          <label><span>Độ khó</span><select name="difficulty" required><option value="basic">Cơ bản</option><option value="intermediate" selected>Trung cấp</option><option value="advanced">Nâng cao</option></select></label>
+          <label><span>Thời gian</span><input name="duration_minutes" type="number" min="1" max="180" value="12" required /></label>
+          <label><span>Version</span><input name="version" type="number" min="1" value="1" required /></label>
+          <label><span>Tags</span><input name="tags" placeholder="Tổng hợp, Công việc" /></label>
+        </div>
+      </form>
+
+      <form id="manualQuestionForm" class="manual-card">
+        <div class="manual-card__heading">
+          <div>
+            <span class="import-eyebrow">Câu hỏi</span>
+            <h2>Thêm câu Part 5</h2>
+          </div>
+          <i data-lucide="list-plus"></i>
+        </div>
+        <div class="manual-grid">
+          <label><span>Question ID</span><input name="question_id" placeholder="Tự sinh nếu bỏ trống" /></label>
+          <label><span>Chủ điểm</span><input name="topic" required placeholder="Từ loại" /></label>
+          <label><span>Grammar ID</span><input name="grammar_id" required placeholder="word-forms" /></label>
+          <label><span>Độ khó</span><select name="difficulty" required><option value="basic">Cơ bản</option><option value="intermediate" selected>Trung cấp</option><option value="advanced">Nâng cao</option></select></label>
+          <label class="wide"><span>Câu hỏi</span><textarea name="sentence" required rows="3" placeholder="The manager gave a _____ explanation of the updated policy."></textarea></label>
+          <label><span>Đáp án A</span><input name="option_a" required /></label>
+          <label><span>Đáp án B</span><input name="option_b" required /></label>
+          <label><span>Đáp án C</span><input name="option_c" required /></label>
+          <label><span>Đáp án D</span><input name="option_d" required /></label>
+          <label><span>Đáp án đúng</span><select name="answer" required><option value="A">A</option><option value="B">B</option><option value="C">C</option><option value="D">D</option></select></label>
+          <label class="wide"><span>Giải thích</span><textarea name="explanation" required rows="3"></textarea></label>
+          <label class="wide"><span>Mẹo học</span><textarea name="tip" required rows="2"></textarea></label>
+        </div>
+        <div class="manual-actions">
+          <button id="addManualQuestionBtn" class="btn" type="submit">
+            <i data-lucide="plus"></i>
+            Thêm câu
+          </button>
+          <button id="validateManualBtn" class="btn primary" type="button">
+            <i data-lucide="clipboard-check"></i>
+            Kiểm tra đề
+          </button>
+        </div>
+      </form>
+
+      <aside class="manual-card manual-list-card">
+        <div class="manual-card__heading">
+          <div>
+            <span class="import-eyebrow">Danh sách</span>
+            <h2>Câu đã thêm</h2>
+          </div>
+          <strong id="manualQuestionCount">0</strong>
+        </div>
+        <div id="manualQuestionList" class="manual-question-list"></div>
+      </aside>
+    </section>
+
+    <section id="resultPanel" class="import-result" hidden>
+      <header class="file-summary">
+        <div class="file-summary__identity">
+          <span class="file-summary__icon"><i data-lucide="file-spreadsheet"></i></span>
+          <div>
+            <strong id="fileName"></strong>
+            <span id="fileMeta"></span>
+          </div>
+        </div>
+        <button id="chooseAnotherBtn" class="btn" type="button">
+          <i data-lucide="refresh-cw"></i>
+          Chọn file khác
+        </button>
+      </header>
+
+      <div id="validationBanner" class="validation-banner" aria-live="polite"></div>
+
+      <div class="import-layout">
+        <section class="import-preview">
+          <div class="preview-heading">
+            <div>
+              <span class="import-eyebrow">Bản xem trước</span>
+              <h2 id="previewTitle">Đề chưa xác định</h2>
+              <p id="previewDescription"></p>
+            </div>
+            <div class="preview-stats">
+              <span><strong id="previewQuestionCount">0</strong> câu</span>
+              <span><strong id="previewDuration">0</strong> phút</span>
+              <span><strong id="previewDifficulty">--</strong></span>
+            </div>
+          </div>
+
+          <div id="questionPreview" class="question-preview"></div>
+        </section>
+
+        <aside class="validation-panel">
+          <div class="validation-panel__heading">
+            <div>
+              <h2>Kiểm tra dữ liệu</h2>
+              <p><span id="errorCount">0</span> lỗi · <span id="warningCount">0</span> cảnh báo</p>
+            </div>
+            <i data-lucide="clipboard-check"></i>
+          </div>
+          <div id="validationList" class="validation-list"></div>
+        </aside>
+      </div>
+
+      <footer class="export-bar">
+        <div>
+          <strong id="exportStatus">Sẵn sàng xuất file</strong>
+          <span>Lưu trực tiếp vào Google Drive hoặc xuất JSON để sao lưu.</span>
+        </div>
+        <div class="export-actions">
+          <button id="saveDriveBtn" class="btn primary" type="button" disabled>
+            <i data-lucide="cloud-upload"></i>
+            Lưu lên Drive
+          </button>
+          <button id="downloadJsonBtn" class="btn" type="button" disabled>
+            <i data-lucide="download"></i>
+            Xuất JSON
+          </button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <div id="toast" class="import-toast" hidden role="status"></div>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/examImport.js"></script>
+</body>
+</html>
