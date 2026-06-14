@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#35c6a1" />
+  <title>VocaNest - Quiz từ vựng</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/vocab-quiz.css" />
+</head>
+<body class="quiz-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
+        <a class="nav__link" href="./grammar.html">Ngữ pháp</a>
+        <a class="nav__link" href="./exams.html">Luyện đề</a>
+      </nav>
+    </div>
+    <div class="user-area">
+      <a class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="quiz-main">
+    <section id="loadingView" class="quiz-state card">
+      <i data-lucide="loader-circle"></i>
+      <h1>Đang tải quiz...</h1>
+      <p>VocaNest đang chuẩn bị câu hỏi từ bộ từ vựng của bạn.</p>
+    </section>
+
+    <section id="setupView" class="quiz-setup" hidden>
+      <a id="backToSetLink" class="back-link" href="./vocab-sets.html"><i data-lucide="arrow-left"></i> Quay lại bộ từ</a>
+      <div class="quiz-heading">
+        <div>
+          <span class="quiz-eyebrow">Mini game từ vựng</span>
+          <h1 id="setTitle">Quiz nhanh</h1>
+          <p id="setDescription">Chọn chế độ luyện phù hợp với mục tiêu hiện tại.</p>
+        </div>
+        <div class="quiz-summary">
+          <span><strong id="totalWords">0</strong> từ</span>
+          <span><strong id="bestScore">--</strong> tốt nhất</span>
+        </div>
+      </div>
+
+      <div class="quiz-setup-grid">
+        <section class="card quiz-config">
+          <h2>Thiết lập</h2>
+          <fieldset class="quiz-mode">
+            <legend>Chế độ</legend>
+            <label>
+              <input type="radio" name="quizMode" value="word-to-meaning" checked />
+              <span><strong>Từ -> nghĩa</strong><small>Nhìn từ tiếng Anh, chọn nghĩa đúng.</small></span>
+            </label>
+            <label>
+              <input type="radio" name="quizMode" value="meaning-to-word" />
+              <span><strong>Nghĩa -> từ</strong><small>Nhìn nghĩa tiếng Việt, chọn từ tiếng Anh.</small></span>
+            </label>
+          </fieldset>
+
+          <label class="quiz-select-label">
+            <span>Số câu</span>
+            <select id="questionCount" class="input"></select>
+          </label>
+
+          <button id="startBtn" class="btn primary block" type="button">
+            <i data-lucide="play"></i>
+            Bắt đầu quiz
+          </button>
+        </section>
+
+        <aside class="card quiz-tips">
+          <h2>Cách tính điểm</h2>
+          <p>Mỗi câu đúng được tính một điểm. Câu sai sẽ được gom lại để bạn luyện lại ngay sau khi xem kết quả.</p>
+          <p class="quiz-note"><i data-lucide="keyboard"></i> Phím tắt: <kbd>1</kbd>-<kbd>4</kbd> chọn đáp án, <kbd>Enter</kbd> sang câu tiếp.</p>
+        </aside>
+      </div>
+    </section>
+
+    <section id="quizView" class="quiz-session" hidden>
+      <header class="quiz-session__header">
+        <div>
+          <span id="modeLabel" class="quiz-eyebrow">Từ -> nghĩa</span>
+          <h1 id="questionProgress">Câu 1 / 10</h1>
+        </div>
+        <div class="quiz-score">
+          <span id="liveScore">0 đúng</span>
+        </div>
+      </header>
+
+      <div class="quiz-progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+      <article class="card quiz-card">
+        <span id="questionPrompt" class="quiz-prompt">Chọn nghĩa đúng của từ</span>
+        <h2 id="questionText"></h2>
+        <div id="answerOptions" class="answer-grid" role="radiogroup" aria-label="Đáp án"></div>
+        <div id="feedbackBox" class="quiz-feedback" hidden></div>
+        <div class="quiz-actions">
+          <button id="quitBtn" class="btn" type="button"><i data-lucide="x"></i> Dừng</button>
+          <button id="nextBtn" class="btn primary" type="button" disabled>Câu tiếp <i data-lucide="chevron-right"></i></button>
+        </div>
+      </article>
+    </section>
+
+    <section id="resultView" class="quiz-result" hidden>
+      <div class="card result-card">
+        <span class="quiz-eyebrow">Kết quả quiz</span>
+        <h1 id="resultTitle">Hoàn thành</h1>
+        <p id="resultSummary"></p>
+        <div class="result-metrics">
+          <div><strong id="resultPercent">0%</strong><span>chính xác</span></div>
+          <div><strong id="resultCorrect">0</strong><span>câu đúng</span></div>
+          <div><strong id="resultWrong">0</strong><span>câu sai</span></div>
+        </div>
+        <div class="result-actions">
+          <button id="retryWrongBtn" class="btn" type="button" disabled><i data-lucide="rotate-ccw"></i> Luyện lại câu sai</button>
+          <button id="restartBtn" class="btn primary" type="button"><i data-lucide="play"></i> Làm quiz mới</button>
+          <a id="backResultLink" class="btn" href="./vocab-sets.html"><i data-lucide="arrow-left"></i> Về bộ từ</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/vocabQuiz.js"></script>
+</body>
+</html>

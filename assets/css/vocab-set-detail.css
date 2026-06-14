@@ -17,6 +17,13 @@
   min-width: 0;
 }
 
+.set-info-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
 .set-info-title {
   margin-bottom: 7px;
   overflow-wrap: anywhere;
@@ -69,7 +76,15 @@
   gap: 14px;
 }
 
-.btn-flashcards {
+.study-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.btn-flashcards,
+.study-actions .btn {
   flex-shrink: 0;
 }
 
@@ -137,8 +152,17 @@
     flex-direction: column;
   }
 
-  .btn-flashcards {
+  .set-info-actions {
+    display: grid;
+  }
+
+  .study-actions,
+  .study-actions .btn {
     width: 100%;
+  }
+
+  .study-actions {
+    display: grid;
   }
 
   #vocabItems {

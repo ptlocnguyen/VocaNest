@@ -40,6 +40,7 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 - Khám phá bộ từ công khai của người dùng khác.
 - Thêm, tìm kiếm và xóa từng từ.
 - Import hàng loạt từ file Excel `.xlsx` hoặc `.xls`.
+- Trang học riêng cho từng bộ từ, gom Flashcards, Mini Quiz và thống kê học tập.
 - Phân quyền chủ sở hữu: người xem bộ công khai không thể sửa dữ liệu.
 
 ### Flashcards
@@ -52,6 +53,15 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 - Đánh dấu từ khó hoặc từ đã nhớ.
 - Điều hướng bằng thao tác vuốt và các phím tắt bàn phím.
 - Lưu trạng thái học cục bộ trên trình duyệt.
+
+### Mini Quiz Từ Vựng
+
+- Tạo quiz trắc nghiệm nhanh từ từng bộ từ vựng.
+- Hỗ trợ chế độ từ -> nghĩa và nghĩa -> từ.
+- Tự sinh 4 đáp án từ dữ liệu trong cùng bộ.
+- Hiển thị phản hồi đúng/sai ngay sau mỗi câu.
+- Tổng kết điểm cuối phiên và cho phép luyện lại câu sai.
+- Lưu điểm tốt nhất cục bộ theo từng bộ từ.
 
 ### Ngữ pháp TOEIC
 
@@ -160,12 +170,16 @@ VocaNest/
 │   │   ├── grammar.css
 │   │   ├── exams.css
 │   │   ├── exam-import.css
+│   │   ├── vocab-study.css
+│   │   ├── vocab-quiz.css
 │   │   └── ...styles theo từng trang
 │   ├── js/
 │   │   ├── apiClient.js
 │   │   ├── authGuard.js
 │   │   ├── grammar.js
 │   │   ├── flashcards.js
+│   │   ├── vocabStudy.js
+│   │   ├── vocabQuiz.js
 │   │   ├── exams.js
 │   │   ├── examImport.js
 │   │   └── ...logic theo từng trang
@@ -186,6 +200,8 @@ VocaNest/
 │   ├── home.html
 │   ├── vocab-sets.html
 │   ├── vocab-set-detail.html
+│   ├── vocab-study.html
+│   ├── vocab-quiz.html
 │   ├── flashcards.html
 │   ├── grammar.html
 │   ├── exams.html

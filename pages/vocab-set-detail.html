@@ -39,7 +39,10 @@
         <p id="setMeta" class="set-info-meta"></p>
         <h1 id="setTitle" class="set-info-title"></h1>
       </div>
-      <a href="./vocab-sets.html" class="btn">← Quay lại thư viện</a>
+      <div class="set-info-actions">
+        <a id="studyHubLink" href="#" class="btn primary"><i data-lucide="graduation-cap"></i> Vào học</a>
+        <a href="./vocab-sets.html" class="btn"><i data-lucide="arrow-left"></i> Thư viện</a>
+      </div>
     </section>
 
     <div class="two-cols two-cols--detail">
@@ -79,7 +82,10 @@
             <h2>Danh sách từ</h2>
             <p class="muted">Tìm kiếm và quản lý từ trong bộ.</p>
           </div>
-          <a id="flashcardsLink" class="btn primary btn-flashcards" href="#"><i data-lucide="layers-3"></i> Học flashcards</a>
+          <div class="study-actions">
+            <a id="flashcardsLink" class="btn primary btn-flashcards" href="#"><i data-lucide="layers-3"></i> Học flashcards</a>
+            <a id="quizLink" class="btn" href="#"><i data-lucide="gamepad-2"></i> Luyện quiz</a>
+          </div>
         </div>
         <input id="searchInput" class="input" type="search" placeholder="Tìm theo từ hoặc nghĩa..." />
         <div id="vocabItems" class="list"></div>
@@ -102,10 +108,16 @@
     (() => {
       const setId = new URLSearchParams(window.location.search).get("id");
       const flashLink = document.getElementById("flashcardsLink");
-      if (setId && flashLink) {
+      const quizLink = document.getElementById("quizLink");
+      const studyHubLink = document.getElementById("studyHubLink");
+      if (setId && flashLink && quizLink && studyHubLink) {
         flashLink.href = `./flashcards.html?set=${encodeURIComponent(setId)}`;
-      } else if (flashLink) {
+        quizLink.href = `./vocab-quiz.html?set=${encodeURIComponent(setId)}`;
+        studyHubLink.href = `./vocab-study.html?set=${encodeURIComponent(setId)}`;
+      } else if (flashLink && quizLink && studyHubLink) {
         flashLink.style.display = "none";
+        quizLink.style.display = "none";
+        studyHubLink.style.display = "none";
       }
     })();
   </script>

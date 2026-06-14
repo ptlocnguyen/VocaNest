@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#35c6a1" />
+  <title>VocaNest - Học bộ từ</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/images/favicon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/images/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <script src="../assets/js/theme.js"></script>
+  <link rel="stylesheet" href="../assets/css/base.css" />
+  <link rel="stylesheet" href="../assets/css/layout.css" />
+  <link rel="stylesheet" href="../assets/css/ui.css" />
+  <link rel="stylesheet" href="../assets/css/vocab-study.css" />
+</head>
+<body class="study-page">
+  <header class="app-header">
+    <div class="app-header__left">
+      <a href="./home.html" class="logo">VocaNest</a>
+      <nav class="nav" aria-label="Điều hướng chính">
+        <a class="nav__link is-active" href="./vocab-sets.html">Bộ từ vựng</a>
+        <a class="nav__link" href="./grammar.html">Ngữ pháp</a>
+        <a class="nav__link" href="./exams.html">Luyện đề</a>
+      </nav>
+    </div>
+    <div class="user-area">
+      <a class="user-account" href="./account.html" title="Tài khoản">
+        <span class="user-account__icon" aria-hidden="true"></span>
+        <span id="userEmail" class="user-account__text"></span>
+      </a>
+    </div>
+  </header>
+
+  <main class="study-main">
+    <section id="loadingView" class="card study-state">
+      <i data-lucide="loader-circle"></i>
+      <h1>Đang tải bộ từ...</h1>
+      <p>VocaNest đang chuẩn bị không gian học cho bộ từ này.</p>
+    </section>
+
+    <section id="studyView" hidden>
+      <a class="back-link" href="./vocab-sets.html"><i data-lucide="arrow-left"></i> Thư viện bộ từ</a>
+
+      <section class="study-hero">
+        <div>
+          <span id="setMeta" class="study-eyebrow">Bộ từ vựng</span>
+          <h1 id="setTitle">Bộ từ</h1>
+          <p id="setDescription"></p>
+        </div>
+        <a id="manageLink" class="btn" href="#"><i data-lucide="settings"></i> Quản lý từ</a>
+      </section>
+
+      <section class="study-metrics" aria-label="Thống kê bộ từ">
+        <div><strong id="wordCount">0</strong><span>từ trong bộ</span></div>
+        <div><strong id="hardCount">0</strong><span>từ khó</span></div>
+        <div><strong id="knownCount">0</strong><span>đã nhớ</span></div>
+        <div><strong id="bestQuiz">--</strong><span>best quiz</span></div>
+      </section>
+
+      <section class="study-actions-grid" aria-label="Chọn cách học">
+        <article class="card study-action-card">
+          <span class="study-action-card__icon"><i data-lucide="layers-3"></i></span>
+          <div>
+            <h2>Flashcards</h2>
+            <p>Lật thẻ, nghe phát âm, đánh dấu từ khó hoặc từ đã nhớ.</p>
+          </div>
+          <a id="flashcardsLink" class="btn primary block" href="#"><i data-lucide="play"></i> Học flashcards</a>
+        </article>
+
+        <article class="card study-action-card">
+          <span class="study-action-card__icon"><i data-lucide="gamepad-2"></i></span>
+          <div>
+            <h2>Mini quiz</h2>
+            <p>Kiểm tra nhanh bằng trắc nghiệm từ -> nghĩa hoặc nghĩa -> từ.</p>
+          </div>
+          <a id="quizLink" class="btn primary block" href="#"><i data-lucide="play"></i> Luyện quiz</a>
+        </article>
+      </section>
+
+      <section class="card study-preview">
+        <div class="study-preview__head">
+          <div>
+            <h2>Từ trong bộ</h2>
+            <p class="muted">Xem nhanh trước khi bắt đầu học.</p>
+          </div>
+          <span id="previewCount" class="badge">0 từ</span>
+        </div>
+        <div id="wordPreview" class="word-preview"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script src="../assets/js/config.js"></script>
+  <script src="../assets/js/apiClient.js"></script>
+  <script src="../assets/js/authGuard.js"></script>
+  <script src="../assets/js/vocabStudy.js"></script>
+</body>
+</html>

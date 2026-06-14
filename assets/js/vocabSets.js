@@ -59,7 +59,7 @@
     modalAlert.style.display = "block";
   }
 
-  openBtn.addEventListener("click", openModal);
+  openBtn.addEventListener("click", () => openModal());
   closeBtn.addEventListener("click", closeModal);
   if (closeBtnX) closeBtnX.addEventListener("click", closeModal);
 
@@ -140,17 +140,17 @@
     const actions = document.createElement("div");
     actions.className = "row row--actions";
 
-    const openLink = document.createElement("a");
-    openLink.className = "btn";
-    openLink.href = `./vocab-set-detail.html?id=${encodeURIComponent(set.id)}`;
-    openLink.textContent = "Mở bộ từ vựng";
-    actions.appendChild(openLink);
+    const studyLink = document.createElement("a");
+    studyLink.className = "btn primary";
+    studyLink.href = `./vocab-study.html?set=${encodeURIComponent(set.id)}`;
+    studyLink.textContent = "Vào học";
+    actions.appendChild(studyLink);
 
-    const flashcardsLink = document.createElement("a");
-    flashcardsLink.className = "btn primary";
-    flashcardsLink.href = `./flashcards.html?set=${encodeURIComponent(set.id)}`;
-    flashcardsLink.textContent = "Flashcards";
-    actions.appendChild(flashcardsLink);
+    const manageLink = document.createElement("a");
+    manageLink.className = "btn";
+    manageLink.href = `./vocab-set-detail.html?id=${encodeURIComponent(set.id)}`;
+    manageLink.textContent = isOwner ? "Quản lý" : "Xem từ";
+    actions.appendChild(manageLink);
 
     if (isOwner) {
       const editBtn = document.createElement("button");
