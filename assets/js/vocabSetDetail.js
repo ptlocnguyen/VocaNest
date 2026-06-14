@@ -26,10 +26,13 @@ let allItems = [];
   const vocabItemsEl = document.getElementById("vocabItems");
   const searchInput = document.getElementById("searchInput");
   const excelInput = document.getElementById("excelInput");
+  const addAlert = document.getElementById("addAlert");
   const importAlert = document.getElementById("importAlert");
 
   let isOwner = false;
   let searchTimer = null;
+  let isAdding = false;
+  let isImporting = false;
 
   function applySetInfo(data) {
     if (setTitleEl) setTitleEl.textContent = data.title || "";
@@ -134,19 +137,34 @@ let allItems = [];
     importAlert.style.display = "block";
   }
 
+  function showAddAlert(msg, type = "err") {
+    if (!addAlert) {
+      console[type === "err" ? "error" : "info"](msg);
+      return;
+    }
+    addAlert.textContent = msg;
+    addAlert.className = `alert ${type}`;
+    addAlert.style.display = "block";
+  }
+
   async function addItem() {
     if (!isOwner) return;
     if (!wordInput || !meaningInput) return;
+    if (isAdding) return;
 
     const word = wordInput.value.trim();
     const meaning = meaningInput.value.trim();
 
     if (!word || !meaning) {
-      alert("Nhập đủ từ và nghĩa");
+      showAddAlert("Nhập đủ từ và nghĩa");
+      (word ? meaningInput : wordInput).focus();
       return;
     }
 
+    isAdding = true;
     if (addBtn) addBtn.disabled = true;
+    if (addBtn) addBtn.textContent = "Đang thêm...";
+    if (addAlert) addAlert.style.display = "none";
 
     try {
       const result = await window.vocaApi.authPost("addItem", {
@@ -162,9 +180,11 @@ let allItems = [];
       wordInput.focus();
     } catch (err) {
       console.error(err);
-      alert(err.message || "Thêm từ thất bại");
+      showAddAlert(err.message || "Thêm từ thất bại");
     } finally {
+      isAdding = false;
       if (addBtn) addBtn.disabled = false;
+      if (addBtn) addBtn.textContent = "Thêm vào bộ";
     }
   }
 
@@ -204,8 +224,11 @@ let allItems = [];
     excelInput.addEventListener("change", async (e) => {
       const file = e.target.files[0];
       if (!file) return;
+      if (isImporting) return;
 
       try {
+        isImporting = true;
+        excelInput.disabled = true;
         showImportAlert("Đang đọc file Excel...", "ok");
 
         const data = await file.arrayBuffer();
@@ -253,6 +276,9 @@ let allItems = [];
       } catch (err) {
         console.error(err);
         showImportAlert(err.message || "Lỗi đọc file Excel", "err");
+      } finally {
+        isImporting = false;
+        excelInput.disabled = false;
       }
     });
   }

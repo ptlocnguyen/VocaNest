@@ -79,7 +79,8 @@ html[data-theme="light"] body {
 
 button,
 input,
-select {
+select,
+textarea {
   font: inherit;
 }
 
@@ -154,6 +155,23 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
   outline-offset: 2px;
 }
 
+.sr-only {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.lucide {
+  width: 1.15em;
+  height: 1.15em;
+  flex: 0 0 auto;
+  stroke-width: 2.25;
+}
+
 .theme-toggle {
   width: 40px;
   height: 40px;
@@ -176,9 +194,8 @@ html[data-theme="light"] ::-webkit-scrollbar-thumb {
 }
 
 .theme-toggle__icon {
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
+  width: 20px;
+  height: 20px;
 }
 
 .theme-toggle--floating {
@@ -352,7 +369,8 @@ html[data-theme="light"] .modal {
   }
 
   .theme-toggle__icon {
-    font-size: 18px;
+    width: 18px;
+    height: 18px;
   }
 
   .theme-toggle--floating {

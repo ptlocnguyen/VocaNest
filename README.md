@@ -35,7 +35,7 @@ Kiến trúc này giúp dự án có chi phí vận hành thấp, dễ triển k
 
 ### Quản lý từ vựng
 
-- Tạo và xóa bộ từ vựng cá nhân.
+- Tạo, chỉnh sửa và xóa bộ từ vựng cá nhân.
 - Chọn trạng thái riêng tư hoặc công khai.
 - Khám phá bộ từ công khai của người dùng khác.
 - Thêm, tìm kiếm và xóa từng từ.
@@ -226,7 +226,7 @@ Cách thêm đề nhanh nhất:
 5. Khi dữ liệu hợp lệ, bấm **Lưu lên Drive** để ghi trực tiếp vào sheet `exam_tests`.
 6. Nút **Xuất JSON** vẫn được giữ làm phương án sao lưu hoặc kiểm tra dữ liệu local.
 
-Nút **Lưu lên Drive** cho phép mọi tài khoản đã đăng nhập đóng góp đề mới. Backend vẫn kiểm tra cấu trúc đề trước khi ghi vào sheet `exam_tests`, nên file sai format sẽ bị từ chối.
+Nút **Lưu lên Drive** cho phép mọi tài khoản đã đăng nhập đóng góp đề mới. Backend vẫn kiểm tra cấu trúc đề trước khi ghi vào sheet `exam_tests`, nên file sai format sẽ bị từ chối. `test_id` phải là duy nhất; nếu trùng với đề đã có, hệ thống sẽ yêu cầu đổi ID để tránh ghi đè dữ liệu.
 
 Nếu muốn đưa toàn bộ đề local hiện có lên Google Sheet, chạy:
 

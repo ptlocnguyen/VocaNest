@@ -19,13 +19,22 @@
   const titleInput = document.getElementById("titleInput");
   const descInput = document.getElementById("descInput");
   const publicCheckbox = document.getElementById("publicCheckbox");
-  const createBtn = document.getElementById("createBtn");
+  const saveSetBtn = document.getElementById("saveSetBtn");
+  const setModalTitle = document.getElementById("setModalTitle");
 
   const mySearchInput = document.getElementById("mySearchInput");
   const publicSearchInput = document.getElementById("publicSearchInput");
   let searchTimer = null;
+  let isSaving = false;
+  let editingSet = null;
 
-  function openModal() {
+  function openModal(set = null) {
+    editingSet = set;
+    setModalTitle.textContent = set ? "Chỉnh sửa bộ từ vựng" : "Tạo bộ từ vựng";
+    saveSetBtn.textContent = set ? "Lưu thay đổi" : "Tạo bộ";
+    titleInput.value = set?.title || "";
+    descInput.value = set?.description || "";
+    publicCheckbox.checked = Boolean(set?.is_public);
     modal.classList.remove("hidden");
     titleInput.focus();
   }
@@ -35,6 +44,19 @@
     titleInput.value = "";
     descInput.value = "";
     publicCheckbox.checked = false;
+    editingSet = null;
+    setModalTitle.textContent = "Tạo bộ từ vựng";
+    saveSetBtn.textContent = "Tạo bộ";
+    const modalAlert = document.getElementById("modalAlert");
+    if (modalAlert) modalAlert.style.display = "none";
+  }
+
+  function showModalAlert(message, type = "err") {
+    const modalAlert = document.getElementById("modalAlert");
+    if (!modalAlert) return;
+    modalAlert.textContent = message;
+    modalAlert.className = `alert ${type}`;
+    modalAlert.style.display = "block";
   }
 
   openBtn.addEventListener("click", openModal);
@@ -131,6 +153,13 @@
     actions.appendChild(flashcardsLink);
 
     if (isOwner) {
+      const editBtn = document.createElement("button");
+      editBtn.className = "btn";
+      editBtn.type = "button";
+      editBtn.textContent = "Sửa";
+      editBtn.addEventListener("click", () => openModal(set));
+      actions.appendChild(editBtn);
+
       const deleteBtn = document.createElement("button");
       deleteBtn.className = "btn btn-danger btn-delete-set";
       deleteBtn.type = "button";
@@ -189,35 +218,58 @@
     publicVocabList.appendChild(fragment);
   }
 
-  createBtn.addEventListener("click", async () => {
+  saveSetBtn.addEventListener("click", async () => {
+    if (isSaving) return;
+
     const title = titleInput.value.trim();
     if (!title) {
-      alert("Vui lòng nhập tên bộ từ vựng");
+      showModalAlert("Vui lòng nhập tên bộ từ vựng");
+      titleInput.focus();
       return;
     }
 
-    createBtn.disabled = true;
+    isSaving = true;
+    saveSetBtn.disabled = true;
+    saveSetBtn.textContent = editingSet ? "Đang lưu..." : "Đang tạo...";
 
     try {
-      const result = await window.vocaApi.authPost("createSet", {
+      const payload = {
         title,
         description: descInput.value.trim(),
         isPublic: publicCheckbox.checked
-      });
+      };
 
-      mySetsCache.unshift(result.data);
+      const result = editingSet
+        ? await window.vocaApi.authPost("updateSet", {
+          ...payload,
+          setId: editingSet.id,
+          wordCount: editingSet.word_count || 0
+        })
+        : await window.vocaApi.authPost("createSet", payload);
+
+      if (editingSet) {
+        mySetsCache = mySetsCache.map((set) => set.id === editingSet.id
+          ? { ...set, ...result.data, word_count: set.word_count || result.data.word_count || 0 }
+          : set);
+        publicSetsCache = publicSetsCache.filter((set) => set.id !== editingSet.id);
+      } else {
+        mySetsCache.unshift(result.data);
+      }
       closeModal();
       renderMySets(mySetsCache);
+      renderPublicSets(publicSetsCache);
     } catch (err) {
       console.error(err);
-      alert(err.message || "Tạo bộ từ vựng thất bại");
+      showModalAlert(err.message || (editingSet ? "Cập nhật bộ từ vựng thất bại" : "Tạo bộ từ vựng thất bại"));
     } finally {
-      createBtn.disabled = false;
+      isSaving = false;
+      saveSetBtn.disabled = false;
+      saveSetBtn.textContent = editingSet ? "Lưu thay đổi" : "Tạo bộ";
     }
   });
 
   titleInput.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") createBtn.click();
+    if (e.key === "Enter") saveSetBtn.click();
   });
 
   if (mySearchInput) {

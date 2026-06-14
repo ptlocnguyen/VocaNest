@@ -49,6 +49,7 @@
   let importState = null;
   let manualRows = [];
   let toastTimer = null;
+  let isSaving = false;
 
   function text(value) {
     return String(value ?? "").trim();
@@ -497,6 +498,9 @@
 
   async function saveToDrive() {
     if (!importState || importState.errors.length) return;
+    if (isSaving) return;
+
+    isSaving = true;
     elements.saveDriveBtn.disabled = true;
     elements.saveDriveBtn.innerHTML = '<i data-lucide="loader-circle"></i> Đang lưu';
     refreshIcons();
@@ -512,6 +516,7 @@
       console.error(error);
       showToast(error.message || "Không lưu được đề lên Drive.");
     } finally {
+      isSaving = false;
       elements.saveDriveBtn.disabled = false;
       elements.saveDriveBtn.innerHTML = '<i data-lucide="cloud-upload"></i> Lưu lên Drive';
       refreshIcons();

@@ -40,16 +40,25 @@ html[data-theme="light"] .app-header {
 }
 
 .app-header__left {
+  flex: 1 1 auto;
   min-width: 0;
   gap: 24px;
 }
 
 .user-area {
+  flex: 0 0 auto;
   gap: 10px;
 }
 
 .nav {
+  min-width: 0;
   gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav::-webkit-scrollbar {
+  display: none;
 }
 
 .logo {
@@ -83,6 +92,7 @@ html[data-theme="light"] .app-header {
   min-height: 38px;
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
   padding: 8px 12px;
   border-radius: 7px;
   color: var(--muted);
@@ -229,5 +239,20 @@ html[data-theme="light"] .app-header {
 
   .row {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 380px) {
+  .app-header {
+    gap: 8px;
+    padding-inline: 10px;
+  }
+
+  .app-header__left {
+    gap: 8px;
+  }
+
+  .user-account {
+    display: none;
   }
 }

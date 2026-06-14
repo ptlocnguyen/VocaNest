@@ -39,13 +39,18 @@
   }
 
   function updateButton(button, mode) {
-    const icon = button.querySelector(".theme-toggle__icon");
+    const icon = button.querySelector("[data-lucide]");
     const next = nextMode(mode);
+    const iconName = mode === "light" ? "sun" : mode === "dark" ? "moon" : "monitor-cog";
 
-    icon.textContent = mode === "light" ? "☀" : mode === "dark" ? "☾" : "◐";
+    icon.setAttribute("data-lucide", iconName);
     button.dataset.mode = mode;
     button.setAttribute("aria-label", `Giao diện: ${modeLabel(mode)}. Chuyển sang ${modeLabel(next)}.`);
     button.title = `Giao diện: ${modeLabel(mode)}`;
+
+    if (window.lucide) {
+      window.lucide.createIcons();
+    }
   }
 
   function createToggle() {
@@ -53,7 +58,7 @@
     button.className = "theme-toggle";
     button.type = "button";
 
-    const icon = document.createElement("span");
+    const icon = document.createElement("i");
     icon.className = "theme-toggle__icon";
     icon.setAttribute("aria-hidden", "true");
     button.appendChild(icon);
